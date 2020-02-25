@@ -1,10 +1,10 @@
 
-import 'package:apk_eureka/src/widgets/menuSiderbar.dart';
+import 'package:QuizLab/src/widgets/menuSiderbar.dart';
 import 'package:flutter/material.dart';
 
-import 'package:apk_eureka/src/pages/auth/login.dart';
-import 'package:apk_eureka/src/providers/menuProvider.dart';
-import 'package:apk_eureka/src/utils/iconStringUtil.dart';
+import 'package:QuizLab/src/pages/auth/login.dart';
+import 'package:QuizLab/src/providers/menuProvider.dart';
+import 'package:QuizLab/src/utils/iconStringUtil.dart';
 
 class HomePage extends StatelessWidget {
   @override

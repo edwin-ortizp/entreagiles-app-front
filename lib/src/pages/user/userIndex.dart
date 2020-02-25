@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:apk_eureka/src/models/User.dart';
-import 'package:apk_eureka/src/providers/userProvider.dart';
-import 'package:apk_eureka/src/widgets/menuSiderbar.dart';
+import 'package:QuizLab/src/models/User.dart';
+import 'package:QuizLab/src/providers/userProvider.dart';
+import 'package:QuizLab/src/widgets/menuSiderbar.dart';
 
 
 class UsersIndex extends StatelessWidget {

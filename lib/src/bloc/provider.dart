@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:apk_eureka/src/bloc/loginBloc.dart';
+import 'package:QuizLab/src/bloc/loginBloc.dart';
 
-export 'package:apk_eureka/src/bloc/loginBloc.dart';
+export 'package:QuizLab/src/bloc/loginBloc.dart';
 
 
 class Provider extends InheritedWidget {

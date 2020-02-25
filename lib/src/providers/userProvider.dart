@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 // llamados de otras paginas
-import 'package:apk_eureka/src/models/User.dart';
+import 'package:QuizLab/src/models/User.dart';
 
 
 

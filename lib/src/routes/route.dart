@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:apk_eureka/src/pages/auth/login.dart';
-import 'package:apk_eureka/src/pages/home.dart';
-import 'package:apk_eureka/src/pages/user/userIndex.dart';
+import 'package:QuizLab/src/pages/auth/login.dart';
+import 'package:QuizLab/src/pages/home.dart';
+import 'package:QuizLab/src/pages/user/userIndex.dart';
 
 
 Map<String, WidgetBuilder> getApplicationRoutes(){

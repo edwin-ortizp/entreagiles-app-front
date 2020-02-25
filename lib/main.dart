@@ -1,13 +1,13 @@
-import 'package:apk_eureka/src/pages/home.dart';
+import 'package:QuizLab/src/pages/home.dart';
 import 'package:flutter/material.dart';
-import 'package:apk_eureka/src/routes/route.dart';
+import 'package:QuizLab/src/routes/route.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:apk_eureka/src/bloc/provider.dart';
+import 'package:QuizLab/src/bloc/provider.dart';
 
 
 
-import 'package:apk_eureka/src/routes/route.dart';
+import 'package:QuizLab/src/routes/route.dart';
  
 void main() => runApp(MyApp());
  
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         //   const Locale('es'), // English
         // ],
         // home: HomePage()
-        initialRoute: 'home',
+        initialRoute: 'login',
         // Rutas de la aplicacion
         routes:getApplicationRoutes(),
         onGenerateRoute: ( RouteSettings  settings ){
