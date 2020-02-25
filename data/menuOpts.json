@@ -1,0 +1,10 @@
+{
+    "nombreApp" : "Eureka",
+    "rutas" : [
+        {
+            "ruta" : "users",
+            "icon" : "people",
+            "texto": "Usuarios"
+        }
+    ]
+}
