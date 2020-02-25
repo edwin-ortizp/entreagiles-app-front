@@ -1,7 +1,7 @@
 // Llamados Dependencias
 import 'package:flutter/material.dart';
 // Llamados Paginas
-import 'package:QuizLab/src/bloc/provider.dart';
+import 'package:QuizLab/src/validations/provider.dart';
 import 'package:QuizLab/src/providers/userProvider.dart';
 
 class LoginPage extends StatelessWidget {

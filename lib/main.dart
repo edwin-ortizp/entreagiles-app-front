@@ -1,9 +1,9 @@
-import 'package:QuizLab/src/pages/home.dart';
 import 'package:flutter/material.dart';
-import 'package:QuizLab/src/routes/route.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:QuizLab/src/bloc/provider.dart';
+import 'package:QuizLab/src/routes/route.dart';
+import 'package:QuizLab/src/pages/home.dart';
+import 'package:QuizLab/src/validations/provider.dart';
 
 
 
