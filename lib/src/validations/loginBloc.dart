@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:QuizLab/src/bloc/validatorsLogin.dart';
+import 'package:QuizLab/src/validations/validatorsLogin.dart';
 
 class LoginBloc with Validators {
 
