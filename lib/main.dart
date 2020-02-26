@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
 
         },
         theme: ThemeData(
-          primaryColor: Colors.indigo[700],
+          primaryColor: Colors.indigoAccent[700],
         ),
       ),
     );
