@@ -1,4 +1,6 @@
 // Llamados Dependencias
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 // Llamados Paginas
 import 'package:QuizLab/src/validations/provider.dart';
@@ -29,35 +31,27 @@ class LoginPage extends StatelessWidget {
       height: size.height * 0.4,  
       width:  double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[
-            Color.fromRGBO(190, 63, 156, 1.0),
-            Color.fromRGBO(150, 70, 200, 1.0),
-            // Color.fromRGBO(r, g, b, opacity)
+        // gradient: LinearGradient(
+        //   colors: <Color>[
+        //     Color.fromRGBO(190, 63, 156, 1.0),
+        //     Color.fromRGBO(150, 70, 200, 1.0),
+        //     // Color.fromRGBO(r, g, b, opacity)
 
-          ])
+        //   ])
       ),    
-    );
-
-    final circulo = Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.0),
-        color: Color.fromRGBO(255, 255, 255, 0.05)
-      ),
     );
 
 
        final logoEureka = Container(
-         padding:  EdgeInsets.only(top: 80.0),
-          width: 400.0,
-          height: 400.0,
+         padding:  EdgeInsets.only(top: 80.0,left: 55.0),
+          width: 350.0,
+          height: 350.0,
           child: Column(
             children: <Widget>[
-              Image.asset('assets/EurekaLogo.png'),
-              SizedBox(height: 0.0,width: double.infinity,),
-              Text('Bienvenido a Eureka!',style:TextStyle(color: Colors.white,fontSize:20.0 ) ,)
+              // Text('¿Olvido su contraseña?'),
+              Image.asset('assets/QuizLab-Logo.png'),
+              SizedBox(height: 25.0,width: double.infinity,),
+              Text('Bienvenido a QuizLab',style:TextStyle(color: Colors.black,fontSize:20.0 ) ,)
               // Image(image: NetworkImage('https://www.tom-archer.com/wp-content/uploads/2018/06/milford-sound-night-fine-art-photography-new-zealand.jpg')),
               // DecoratedBox(decoration: BoxDecoration( image: DecorationImage(image: AssetImage('assets/robot-loading.gif'))))
             ],
@@ -67,15 +61,13 @@ class LoginPage extends StatelessWidget {
     return Stack(
       children: <Widget>[
         fondo,
-        Positioned(top: 220.0,left: 10,child: circulo),
-        Positioned(top: -40.0,left: 350,child: circulo),
-        Positioned(top: 90.0,left: 175,child: circulo),
-        Positioned(top: 400.0,left: 175,child: circulo),
-        Positioned(top: 650.0,left: 350,child: circulo),
-        logoEureka
+        Positioned(top: 80.0,left: 220,child: Text('¿Olvido su contraseña?'),),
+        Positioned(top: 50.0,left: 0,child: logoEureka),
+        // logoEureka
+        // logoEureka
         // Positioned(top: 90.0,left: 15.0,child: logoEureka),
         // Positioned(top: 90.0,left: 175,child: ),
-     
+      
       ],
     );
   }
@@ -98,22 +90,22 @@ class LoginPage extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical: 50.0),
               padding: EdgeInsets.symmetric(vertical: 50.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                // color: Colors.white,
                 //  color: Color.fromRGBO(0, 0, 0, 0.3),
                 borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.purple[400],
-                    blurRadius: 3.0,
-                    offset: Offset(0.0, 1.0),
-                    spreadRadius: 1.0
+                // boxShadow: <BoxShadow>[
+                //   BoxShadow(
+                //     color: Colors.purple[400],
+                //     blurRadius: 3.0,
+                //     offset: Offset(0.0, 1.0),
+                //     spreadRadius: 1.0
 
-                  )
-                ]
+                //   )
+                // ]
               ),
               child: Column(
                 children: <Widget>[
-                  Text('Login',style: TextStyle(fontSize: 20.0),),
+                  // Text('Login',style: TextStyle(fontSize: 20.0),),
                   SizedBox( height: 20.0,),
                   _crearEmail(bloc),
                    SizedBox( height: 40.0,),
@@ -124,8 +116,8 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             // Positioned(top: 650.0,left: 350,child: circulo),
-            Text('¿Olvido su contraseña?'),
-            SizedBox(height: 100.0,)
+            
+            // SizedBox(height: 100.0,)
           ],
         ),
       );
@@ -142,10 +134,9 @@ class LoginPage extends StatelessWidget {
         child: TextField(
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            icon: Icon(Icons.alternate_email,color: Colors.purple[400]),
+            icon: Icon(Icons.alternate_email,color: Colors.indigo[700]),
             hintText:  'ejemplo.certmind.org',
             labelText: 'Correo electrónico',
-            counterText: snapshot.data,
             errorText: snapshot.error
           ),
           onChanged: bloc.changeEmail,
@@ -170,9 +161,8 @@ class LoginPage extends StatelessWidget {
           obscureText: true,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            icon: Icon(Icons.lock_outline,color: Colors.purple[400]),
+            icon: Icon(Icons.lock_outline,color: Colors.indigo[700]),
             labelText: 'Contraseña',
-              counterText: snapshot.data,
               errorText: snapshot.error
           ),
            onChanged: bloc.changePassword,
@@ -199,7 +189,7 @@ class LoginPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
             ),
             elevation: 0.0,
-            color: Colors.purple[400],
+            color: Colors.indigo[700],
             textColor: Colors.white,
             onPressed: snapshot.hasData ? ()=> _login(bloc, context) : null
           );
