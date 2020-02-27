@@ -5,16 +5,13 @@ import 'package:QuizLab/src/pages/auth/login.dart';
 import 'package:QuizLab/src/providers/menuProvider.dart';
 import 'package:QuizLab/src/utils/iconStringUtil.dart';
 
+// ----------------------
+
+
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // BorderRadiusGeometry _borderRadius = BorderRadius.circular(50);
-
-      
-      
-
-      // body: _lista(),
-    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -24,28 +21,31 @@ class HomePage extends StatelessWidget {
       ),
       drawer: MenuSiderbar(),
       backgroundColor: Colors.white,
+
           body: 
-           Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-    
-          _cardTipo1(context),
-          
-        ],
-      )
+          ListView(children: <Widget>[
+ Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
       
-    ); 
-    
+      _cardTipo3(context),
+      _cardTipo4(context),
+      _cardTipo2(context),
+
+      _cardTipo1(context),
+
+          ],
+          ),
+        ],
+      )   
+    );    
   }
  
+          
 
 
 Widget _cardTipo1(BuildContext context){
     final size = MediaQuery.of(context).size;
-    // final fondo = Container(height: size.height * 0.4, width:  double.infinity,decoration: BoxDecoration(
-    
-    //   ),    
-    // );
 
     return Card(
       margin: EdgeInsets.all(20.0),
@@ -55,9 +55,7 @@ Widget _cardTipo1(BuildContext context){
       child: Column(
         children:<Widget>[
            ListTile(
-            //  leading: Icon(Icons.photo_album,color:Colors.purple[400]) ,
              title: Text('Mis Cursos'),
-              // subtitle: Text('Esto es un texto para ver como se ve la card'),
           ),
        
           Row(
@@ -75,9 +73,6 @@ Widget _cardTipo1(BuildContext context){
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontWeight: FontWeight.bold),
             )
-          // Positioned(top: 80.0,left: 220,child: Text('¿Olvido su contraseña?'),),
-            //  Text('Upps! Esto está muy vacío que tal si visitas la tienda',textScaleFactor: 1.0,overflow: TextOverflow.ellipsis,softWrap: true),
-              
             ],
             ),
             
@@ -89,18 +84,168 @@ Widget _cardTipo1(BuildContext context){
                 onPressed: (){},
                  child: Text('Ver todos',style:TextStyle(color: Colors.blueAccent,fontSize:15.0 )),
                  ),
-            
             ],
             )
-
-
         ]
       )
     );
-  
   }
 
 
+Widget _cardTipo2(BuildContext context){
+    final size = MediaQuery.of(context).size;
+
+    return SizedBox( 
+      
+      height: 250,
+      width: 160,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+     
+
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          children:<Widget>[
+             ListTile(          
+               title: Text('Tu perfil',
+            ),),
+         
+
+Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: <Widget>[
+Container(
+        width: 80.0,
+        height: 80.0,
+        decoration: new BoxDecoration(
+            shape: BoxShape.circle,
+            image: new DecorationImage(
+            fit: BoxFit.fill,
+            image: new NetworkImage(
+                   "https://i.imgur.com/BoN9kdC.png")
+                   )
+)),
+
+],),
+
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+             
+              Text(
+                'Edwin Alexander Ortiz',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold,
+                fontSize:20.0),
+              )
+              ],
+              ),
+              
+          ]
+        ),
+      )
+    );
+  }
+
+  Widget _cardTipo3(BuildContext context){
+    final size = MediaQuery.of(context).size;
+
+    return SizedBox( 
+      
+      height: 125,
+      width: 160,
+     
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+
+      child: Card(
+      //  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
+        decoration: new BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blueAccent[700],Colors.deepPurple[400]],
+            stops: [0.2,0.8],
+            begin: FractionalOffset.topLeft,
+            end: FractionalOffset.bottomRight
+          )
+        ),
+
+        // color: Colors.greenAccent[400],
+        child: Column(
+          children:<Widget>[
+             ListTile(          
+                title: Text('Tu Ranking',style: TextStyle(color: Colors.white))
+               
+               ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+
+              Text(
+                 '#513.256',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold,
+                fontSize:23.0,color: Colors.white),
+              )
+              ],
+              ),
+              
+          ]
+        ),
+      ))
+    );
+  }
+
+  Widget _cardTipo4(BuildContext context){
+    final size = MediaQuery.of(context).size;
+
+    return SizedBox( 
+      
+      height: 125,
+      width: 160,
+     
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+
+      child: Card(
+      //  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
+        decoration: new BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.greenAccent[700],Colors.tealAccent[400]],
+            stops: [0.2,0.8],
+            begin: FractionalOffset.topLeft,
+            end: FractionalOffset.bottomRight
+          )
+        ),
+
+        // color: Colors.greenAccent[400],
+        child: Column(
+          children:<Widget>[
+             ListTile(          
+               title: Text('Eurecoins',style: TextStyle(color: Colors.white))
+               
+               ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+
+              Text(
+                '0',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold,
+                fontSize:23.0,color: Colors.white),
+              )
+              ],
+              ),
+              
+          ]
+        ),
+      ))
+    );
+  }
 
   Widget _lista() {
 
