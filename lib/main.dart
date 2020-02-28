@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         //   const Locale('es'), // English
         // ],
         // home: HomePage()
-        initialRoute: 'login',
+        initialRoute: 'userProfile',
         // Rutas de la aplicacion
         routes:getApplicationRoutes(),
         onGenerateRoute: ( RouteSettings  settings ){

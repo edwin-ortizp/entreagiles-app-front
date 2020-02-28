@@ -26,6 +26,13 @@ class MenuSiderbar extends StatelessWidget {
             } 
           ),
           ListTile(
+            leading: Icon(Icons.account_circle,color: Colors.purple[400],),
+            title: Text('Perfil'),
+            onTap: (){
+              Navigator.pushReplacementNamed(context, 'userProfile');
+            } 
+          ),
+          ListTile(
             leading: Icon(Icons.people,color: Colors.purple[400],),
             title: Text('Usuarios'),
             onTap: (){
