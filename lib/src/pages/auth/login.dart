@@ -1,6 +1,8 @@
 // Llamados Dependencias
 import 'dart:typed_data';
 
+import 'package:QuizLab/src/utils/alerts.dart';
+import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
 // Llamados Paginas
 import 'package:QuizLab/src/validations/provider.dart';
@@ -9,6 +11,7 @@ import 'package:QuizLab/src/providers/userProvider.dart';
 class LoginPage extends StatelessWidget {
 
   final usersProvider = new UsersProvider();
+  final _prefs = new PreferencesUser();
 
   @override
   Widget build(BuildContext context) {
@@ -187,16 +190,24 @@ class LoginPage extends StatelessWidget {
         );
     }
 
-     _login(LoginBloc bloc, BuildContext context) {
+     _login(LoginBloc bloc, BuildContext context) async {
 
-    usersProvider.login(bloc.email, bloc.password);
+      Map info = await usersProvider.login(bloc.email, bloc.password);
+
+      if( info['ok']){
+        Navigator.pushReplacementNamed(context, 'buttonBarBottom');
+      }else{
+        alertLogin( context, info['mensaje'] );
+      }
+
+
 
     // print('================');
     // print('Email: ${ bloc.email }');
     // print('Password: ${ bloc.password }');
     // print('================');
 
-    // Navigator.pushReplacementNamed(context, 'home');
+    // (_prefs.token) ? Navigator.pushReplacementNamed(context, 'home'):Navigator.pushReplacementNamed(context, 'login');
 
   }
 

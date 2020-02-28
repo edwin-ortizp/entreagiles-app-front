@@ -1,3 +1,4 @@
+import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -7,14 +8,20 @@ import 'package:QuizLab/src/validations/provider.dart';
 
 
 
-import 'package:QuizLab/src/routes/route.dart';
+// import 'package:QuizLab/src/routes/route.dart';
  
-void main() => runApp(MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = new PreferencesUser();
+  
+  await prefs.intPrefs();
+  runApp(MyApp());
+} 
  
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    final prefs = new PreferencesUser();
     return Provider(
       child: MaterialApp(
         title: 'Componetes Flutter',
@@ -29,7 +36,10 @@ class MyApp extends StatelessWidget {
         //   const Locale('es'), // English
         // ],
         // home: HomePage()
-        initialRoute: 'login',
+
+        // para declara la pagina   de inicio de la apk
+        // initialRoute: 'buttonBarBottom',
+        initialRoute: prefs.ultimaPagina,
         // Rutas de la aplicacion
         routes:getApplicationRoutes(),
         onGenerateRoute: ( RouteSettings  settings ){

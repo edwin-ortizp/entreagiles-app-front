@@ -19,17 +19,25 @@ class MenuSiderbar extends StatelessWidget {
           ),
 
           ListTile(
-            leading: Icon(Icons.store,color: Colors.purple[400],),
+            leading: Icon(Icons.store,color: Colors.indigoAccent[700],),
             title: Text('Home'),
             onTap: (){
               Navigator.pushReplacementNamed(context, 'home');
             } 
           ),
           ListTile(
-            leading: Icon(Icons.people,color: Colors.purple[400],),
+            leading: Icon(Icons.people,color: Colors.indigoAccent[700],),
             title: Text('Usuarios'),
             onTap: (){
               Navigator.pushReplacementNamed(context, 'users');
+            } 
+          ),
+          ListTile(
+            leading: Icon(Icons.settings,color: Colors.indigoAccent[700],),
+            title: Text('Setting'),
+            onTap: (){
+              Navigator.pushReplacementNamed(context, 'settings');
+              
             } 
           )
 

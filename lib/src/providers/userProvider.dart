@@ -1,5 +1,6 @@
 // llamado de dependencias
 import 'dart:convert';
+import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:http/http.dart' as http;
 // llamados de otras paginas
 import 'package:QuizLab/src/models/User.dart';
@@ -8,6 +9,7 @@ import 'package:QuizLab/src/models/User.dart';
 
 class UsersProvider{
 // login(String email, String password){
+  final _prefs = new PreferencesUser();
 
   Future<Map<String, dynamic>> login(String email, String password) async{
 
@@ -26,9 +28,10 @@ class UsersProvider{
 
     print(resp.body);
 
-    print(decodeResp);
+    print( _prefs.token);
     if(decodeResp.containsKey('token')){
 
+      _prefs.token= decodeResp['token'];
       return { 'ok': true, 'token': decodeResp['token'] };
     }else{
        return { 'ok': false, 'mensaje': decodeResp['message'] };
@@ -39,10 +42,10 @@ class UsersProvider{
 
 
   final String _url = 'http://10.0.2.2:3000';
-  final _token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJrZXdpbiIsImFwZWxsaWRvIjoiY2FsZGVyb24iLCJlbWFpbCI6Imtld2luZXJpa3NvbkBob3RtYWlsLmNvbSIsImlkIjoiMjI5NSIsInRpcG8iOiJhZG1pbiIsImlhdCI6MTU4MjY0NzAzOCwiZXhwIjoxNTgyNjYxNDM4fQ.MOFmq3X29-TFZ2lffwwuaq38GXJ6ldEqETjjbqLixu8';
+  // final _token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJLZXdpbiBFcmlrc29uIiwiYXBlbGxpZG8iOiJDYWxkZXJvbiIsImVtYWlsIjoia2V3aW5lcmlrc29uQGhvdG1haWwuY29tIiwiaWQiOiIyMjk2IiwidGlwbyI6ImFkbWluIiwiaWF0IjoxNTgyODM2ODQ3LCJleHAiOjE1ODI4NTEyNDd9.FZt9XFYqGP0bn7PftKH_s3nzB7L2b1TiCiT-fZxIkdk';
 
   Future<List<UsuarioModel>> cargarUsuarios() async{
-    final url = '$_url/users?token=$_token';
+    final url = '$_url/users?token=${_prefs.token}';
     final resp = await http.get(url);
 
     final  decodedData = json.decode(resp.body);
@@ -81,7 +84,7 @@ class UsersProvider{
 
    Future<bool> editarUsuario( UsuarioModel usuario ) async {
     
-    final url = '$_url/users/{$usuario.id}?token={$_token}';
+    final url = '$_url/users/{$usuario.id}?token=${_prefs.token}';
 
     final resp = await http.put( url, body: json.encode(usuario) );
     // fina
@@ -128,7 +131,7 @@ class UsersProvider{
 
   Future<int> borrarUsuario (String id)async{
 
-    final url   = '$_url/users/$id?token=$_token';
+    final url   = '$_url/users/$id?token=${_prefs.token}';
     final resp  = await http.delete(url);
     print(json.decode(resp.body));
     return 1;
