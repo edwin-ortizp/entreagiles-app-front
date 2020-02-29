@@ -13,7 +13,7 @@ class MenuSiderbar extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                 image: AssetImage('assets/imagenMenu.jpg'),
-                fit: BoxFit.cover
+                fit: BoxFit.cover,
                 ),
               ),
           ),
@@ -37,6 +37,14 @@ class MenuSiderbar extends StatelessWidget {
             title: Text('Setting'),
             onTap: (){
               Navigator.pushReplacementNamed(context, 'settings');
+              
+            } 
+          ),
+          ListTile(
+            leading: Icon(Icons.cancel,color: Colors.indigoAccent[700],),
+            title: Text('Cerrar secion'),
+            onTap: (){
+              Navigator.pushReplacementNamed(context, 'login');
               
             } 
           )
