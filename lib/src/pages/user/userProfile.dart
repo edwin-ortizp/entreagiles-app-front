@@ -17,7 +17,7 @@ class UserProfile extends StatelessWidget {
       body: Column(children: <Widget>[
         Padding(padding: EdgeInsets.only(top: 60.0)),
 
-        _formEdit('Alexander Ortiz', 'alexander@gesthor.org')
+        _header('Alexander Ortiz', 'alexander@gesthor.org')
         // _menuOptions('Editar mi perfil'),
         // _menuOptions('Recargar creditos'),
         // _menuOptions('Organizaciones'),
@@ -47,7 +47,7 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Widget _formEdit(String nombre, correo) {
+  Widget _header(String nombre, correo) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -70,6 +70,17 @@ class UserProfile extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _formEdit(){
+    return Container(
+      margin: EdgeInsets.all(20.0),
+      child: Form(
+        child: Column(children: <Widget>[
+
+        ],)
+      ),
     );
   }
 }
