@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:QuizLab/src/pages/auth/login.dart';
 import 'package:QuizLab/src/pages/home.dart';
 import 'package:QuizLab/src/pages/user/userIndex.dart';
+import 'package:QuizLab/src/pages/user/userProfile.dart';
+
 
 
 Map<String, WidgetBuilder> getApplicationRoutes(){
@@ -15,6 +17,7 @@ return <String, WidgetBuilder>{
         'buttonBarBottom'   : ( BuildContext context ) => ButtonBarBottom(),
         'home'   : ( BuildContext context ) => HomePage(),
         'users' : ( BuildContext context ) => UsersIndex(),
+        'userProfile' : ( BuildContext context ) => UserProfile(),
         'settings' : ( BuildContext context ) => SettingPage(),
         'courses' : ( BuildContext context ) => CourseIndex(),
       };
