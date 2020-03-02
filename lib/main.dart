@@ -1,9 +1,9 @@
 import 'package:QuizLab/src/utils/preferencesUser.dart';
+import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:QuizLab/src/routes/route.dart';
-import 'package:QuizLab/src/pages/home.dart';
 import 'package:QuizLab/src/validations/provider.dart';
 
 
@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
     final prefs = new PreferencesUser();
     return Provider(
       child: MaterialApp(
-        title: 'Componetes Flutter',
+        title: 'QuizLab',
+        // theme: ThemeData(fontFamily: 'TTFirs'),
         debugShowCheckedModeBanner: false,
         // localizationsDelegates: [
         //   // ... app-specific localization delegate[s] here
@@ -47,11 +48,11 @@ class MyApp extends StatelessWidget {
           print('ruta llamada: ${settings.name}');
 
           return MaterialPageRoute(
-            builder: (BuildContext context) => HomePage());
+            builder: (BuildContext context) => ButtonBarBottom());
 
         },
         theme: ThemeData(
-          primaryColor: Colors.indigoAccent[700],
+          primaryColor: Colors.indigoAccent[700],fontFamily: 'TTFirs',
         ),
       ),
     );

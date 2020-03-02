@@ -22,7 +22,7 @@ class MenuSiderbar extends StatelessWidget {
             leading: Icon(Icons.store,color: Colors.indigoAccent[700],),
             title: Text('Home'),
             onTap: (){
-              Navigator.pushReplacementNamed(context, 'home');
+              Navigator.pushReplacementNamed(context, 'buttonBarBottom');
             } 
           ),
           ListTile(
@@ -37,6 +37,14 @@ class MenuSiderbar extends StatelessWidget {
             title: Text('Setting'),
             onTap: (){
               Navigator.pushReplacementNamed(context, 'settings');
+              
+            } 
+          ),
+          ListTile(
+            leading: Icon(Icons.settings,color: Colors.indigoAccent[700],),
+            title: Text('courses'),
+            onTap: (){
+              Navigator.pushReplacementNamed(context, 'course');
               
             } 
           ),

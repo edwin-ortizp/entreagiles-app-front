@@ -18,15 +18,15 @@ Future<List<CourseModel>> courseForUser() async {
   // print(datos);
     final List<CourseModel> myCourses = new List ();
 
-    if( datos == null ) return [];
+    if( datos == null ) return null;
 
     datos.forEach(( myCourse ){
       final myCoursesTemp = CourseModel.fromJson(myCourse);
       // cursosTemp.id = cursos ['id'];
       myCourses.add(myCoursesTemp);
       
-      // print(decodedData);
     });
+      print(myCourses);
      
     return myCourses;
 
@@ -37,7 +37,7 @@ Future<List<CourseModel>> allCourse() async {
   final  decodedData = json.decode(resp.body);
   // print( url);
     List datos = decodedData ['cursos'];
-  print(datos);
+  // print(datos);
     final List<CourseModel> allCourses = new List ();
 
     if( datos == null ) return [];

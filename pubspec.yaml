@@ -39,6 +39,17 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: TTFirs
+      fonts:
+        - asset: assets/fonts/TTFirs-Medium.ttf
+        - asset: assets/fonts/TTFirs-MediumItalic.ttf
+          style: italic
+    - family: TTFirsBlods
+      fonts:
+        - asset: assets/fonts/TTFirs-ExtraBold.ttf
+        - asset: assets/fonts/TTFirs-ExtraBoldItalic.ttf
+          weight: 700
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
