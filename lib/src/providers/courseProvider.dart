@@ -10,11 +10,11 @@ final _prefs = new PreferencesUser();
 final String _url = 'http://192.168.0.8:3000';
 // http://localhost:3000/courses/1/mycourses?token=
 Future<List<CourseModel>> courseForUser() async {
-  final url = '$_url/courses/5/mycourses?token=${_prefs.token}';
+  final url = '$_url/courses/my-courses/inscribed?token=${_prefs.token}';
   final resp = await http.get(url);
   final  decodedData = json.decode(resp.body);
   // print( url);
-    List datos = decodedData ['mycourses'];
+    List datos = decodedData ['myCourse'];
   // print(datos);
     final List<CourseModel> myCourses = new List ();
 

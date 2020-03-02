@@ -20,7 +20,7 @@ class UsersProvider{
       // 'token' :true
     };
 
-    final resp = await http.post('http://10.0.2.2:3000/login',
+    final resp = await http.post('http://192.168.0.8:3000/login',
       body: (authData)
       );
 
