@@ -28,7 +28,8 @@ class CourseIndex extends StatelessWidget {
               // _categoryRow("Start a new career"),
               // _courseList()
               _categoryRow("Start a new career"),
-              _courseList()
+              // _courseList(),
+              _coursesLoad()
             ],
           ),
         )
@@ -217,38 +218,7 @@ class CourseIndex extends StatelessWidget {
   //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
   //       children: <Widget>[
   //         Padding(
-  //           padding: EdgeInsets.symmetric(horizontal: 20),
-  //           child: Text(
-  //             title,
-  //             style: TextStyle(
-  //                 color: Colors.purpleAccent,
-  //                 fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           height: 10,
-  //         ),
-  //         Container(
-  //             width: width,
-  //             height: 30,
-  //             child: ListView(
-  //               scrollDirection: Axis.horizontal,
-  //               children: <Widget>[
-  //                 SizedBox(width: 20),
-  //                 _chip("Data Scientist", Colors.yellow, height: 5),
-  //                 SizedBox(width: 10),
-  //                 _chip("Data Analyst", Colors.red, height: 5),
-  //                 SizedBox(width: 10),
-  //                 _chip("Data Engineer", Colors.orange, height: 5),
-  //                 SizedBox(width: 10),
-  //                 _chip("Data Scientist", Colors.Blue,s height: 5),
-  //               ],
-  //             )),
-  //         SizedBox(height: 10)
-  //       ],
-  //     ),
-  //   );
-  // }
+  //     
 
    Widget _circularContainer(double height, Color color,
       {Color borderColor = Colors.transparent, double borderWidth = 2}) {
@@ -262,7 +232,7 @@ class CourseIndex extends StatelessWidget {
       ),
     );
   }
-
+//menu de arriba
   Widget _categoryRow(String title) {
     return Container(
       // margin: EdgeInsets.symmetric(horizontal: 20),
@@ -321,7 +291,7 @@ class CourseIndex extends StatelessWidget {
               indent: 20,
             ),
             _courceInfo(CourseList.list[1], _decorationContainerB(),
-                background: Colors.orange),
+                background: Colors.blue),
             Divider(
               thickness: 1,
               endIndent: 20,
@@ -349,7 +319,7 @@ class CourseIndex extends StatelessWidget {
             boxShadow: <BoxShadow>[
               BoxShadow(
                   offset: Offset(0, 5),
-                  blurRadius: 10,
+                  blurRadius: 20,
                   color: Color(0x12000000))
             ]),
         child: ClipRRect(
@@ -585,4 +555,172 @@ class CourseIndex extends StatelessWidget {
   //     )
   //   );
   // }
+
+
+  // Widget _coursesLoad() {
+  //   return FutureBuilder(
+  //     future: coursesProvider.allCourse(),
+  //     builder:
+  //         (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
+  //       if (snapshot.hasData) {
+  //         final allCourses = snapshot.data;
+  //         return SingleChildScrollView(
+  //     scrollDirection: Axis.vertical,
+  //     child: Container(
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.start,
+  //         children: <Widget>[
+           
+  //           Divider(
+  //             thickness: 1,
+  //             endIndent: 20,
+  //             indent: 20,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  //       } else {
+  //         return Center(
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
+
+  Widget _coursesLoad() {
+    return FutureBuilder(
+      future: coursesProvider.allCourse(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
+        if (snapshot.hasData) {
+          final allCourses = snapshot.data;
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+          child: Container(
+            height: 1090.2,
+            child: ListView.builder(
+              // pageSnapping: false,
+              controller: PageController(
+                initialPage: 1,
+                viewportFraction: 0.3,
+              ),
+              itemCount: allCourses.length,
+              itemBuilder: (context, i) => _courses(context, allCourses[i]),
+              //  _courceInfo(CourseList.list[0],
+              //   _decorationContainerA(Colors.redAccent, -110, -85),
+              //   background: Colors.blue),
+            //    Divider(
+            //   thickness: 1,
+            //   endIndent: 20,
+            //   indent: 20,
+            // ),
+            ),
+            ),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+  //  return SingleChildScrollView(
+  //     scrollDirection: Axis.vertical,
+  //     child: Container(
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.start,
+  //         children: <Widget>[
+  //           _courceInfo(CourseList.list[0],
+  //               _decorationContainerA(Colors.redAccent, -110, -85),
+  //               background: Colors.blue),
+  //           Divider(
+  //             thickness: 1,
+  //             endIndent: 20,
+  //             indent: 20,
+  //           ),
+
+    Widget _courses(BuildContext context, CourseModel course,) {
+    return Container(
+        height: 190,
+        width: 392.72727272727275 - 20,
+      // margin: EdgeInsets.only(right: 15.0),
+      child: Row(
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: .7,
+              // child: _card(primaryColor: background, backWidget: decoration),
+            ),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                
+                SizedBox(height: 15),
+                Container(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(course.name,
+                            style: TextStyle(
+                                color: Colors.purple,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                      CircleAvatar(
+                        radius: 3,
+                        backgroundColor:Colors.blue,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text('model.noOfCource',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          )),
+                      SizedBox(width: 10)
+                    ],
+                  ),
+                ),
+                Text('model.university',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    )
+                    ),
+                SizedBox(height: 15),
+                Text("${course.description}",
+                    style: TextStyle(
+                        fontSize: 12, color: Colors.purple)
+                        ),
+                SizedBox(height: 15),
+                Row(
+                  children: <Widget>[
+                    _chip("model.tag1", Colors.orange, height: 5),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    _chip("model.tag2", Colors.blue, height: 5),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    Divider(
+              thickness: 1,
+              endIndent: 20,
+              indent: 20,
+            ),
+                  ],
+                )
+              ],
+            ))
+          ],
+        )
+    );
+              
+  }
 }

@@ -26,18 +26,7 @@ class MenuSiderbar extends StatelessWidget {
             } 
           ),
           ListTile(
-<<<<<<< HEAD
-            leading: Icon(Icons.account_circle,color: Colors.purple[400],),
-            title: Text('Perfil'),
-            onTap: (){
-              Navigator.pushReplacementNamed(context, 'userProfile');
-            } 
-          ),
-          ListTile(
-            leading: Icon(Icons.people,color: Colors.purple[400],),
-=======
             leading: Icon(Icons.people,color: Colors.indigoAccent[700],),
->>>>>>> feature/Sprint_02_login_token
             title: Text('Usuarios'),
             onTap: (){
               Navigator.pushReplacementNamed(context, 'users');
@@ -56,6 +45,14 @@ class MenuSiderbar extends StatelessWidget {
             title: Text('courses'),
             onTap: (){
               Navigator.pushReplacementNamed(context, 'course');
+              
+            } 
+          ),
+          ListTile(
+            leading: Icon(Icons.settings,color: Colors.indigoAccent[700],),
+            title: Text('Profile'),
+            onTap: (){
+              Navigator.pushReplacementNamed(context, 'userProfile');
               
             } 
           ),

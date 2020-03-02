@@ -19,7 +19,7 @@ class CourseModel {
     int enrollTyId;
     int teacherId;
     double price;
-    Text requirements;
+    // Text requirements;
     Text leam;
     int carreraId;
 
@@ -40,7 +40,7 @@ class CourseModel {
         this.enrollTyId,
         this.teacherId,
         this.price,
-        this.requirements,
+        // this.requirements,
         this.leam,
         this.carreraId,
 
@@ -60,7 +60,7 @@ class CourseModel {
         enrollTyId: json["enroll_ty_id"],
         teacherId: json["teacher_id"],
         price: json["price"].toDouble(),
-        requirements: json["requirements"],
+        // requirements: json["requirements"],
         leam: json["leam"],
         carreraId: json["carrera_id"],
     );
@@ -74,7 +74,7 @@ class CourseModel {
         "enroll_ty_id": enrollTyId,
         "teacher_id": teacherId,
         "price": price,
-        "requirements": requirements,
+        // "requirements": requirements,
         "leam": leam,
         "carrera_id": carreraId,
     };
