@@ -1,4 +1,8 @@
 // Llamados Dependencias
+import 'dart:typed_data';
+
+import 'package:QuizLab/src/utils/alerts.dart';
+import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
 // Llamados Paginas
 import 'package:QuizLab/src/validations/provider.dart';
@@ -7,13 +11,15 @@ import 'package:QuizLab/src/providers/userProvider.dart';
 class LoginPage extends StatelessWidget {
 
   final usersProvider = new UsersProvider();
+  final _prefs = new PreferencesUser();
 
   @override
   Widget build(BuildContext context) {
       return Scaffold(
       body: Stack(
         children: <Widget>[
-          _crearFondo( context ),
+          // SizedBox(height: 50,),
+          _logo( context ),
           _loginForm( context ),
         ],
       )
@@ -21,61 +27,46 @@ class LoginPage extends StatelessWidget {
   }
 
 
-  Widget  _crearFondo(BuildContext context){
+  Widget  _logo(BuildContext context){
 
     final size = MediaQuery.of(context).size;
 
     final fondo = Container(
-      height: size.height * 0.4,  
+      height: size.height * 1,  
       width:  double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[
-            Color.fromRGBO(190, 63, 156, 1.0),
-            Color.fromRGBO(150, 70, 200, 1.0),
-            // Color.fromRGBO(r, g, b, opacity)
+        color: Colors.white
+        // gradient: LinearGradient(
+        //   colors: <Color>[
+        //     Color.fromRGBO(190, 63, 156, 1.0),
+        //     Color.fromRGBO(150, 70, 200, 1.0),
+        //     // Color.fromRGBO(r, g, b, opacity)
 
-          ])
+        //   ])
       ),    
     );
-
-    final circulo = Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.0),
-        color: Color.fromRGBO(255, 255, 255, 0.05)
-      ),
-    );
-
+       final register =Container(
+         padding: EdgeInsets.only(top:20, left:size.height*0.25 ),
+          child: Text('¿Nuevo usuario?'),
+      );
 
        final logoEureka = Container(
-         padding:  EdgeInsets.only(top: 80.0),
-          width: 400.0,
-          height: 400.0,
+         padding:  EdgeInsets.symmetric(horizontal: 30.0,vertical: 60.0),
+          height: size.height * 1,
           child: Column(
             children: <Widget>[
-              Image.asset('assets/EurekaLogo.png'),
-              SizedBox(height: 0.0,width: double.infinity,),
-              Text('Bienvenido a Eureka!',style:TextStyle(color: Colors.white,fontSize:20.0 ) ,)
-              // Image(image: NetworkImage('https://www.tom-archer.com/wp-content/uploads/2018/06/milford-sound-night-fine-art-photography-new-zealand.jpg')),
-              // DecoratedBox(decoration: BoxDecoration( image: DecorationImage(image: AssetImage('assets/robot-loading.gif'))))
+              register,
+              SizedBox(height: 80),
+              Image.asset('assets/QuizLab-Logo.png'),
             ],
           ),
         );
-
     return Stack(
       children: <Widget>[
         fondo,
-        Positioned(top: 220.0,left: 10,child: circulo),
-        Positioned(top: -40.0,left: 350,child: circulo),
-        Positioned(top: 90.0,left: 175,child: circulo),
-        Positioned(top: 400.0,left: 175,child: circulo),
-        Positioned(top: 650.0,left: 350,child: circulo),
+        Padding(padding:EdgeInsets.symmetric(vertical: 20.0)
+         ),
         logoEureka
-        // Positioned(top: 90.0,left: 15.0,child: logoEureka),
-        // Positioned(top: 90.0,left: 175,child: ),
-     
       ],
     );
   }
@@ -90,75 +81,64 @@ class LoginPage extends StatelessWidget {
           children: <Widget>[
             SafeArea(
               child: Container(
-                height: 190.0,
+                height: size.height * 0.35,
               )
               ),
             Container(
-              width:size.width *0.85 ,
+              width:size.width *0.95 ,
               margin: EdgeInsets.symmetric(vertical: 50.0),
               padding: EdgeInsets.symmetric(vertical: 50.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                //  color: Color.fromRGBO(0, 0, 0, 0.3),
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.purple[400],
-                    blurRadius: 3.0,
-                    offset: Offset(0.0, 1.0),
-                    spreadRadius: 1.0
-
-                  )
-                ]
               ),
               child: Column(
                 children: <Widget>[
-                  Text('Login',style: TextStyle(fontSize: 20.0),),
+                  // Text('Login',style: TextStyle(fontSize: 20.0),),
+                  Text('Bienvenido a QuizLab',style:TextStyle(color: Colors.black,fontSize:20.0 ) ,),
                   SizedBox( height: 20.0,),
-                  _crearEmail(bloc),
-                   SizedBox( height: 40.0,),
-                  _crearpassword(bloc),
+                  _emailInput(bloc),
+                   SizedBox( height: 30.0,),
+                  _passwordInput(bloc),
                   SizedBox( height: 30.0,),
-                  _crearBoton(bloc)
+                  _button(bloc)
                 ],
               ),
             ),
-            // Positioned(top: 650.0,left: 350,child: circulo),
-            Text('¿Olvido su contraseña?'),
-            SizedBox(height: 100.0,)
           ],
         ),
       );
     }
 
-    Widget _crearEmail(LoginBloc bloc){
+    Widget _emailInput(LoginBloc bloc){
 
       return StreamBuilder(
       stream: bloc.emailStream,
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-
-      return Container(
-        padding:  EdgeInsets.symmetric(horizontal: 10.0),
-        child: TextField(
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            icon: Icon(Icons.alternate_email,color: Colors.purple[400]),
-            hintText:  'ejemplo.certmind.org',
-            labelText: 'Correo electrónico',
-            counterText: snapshot.data,
-            errorText: snapshot.error
+      
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+        return Container(
+          padding:  EdgeInsets.symmetric(horizontal: 10.0),
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              // icon: Icon(Icons.alternate_email,color: Colors.indigoAccent[700]),
+              hintText:  'example.quizlab.org',
+              labelText: 'Correo electrónico',
+              suffixIcon: Icon(Icons.alternate_email,color: Colors.indigoAccent[700],),
+              border:   OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            ),
+          errorText: snapshot.error
           ),
           onChanged: bloc.changeEmail,
         ),
       );
-
-       },
+    },
     );
 
     }
 
 
-    Widget _crearpassword(LoginBloc bloc){
+    Widget _passwordInput(LoginBloc bloc){
 
       return StreamBuilder(
         stream: bloc.passwordStream,
@@ -170,10 +150,13 @@ class LoginPage extends StatelessWidget {
           obscureText: true,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            icon: Icon(Icons.lock_outline,color: Colors.purple[400]),
+            border:   OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+            // icon: Icon(Icons.lock_outline,color: Colors.indigoAccent[700]),
             labelText: 'Contraseña',
-              counterText: snapshot.data,
-              errorText: snapshot.error
+            suffixIcon: Icon(Icons.lock_outline,color: Colors.indigoAccent[700],),
+            errorText: snapshot.error
           ),
            onChanged: bloc.changePassword,
         ),
@@ -183,7 +166,7 @@ class LoginPage extends StatelessWidget {
 
     }
 
-    Widget _crearBoton(LoginBloc bloc){
+    Widget _button(LoginBloc bloc){
       
 
 
@@ -199,7 +182,7 @@ class LoginPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
             ),
             elevation: 0.0,
-            color: Colors.purple[400],
+            color: Colors.indigoAccent[700],
             textColor: Colors.white,
             onPressed: snapshot.hasData ? ()=> _login(bloc, context) : null
           );
@@ -207,16 +190,24 @@ class LoginPage extends StatelessWidget {
         );
     }
 
-     _login(LoginBloc bloc, BuildContext context) {
+     _login(LoginBloc bloc, BuildContext context) async {
 
-    usersProvider.login(bloc.email, bloc.password);
+      Map info = await usersProvider.login(bloc.email, bloc.password);
+
+      if( info['ok']){
+        Navigator.pushReplacementNamed(context, 'buttonBarBottom');
+      }else{
+        alertLogin( context, info['mensaje'] );
+      }
+
+
 
     // print('================');
     // print('Email: ${ bloc.email }');
     // print('Password: ${ bloc.password }');
     // print('================');
 
-    // Navigator.pushReplacementNamed(context, 'home');
+    // (_prefs.token) ? Navigator.pushReplacementNamed(context, 'home'):Navigator.pushReplacementNamed(context, 'login');
 
   }
 

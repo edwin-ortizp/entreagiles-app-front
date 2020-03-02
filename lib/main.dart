@@ -1,23 +1,31 @@
+import 'package:QuizLab/src/utils/preferencesUser.dart';
+import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:QuizLab/src/routes/route.dart';
-import 'package:QuizLab/src/pages/home.dart';
 import 'package:QuizLab/src/validations/provider.dart';
 
 
 
-import 'package:QuizLab/src/routes/route.dart';
+// import 'package:QuizLab/src/routes/route.dart';
  
-void main() => runApp(MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = new PreferencesUser();
+  
+  await prefs.intPrefs();
+  runApp(MyApp());
+} 
  
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    final prefs = new PreferencesUser();
     return Provider(
       child: MaterialApp(
-        title: 'Componetes Flutter',
+        title: 'QuizLab',
+        // theme: ThemeData(fontFamily: 'TTFirs'),
         debugShowCheckedModeBanner: false,
         // localizationsDelegates: [
         //   // ... app-specific localization delegate[s] here
@@ -29,7 +37,10 @@ class MyApp extends StatelessWidget {
         //   const Locale('es'), // English
         // ],
         // home: HomePage()
-        initialRoute: 'userProfile',
+
+        // para declara la pagina   de inicio de la apk
+        // initialRoute: 'buttonBarBottom',
+        initialRoute: prefs.ultimaPagina,
         // Rutas de la aplicacion
         routes:getApplicationRoutes(),
         onGenerateRoute: ( RouteSettings  settings ){
@@ -37,11 +48,11 @@ class MyApp extends StatelessWidget {
           print('ruta llamada: ${settings.name}');
 
           return MaterialPageRoute(
-            builder: (BuildContext context) => HomePage());
+            builder: (BuildContext context) => ButtonBarBottom());
 
         },
         theme: ThemeData(
-          primaryColor: Colors.purple[400],
+          primaryColor: Colors.indigoAccent[700],fontFamily: 'TTFirs',
         ),
       ),
     );
