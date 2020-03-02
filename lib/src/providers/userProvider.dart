@@ -20,7 +20,7 @@ class UsersProvider{
       // 'token' :true
     };
 
-    final resp = await http.post('http://10.0.2.2:3000/login',
+    final resp = await http.post('http://192.168.0.8:3000/login',
       body: (authData)
       );
 
@@ -41,7 +41,7 @@ class UsersProvider{
 // }
 
 
-  final String _url = 'http://10.0.2.2:3000';
+  final String _url = 'http://192.168.0.8:3000';
   // final _token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJLZXdpbiBFcmlrc29uIiwiYXBlbGxpZG8iOiJDYWxkZXJvbiIsImVtYWlsIjoia2V3aW5lcmlrc29uQGhvdG1haWwuY29tIiwiaWQiOiIyMjk2IiwidGlwbyI6ImFkbWluIiwiaWF0IjoxNTgyODM2ODQ3LCJleHAiOjE1ODI4NTEyNDd9.FZt9XFYqGP0bn7PftKH_s3nzB7L2b1TiCiT-fZxIkdk';
 
   Future<List<UsuarioModel>> cargarUsuarios() async{

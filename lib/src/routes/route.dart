@@ -1,4 +1,5 @@
 import 'package:QuizLab/src/pages/course/courseIndex.dart';
+import 'package:QuizLab/src/pages/course/courseShow.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
 import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
 import 'package:flutter/material.dart';
@@ -20,5 +21,6 @@ return <String, WidgetBuilder>{
         'userProfile' : ( BuildContext context ) => UserProfile(),
         'settings' : ( BuildContext context ) => SettingPage(),
         'courses' : ( BuildContext context ) => CourseIndex(),
+        'showCourses' : ( BuildContext context ) => CourseShow(),
       };
 }
