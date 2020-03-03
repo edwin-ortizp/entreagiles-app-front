@@ -74,7 +74,7 @@ class CourseModel {
         "enroll_ty_id": enrollTyId,
         "teacher_id": teacherId,
         "price": price,
-        // "requirements": requirements,
+        // "requirements": requirements, 
         "leam": leam,
         "carrera_id": carreraId,
     };

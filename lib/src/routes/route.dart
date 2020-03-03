@@ -10,6 +10,7 @@ import 'package:QuizLab/src/pages/user/userProfile.dart';
 
 
 
+
 Map<String, WidgetBuilder> getApplicationRoutes(){
 
 return <String, WidgetBuilder>{
