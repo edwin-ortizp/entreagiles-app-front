@@ -295,10 +295,10 @@ class CourseIndex extends StatelessWidget {
           left: left,
           child: CircleAvatar(
             radius: 100,
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.red,
           ),
         ),
-        _smallContainer(Colors.yellow, 40, 20),
+        _smallContainer(Colors.red, 40, 20),
         Positioned(
           top: -30,
           right: -10,
@@ -589,7 +589,7 @@ class CourseIndex extends StatelessWidget {
                           child: Text(course.name,
                               style: TextStyle(
                                   color: Colors.purple,
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold),
                                    overflow: TextOverflow.ellipsis,
                               maxLines: 3,),
@@ -634,7 +634,7 @@ class CourseIndex extends StatelessWidget {
                            height: 24,
                            child: Text("${course.description}",
                               style: TextStyle(
-                                  fontSize: 12, color: Colors.purple),
+                                  fontSize: 12, color: Colors.grey[700]),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 3,
                               
@@ -659,7 +659,7 @@ class CourseIndex extends StatelessWidget {
                   SizedBox(height: 15),
                   Row(
                     children: <Widget>[
-                      _chip("Comprar", Colors.orange, height: 5),
+                      _chip("Comprar", Colors.purple[700], height: 5),
                       SizedBox(
                         width: 10,
                       ),

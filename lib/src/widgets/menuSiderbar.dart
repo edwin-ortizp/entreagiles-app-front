@@ -1,9 +1,11 @@
+import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
 
 class MenuSiderbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final prefs = new PreferencesUser();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -12,7 +14,7 @@ class MenuSiderbar extends StatelessWidget {
             child: Container(),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                image: AssetImage('assets/imagenMenu.jpg'),
+                  image: (prefs.colorSecundario) ? AssetImage('assets/imagenMenu1.jpg'): AssetImage('assets/banner.png'),
                 fit: BoxFit.cover,
                 ),
               ),
