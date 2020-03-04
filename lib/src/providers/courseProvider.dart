@@ -16,7 +16,7 @@ Future<List<CourseModel>> courseForUser() async {
   final url = '$_url/courses/my-courses/inscribed?token=${_prefs.token}';
   final resp = await http.get(url);
   final  decodedData = json.decode(resp.body);
-  print( decodedData);
+  // print( decodedData);
     List datos = decodedData ['myCourse'];
   // print(datos);
     final List<CourseModel> myCourses = new List ();
@@ -29,7 +29,7 @@ Future<List<CourseModel>> courseForUser() async {
       myCourses.add(myCoursesTemp);
       
     });
-      print(myCourses);
+      // print(myCourses);
      
     return myCourses;
 
@@ -50,8 +50,8 @@ Future<List<CourseModel>> allCourse() async {
       // cursosTemp.id = cursos ['id'];
       allCourses.add(myCoursesTemp);
       
-      // print(decodedData);
     });
+      // print(allCourses);
      
     return allCourses;
 

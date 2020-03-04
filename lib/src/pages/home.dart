@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
           centerTitle: true,
           title: Text('Welcome ${prefs.nombre}',
               style: (prefs.colorSecundario)
-                  ? TextStyle(color: Colors.black)
+                  ? TextStyle(color: Colors.white)
                   : TextStyle(color: Colors.black)),
           // backgroundColor: Colors.purple[400],
           iconTheme: (prefs.colorSecundario)
@@ -246,8 +246,10 @@ class HomePage extends StatelessWidget {
             height: 190.2,
             child: PageView.builder(
               pageSnapping: false,
+              // reverse:true,
+              // physics:ScrollPhysics(),
               controller: PageController(
-                initialPage: 1,
+                initialPage: 3,
                 viewportFraction: 0.3,
               ),
               itemCount: allCourses.length,
@@ -344,7 +346,7 @@ class HomePage extends StatelessWidget {
             title,
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
-          _carouselButton("Ver todos", primary, context, route)
+             _carouselButton("Ver todos", primary, context, route)
         ],
       ),
     );
