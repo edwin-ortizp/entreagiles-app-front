@@ -60,9 +60,17 @@ class MenuSiderbar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.cancel,color: Colors.indigoAccent[700],),
-            title: Text('Cerrar secion'),
+            title: Text('Cerrar sesion'),
             onTap: (){
               Navigator.pushReplacementNamed(context, 'login');
+              
+            } 
+          ),
+          ListTile(
+            leading: Icon(Icons.portrait,color: Colors.indigoAccent[700],),
+            title: Text('Show curso'),
+            onTap: (){
+              Navigator.pushReplacementNamed(context, 'showCourses');
               
             } 
           )

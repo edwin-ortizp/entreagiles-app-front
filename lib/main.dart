@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
         // home: HomePage()
 
         // para declara la pagina   de inicio de la apk
-        // initialRoute: 'buttonBarBottom',
-        initialRoute: prefs.ultimaPagina,
+        initialRoute: 'buttonBarBottom',
+        // initialRoute: prefs.ultimaPagina,
         // Rutas de la aplicacion
         routes:getApplicationRoutes(),
         onGenerateRoute: ( RouteSettings  settings ){
