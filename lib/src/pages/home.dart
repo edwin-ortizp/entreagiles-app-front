@@ -268,42 +268,45 @@ class HomePage extends StatelessWidget {
   Widget _courses(BuildContext context, CourseModel course) {
     return Container(
       margin: EdgeInsets.only(right: 15.0),
-      child: Stack(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/cat-loading.gif'),
-              // , image: NetworkImage('https://novapixel.org/eureka/imgs/courses/$course.name.jpg'),
-              image: NetworkImage(
-                  'https://picsum.photos/200/300?random=${course.id}'),
-              fit: BoxFit.cover,
-              // width: 100.0,
+      child: GestureDetector(
+        onTap:  () => Navigator.pushNamed(context, 'courseShow',),
+        child: Stack(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/cat-loading.gif'),
+                // , image: NetworkImage('https://novapixel.org/eureka/imgs/courses/$course.name.jpg'),
+                image: NetworkImage(
+                    'https://picsum.photos/200/300?random=${course.id}'),
+                fit: BoxFit.cover,
+                // width: 100.0,
+                height: 120.0,
+                width: 100,
+              ),
+            ),
+            SizedBox( height: 5.0,),
+            Container(
               height: 120.0,
               width: 100,
-            ),
-          ),
-          SizedBox( height: 5.0,),
-          Container(
-            height: 120.0,
-            width: 100,
-             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-                color:Color.fromRGBO(37,37,233,0.29),
+               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                  color:Color.fromRGBO(37,37,233,0.29),
+                ),
+              child: Center(
+                // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
+                
+                child: Text(
+                  course.name,
+                  // TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  // style: Theme.of(context).textTheme.caption,
+                  style: TextStyle(color: Colors.white, fontSize: 11),textAlign: TextAlign.center,
+                ),
               ),
-            child: Center(
-              // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
-              
-              child: Text(
-                course.name,
-                // TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                // style: Theme.of(context).textTheme.caption,
-                style: TextStyle(color: Colors.white, fontSize: 11),textAlign: TextAlign.center,
-              ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

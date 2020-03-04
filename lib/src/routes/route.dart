@@ -1,4 +1,5 @@
 import 'package:QuizLab/src/pages/course/courseIndex.dart';
+import 'package:QuizLab/src/pages/course/courseShow.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
 import 'package:QuizLab/src/pages/user/users_create.dart';
 import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
@@ -22,5 +23,6 @@ return <String, WidgetBuilder>{
         'userProfile' : ( BuildContext context ) => UserProfile(),
         'settings' : ( BuildContext context ) => SettingPage(),
         'courses' : ( BuildContext context ) => CourseIndex(),
+        'courseShow' : ( BuildContext context ) => CourseShow(),
       };
 }
