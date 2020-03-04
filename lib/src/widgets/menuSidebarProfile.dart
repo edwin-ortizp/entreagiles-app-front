@@ -48,8 +48,8 @@ class MenuSiderbarProfile extends StatelessWidget {
               onTap: (){
                 Navigator.pushReplacementNamed(context, 'users');
               } 
-            )
-
+            ),
+            
           ],
         ) ,
       ),
