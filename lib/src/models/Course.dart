@@ -121,6 +121,7 @@ class Section {
     String description;
     int courseId;
     int order;
+    List<Quiz> quizzes;
 
     Section({
         this.id,
@@ -128,6 +129,7 @@ class Section {
         this.description,
         this.courseId,
         this.order,
+        this.quizzes,
     });
 
     factory Section.fromJson(Map<String, dynamic> json) => Section(
@@ -136,6 +138,7 @@ class Section {
         description: json["description"],
         courseId: json["course_id"],
         order: json["order"],
+        quizzes: List<Quiz>.from(json["quizzes"].map((x) => Quiz.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -144,8 +147,49 @@ class Section {
         "description": description,
         "course_id": courseId,
         "order": order,
+        "quizzes": ["quizzes"] != null ? new List<dynamic>.from(quizzes.map((x) => x.toJson())) : List<dynamic>(),
     };
 }
+class Quiz {
+    int id;
+    String title;
+    int score;
+    int creator;
+    int bankId;
+    int limitTries;
+    int duration;
+
+    Quiz({
+        this.id,
+        this.title,
+        this.score,
+        this.creator,
+        this.bankId,
+        this.limitTries,
+        this.duration,
+    });
+
+    factory Quiz.fromJson(Map<String, dynamic> json) => Quiz(
+        id: json["id"],
+        title: json["title"],
+        score: json["score"],
+        creator: json["creator"],
+        bankId: json["bank_id"],
+        limitTries: json["limit_tries"],
+        duration: json["duration"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "score": score,
+        "creator": creator,
+        "bank_id": bankId,
+        "limit_tries": limitTries,
+        "duration": duration,
+    };
+}
+
 class CourseList {
   static List<CourseModel> list = [
     CourseModel(

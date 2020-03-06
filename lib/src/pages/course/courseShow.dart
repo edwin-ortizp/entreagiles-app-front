@@ -26,6 +26,8 @@ class CourseShow extends StatelessWidget {
                 SizedBox(height: 10.0,),
                 // _title(context,course),
                 _sectionLoad( context),
+                //  _quizzesLoad(section),
+                // _cardexpansiontiletipo2(context),
               ]
             ),
           )
@@ -100,9 +102,28 @@ class CourseShow extends StatelessWidget {
 
   // }
 
+  Widget _sectionLoad(BuildContext context ) {
+     var height = MediaQuery.of(context).size.height;
+  final sections = course.sections;
+    return SizedBox(
+      height: height * 1,
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        // pageSnapping: false,
+        // controller: PageController(
+        //   viewportFraction: 0.3,
+        //   initialPage: 1
+        // ),
+        itemCount: sections.length,
+        itemBuilder: (context, i) => _accordion(sections[i])
+      ),
+    );
+
+  }
 
 
- Widget _accordion(Section section){
+
+ Widget _accordion2(Section section){
    
   //  final sections = course.sections;
   //  for(var i = 0; i < sections.length; i++){
@@ -126,37 +147,10 @@ class CourseShow extends StatelessWidget {
           Icons.video_call,color: Colors.indigoAccent[700]),
         trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),      
         title: Text("${section.name}"),
-        children: <Widget>[
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
-              Text("Prueba de curso numero1"),
+        children: (section.quizzes.isEmpty ) ? <Widget>[
+              Text(""),
+        ]:<Widget>[
+              Text("${section.quizzes[1].title}"),
         ],
 
               ),
@@ -168,23 +162,103 @@ class CourseShow extends StatelessWidget {
     }
 
 
-  Widget _sectionLoad(BuildContext context ) {
-     var height = MediaQuery.of(context).size.height;
-  final sections = course.sections;
-    return SizedBox(
-      height: height * 1,
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        // pageSnapping: false,
-        // controller: PageController(
-        //   viewportFraction: 0.3,
-        //   initialPage: 1
-        // ),
-        itemCount: sections.length,
-        itemBuilder: (context, i) => _accordion(sections[i])
+  Widget _accordion(Section section ){
+    final quizzes = section.quizzes;
+  return Center(
+   
+    child: Card(
+      
+     
+      margin: EdgeInsets.all(20.0),
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ExpansionTile(
+        
+        trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),   
+
+
+        title: Text("Sección ${section.order+1}"),
+        subtitle: Text("${section.name}"),
+        
+        children: <Widget>[
+          //  ListView.builder(
+          //          itemCount: quizzes.length,
+          //         itemBuilder: (context, i) => _quizzes(quizzes[i])
+          //     ),
+          
+          // const ListTile(
+          // leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
+          // //  Icon(Icons.album, size: 50),
+          // title: Text('Video de introducción'),
+          // subtitle: Text('subtitulo'),
+          // trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
+          // ),
+          // const ListTile(
+          // leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
+          // //  Icon(Icons.album, size: 50),
+          // title: Text('Video de introducción'),
+          // subtitle: Text('subtitulo'),
+          // trailing: Icon(Icons.check_box, color: Colors.greenAccent), 
+          // ),
+          // const ListTile(
+          // leading: Icon(Icons.description, color: Colors.green),
+          // //  Icon(Icons.album, size: 50),
+          // title: Text('Esquema de certificacion aaaaaaaaaaaaaaa'),
+          // subtitle: Text('subtitulo'),
+          // trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
+          // ),
+          // const ListTile(
+          // leading: Icon(Icons.description, color: Colors.green),
+          // //  Icon(Icons.album, size: 50),
+          // title: Text('Esquema de certificacion aaaaaaaaaaaaaaa'),
+          // subtitle: Text('subtitulo'),
+          // trailing: Icon(Icons.check_box, color: Colors.greenAccent),  
+          // ),
+          
+              // Text("Prueba de curso numero1")
+
+        //  children: _quizzesLoad(section),
+        ],
+
+              )
+            ],
+          ),
+    
       ),
     );
 
+
   }
 
+
+
+  // Widget _quizzesLoad(Section section){
+
+  //  final quizzes = section.quizzes;
+  //   final  quiz=   <Widget>[
+  //             ListView.builder(
+  //                  itemCount: quizzes.length,
+  //                 itemBuilder: (context, i) => _quizzes(quizzes[i])
+  //             ),
+  //                ];
+  //   return quiz;
+
+  // }
+
+  Widget _quizzes(Quiz quiz){
+
+
+return ListTile(
+          leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
+          //  Icon(Icons.album, size: 50),
+          title: Text('${quiz.title}'),
+          subtitle: Text('subtitulo'),
+          trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
+          );
+
+  }
 }
