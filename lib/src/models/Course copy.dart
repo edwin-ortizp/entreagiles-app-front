@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
 CourseModel courseModelFromJson(String str) => CourseModel.fromJson(json.decode(str));
 
 String courseModelToJson(CourseModel data) => json.encode(data.toJson());
@@ -14,23 +16,20 @@ class CourseModel {
     String description;
     String color;
     String imagePath;
-    DateTime createdAt;
-    DateTime updatedAt;
-    int enrollTypeId;
-    dynamic teacherId;
-    int price;
-    dynamic requirements;
-    dynamic learn;
-    dynamic top;
-    dynamic carreraId;
-    List<Section> sections;
-    List<MySection> mySections;
-        //wliminar
+    int enrollTyId;
+    int teacherId;
+    double price;
+    // Text requirements;
+    Text leam;
+    int carreraId;
+
+    //wliminar
   String university;
   String noOfCource;
   String tag1;
   String tag2;
-    
+
+
 
     CourseModel({
         this.id,
@@ -38,18 +37,14 @@ class CourseModel {
         this.description,
         this.color,
         this.imagePath,
-        this.createdAt,
-        this.updatedAt,
-        this.enrollTypeId,
+        this.enrollTyId,
         this.teacherId,
         this.price,
-        this.requirements,
-        this.learn,
-        this.top,
+        // this.requirements,
+        this.leam,
         this.carreraId,
-        this.sections,
-        this.mySections,
-         //eliminar
+
+        //eliminar
         this.noOfCource,
         this.university,
         this.tag1,
@@ -62,17 +57,12 @@ class CourseModel {
         description: json["description"],
         color: json["color"],
         imagePath: json["image_path"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        enrollTypeId: json["enroll_type_id"],
+        enrollTyId: json["enroll_ty_id"],
         teacherId: json["teacher_id"],
-        price: json["price"],
-        requirements: json["requirements"],
-        learn: json["learn"],
-        top: json["top"],
+        price: json["price"].toDouble(),
+        // requirements: json["requirements"],
+        leam: json["leam"],
         carreraId: json["carrera_id"],
-        sections: json["sections"] != null ? new List<Section>.from(json["sections"].map((x) => Section.fromJson(x))) : List<Section>(),
-        mySections: json["mySections"] != null ? new List<MySection>.from(json["mySections"].map((x) => MySection.fromJson(x))):List<MySection>(),
     );
 
     Map<String, dynamic> toJson() => {
@@ -81,69 +71,12 @@ class CourseModel {
         "description": description,
         "color": color,
         "image_path": imagePath,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "enroll_type_id": enrollTypeId,
+        "enroll_ty_id": enrollTyId,
         "teacher_id": teacherId,
         "price": price,
-        "requirements": requirements,
-        "learn": learn,
-        "top": top,
+        // "requirements": requirements,
+        "leam": leam,
         "carrera_id": carreraId,
-        "sections": List<dynamic>.from(sections.map((x) => x.toJson())),
-        "mySections": List<dynamic>.from(mySections.map((x) => x.toJson())),
-    };
-}
-
-class MySection {
-    int idCourse;
-    int countSection;
-
-    MySection({
-        this.idCourse,
-        this.countSection,
-    });
-
-    factory MySection.fromJson(Map<String, dynamic> json) => MySection(
-        idCourse: json["idCourse"],
-        countSection: json["countSection"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "idCourse": idCourse,
-        "countSection": countSection,
-    };
-}
-
-class Section {
-    int id;
-    String name;
-    String description;
-    int courseId;
-    int order;
-
-    Section({
-        this.id,
-        this.name,
-        this.description,
-        this.courseId,
-        this.order,
-    });
-
-    factory Section.fromJson(Map<String, dynamic> json) => Section(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        courseId: json["course_id"],
-        order: json["order"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "course_id": courseId,
-        "order": order,
     };
 }
 class CourseList {
@@ -174,3 +107,4 @@ class CourseList {
         tag2: "Apache Spark"),
   ];
 }
+

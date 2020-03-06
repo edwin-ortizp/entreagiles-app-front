@@ -473,7 +473,7 @@ class CourseIndex extends StatelessWidget {
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
           child: Container(
-            height: height *1,
+            height: height *1 -100,
             child: ListView.builder(
               
               itemCount: allCourses.length,
@@ -530,7 +530,7 @@ class CourseIndex extends StatelessWidget {
                 aspectRatio: .7,
                 child:  Container(
          height: 190,
-          width: 392.72727272727275 * .34,
+          width: width * .34,
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         // margin: EdgeInsets.only(right: 15.0),
         child: Stack(

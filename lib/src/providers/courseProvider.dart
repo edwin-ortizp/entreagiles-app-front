@@ -29,7 +29,7 @@ Future<List<CourseModel>> courseForUser() async {
       myCourses.add(myCoursesTemp);
       
     });
-      // print(myCourses);
+      print(myCourses);
      
     return myCourses;
 

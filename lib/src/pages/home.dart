@@ -269,7 +269,7 @@ class HomePage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 15.0),
       child: GestureDetector(
-        onTap:  () => Navigator.pushNamed(context, 'courseShow',),
+        onTap:  () => Navigator.pushNamed(context, 'courseShow',arguments: course),
         child: Stack(
           children: <Widget>[
             ClipRRect(
