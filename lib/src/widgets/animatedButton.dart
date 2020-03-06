@@ -38,7 +38,7 @@ class _AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvid
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('Tap on the Below Button',style: TextStyle(color: Colors.grey[400],fontSize: 20.0),),
             SizedBox(
