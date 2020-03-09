@@ -1,4 +1,6 @@
 // import 'dart:js';
+// import 'dart:js';
+
 import 'package:QuizLab/src/models/Course.dart';
 import 'package:QuizLab/src/providers/courseProvider.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
@@ -25,8 +27,9 @@ class CourseShow extends StatelessWidget {
               [
                 SizedBox(height: 10.0,),
                 // _title(context,course),
-                _sectionLoad( context),
-                //  _quizzesLoad(section),
+                // _sectionLoad( context),
+                 _sectionsLoad(context)
+                
                 // _cardexpansiontiletipo2(context),
               ]
             ),
@@ -168,6 +171,7 @@ class CourseShow extends StatelessWidget {
    
     child: Card(
       
+      
      
       margin: EdgeInsets.all(20.0),
       elevation: 8,
@@ -185,39 +189,40 @@ class CourseShow extends StatelessWidget {
         subtitle: Text("${section.name}"),
         
         children: <Widget>[
-          //  ListView.builder(
+          //  PageView.builder(
           //          itemCount: quizzes.length,
           //         itemBuilder: (context, i) => _quizzes(quizzes[i])
           //     ),
           
-          // const ListTile(
-          // leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
-          // //  Icon(Icons.album, size: 50),
-          // title: Text('Video de introducción'),
-          // subtitle: Text('subtitulo'),
-          // trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
-          // ),
-          // const ListTile(
-          // leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
-          // //  Icon(Icons.album, size: 50),
-          // title: Text('Video de introducción'),
-          // subtitle: Text('subtitulo'),
-          // trailing: Icon(Icons.check_box, color: Colors.greenAccent), 
-          // ),
-          // const ListTile(
-          // leading: Icon(Icons.description, color: Colors.green),
-          // //  Icon(Icons.album, size: 50),
-          // title: Text('Esquema de certificacion aaaaaaaaaaaaaaa'),
-          // subtitle: Text('subtitulo'),
-          // trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
-          // ),
-          // const ListTile(
-          // leading: Icon(Icons.description, color: Colors.green),
-          // //  Icon(Icons.album, size: 50),
-          // title: Text('Esquema de certificacion aaaaaaaaaaaaaaa'),
-          // subtitle: Text('subtitulo'),
-          // trailing: Icon(Icons.check_box, color: Colors.greenAccent),  
-          // ),
+          // for ( Quiz quiz in section.quizzes)
+          const ListTile(
+          leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
+          //  Icon(Icons.album, size: 50),
+          title: Text('Video de introducción'),
+          subtitle: Text('subtitulo'),
+          trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
+          ),
+          const ListTile(
+          leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
+          //  Icon(Icons.album, size: 50),
+          title: Text('Video de introducción'),
+          subtitle: Text('subtitulo'),
+          trailing: Icon(Icons.check_box, color: Colors.greenAccent), 
+          ),
+          const ListTile(
+          leading: Icon(Icons.description, color: Colors.green),
+          //  Icon(Icons.album, size: 50),
+          title: Text('Esquema de certificacion aaaaaaaaaaaaaaa'),
+          subtitle: Text('subtitulo'),
+          trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
+          ),
+          const ListTile(
+          leading: Icon(Icons.description, color: Colors.green),
+          //  Icon(Icons.album, size: 50),
+          title: Text('Esquema de certificacion aaaaaaaaaaaaaaa'),
+          subtitle: Text('subtitulo'),
+          trailing: Icon(Icons.check_box, color: Colors.greenAccent),  
+          ),
           
               // Text("Prueba de curso numero1")
 
@@ -227,6 +232,7 @@ class CourseShow extends StatelessWidget {
               )
             ],
           ),
+          
     
       ),
     );
@@ -236,29 +242,73 @@ class CourseShow extends StatelessWidget {
 
 
 
-  // Widget _quizzesLoad(Section section){
+  Widget _sectionsLoad(BuildContext context){
 
-  //  final quizzes = section.quizzes;
-  //   final  quiz=   <Widget>[
-  //             ListView.builder(
-  //                  itemCount: quizzes.length,
-  //                 itemBuilder: (context, i) => _quizzes(quizzes[i])
-  //             ),
-  //                ];
-  //   return quiz;
+   var height = MediaQuery.of(context).size.height;
+  final sections = course.sections;
+  // physics: NeverScrollableScrollPhysics(),
+    return SizedBox(
+      height: height * 1,
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: sections.length,
+        itemBuilder: (context, i) {
+          return Center(
+            child: Card(
+       margin: EdgeInsets.all(20.0),
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),),
+              child: Column(
+                children: <Widget>[
+                  
+                  new ExpansionTile(
+                    trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),   
+                    title: new Text('Sección ${sections[i].order+1}'),
+                     subtitle: Text("${sections[i].name}"),
+                    children: <Widget>[
+                      new Column(
+                        children: _quizContent(sections[i]),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      );
 
-  // }
+  }
 
-  Widget _quizzes(Quiz quiz){
+//   Widget _quizzes(Quiz quiz){
 
 
-return ListTile(
-          leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
-          //  Icon(Icons.album, size: 50),
-          title: Text('${quiz.title}'),
+// return ListTile(
+//           leading: Icon(Icons.video_call,color: Colors.indigoAccent,),
+//           //  Icon(Icons.album, size: 50),
+//           title: Text('${quiz.title}'),
+//           subtitle: Text('subtitulo'),
+//           trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
+//           );
+
+//   }
+
+
+  _quizContent(Section section) {
+    List<Widget> quizContent = [];
+
+    for (Quiz quiz in section.quizzes)
+      quizContent.add(
+        new ListTile(
+            title: new Text("${ quiz.title}"),
+             leading: Icon(Icons.description, color: Colors.green),
           subtitle: Text('subtitulo'),
           trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
-          );
+        ),
+      );
 
+    return quizContent;
   }
 }
