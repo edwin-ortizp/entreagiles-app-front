@@ -4,11 +4,11 @@
 
 import 'dart:convert';
 
-UsuarioModel usuarioModelFromJson(String str) => UsuarioModel.fromJson(json.decode(str));
+UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
-String usuarioModelToJson(UsuarioModel data) => json.encode(data.toJson());
+String userModelToJson(UserModel data) => json.encode(data.toJson());
 
-class UsuarioModel {
+class UserModel {
     String id;
     String username;
     String firstName;
@@ -28,7 +28,7 @@ class UsuarioModel {
     DateTime enrollDateTo;
     int points;
 
-    UsuarioModel({
+    UserModel({
         this.id,
         this.username ,
         this.firstName = "",
@@ -49,7 +49,7 @@ class UsuarioModel {
         this.points = 0,
     });
 
-    factory UsuarioModel.fromJson(Map<String, dynamic> json) => UsuarioModel(
+    factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
         username: json["username"],
         firstName: json["first_name"],

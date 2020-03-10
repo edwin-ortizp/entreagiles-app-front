@@ -25,7 +25,7 @@ class UsersIndex extends StatelessWidget {
 
     return FutureBuilder(
       future: usersProvider.cargarUsuarios(),
-      builder: (BuildContext context, AsyncSnapshot<List<UsuarioModel>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<UserModel>> snapshot) {
 
         if(snapshot.hasData){
 
@@ -48,7 +48,7 @@ class UsersIndex extends StatelessWidget {
 
 
 
-  Widget _crearItem(BuildContext context, UsuarioModel user){
+  Widget _crearItem(BuildContext context, UserModel user){
 
     return Dismissible(
         key: UniqueKey(),

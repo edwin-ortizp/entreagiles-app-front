@@ -50,18 +50,17 @@ final String _url = 'http://10.0.2.2:3000';
   
   // final _token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJLZXdpbiBFcmlrc29uIiwiYXBlbGxpZG8iOiJDYWxkZXJvbiIsImVtYWlsIjoia2V3aW5lcmlrc29uQGhvdG1haWwuY29tIiwiaWQiOiIyMjk2IiwidGlwbyI6ImFkbWluIiwiaWF0IjoxNTgyODM2ODQ3LCJleHAiOjE1ODI4NTEyNDd9.FZt9XFYqGP0bn7PftKH_s3nzB7L2b1TiCiT-fZxIkdk';
 
-  Future<List<UsuarioModel>> cargarUsuarios() async{
+  Future<List<UserModel>> cargarUsuarios() async{
     final url = '$_url/users?token=${_prefs.token}';
     final resp = await http.get(url);
 
     final  decodedData = json.decode(resp.body);
     List datos = decodedData ['usuarios'];
-    final List<UsuarioModel> usuarios = new List ();
-
+    final List<UserModel> usuarios = new List ();
     if( datos == null ) return [];
 
     datos.forEach(( user ){
-      final usuariosTemp = UsuarioModel.fromJson(user);
+      final usuariosTemp = UserModel.fromJson(user);
       // cursosTemp.id = cursos ['id'];
       usuarios.add(usuariosTemp);
       
@@ -71,10 +70,10 @@ final String _url = 'http://10.0.2.2:3000';
   }
 
 
-  Future<bool> crearUsuario( UsuarioModel user) async{
+  Future<bool> crearUsuario( UserModel user) async{
 
   final url = '$_url/users?';    
-  final resp = await http.post(url, body:usuarioModelToJson(user));
+  final resp = await http.post(url, body:userModelToJson(user));
   final decodeData = json.decode(resp.body);
   print(decodeData);
   return true;
@@ -88,7 +87,7 @@ final String _url = 'http://10.0.2.2:3000';
   // return true;
   // }
 
-   Future<bool> editarUsuario( UsuarioModel usuario ) async {
+   Future<bool> editarUsuario( UserModel usuario ) async {
     
     final url = '$_url/users/{$usuario.id}?token=${_prefs.token}';
 

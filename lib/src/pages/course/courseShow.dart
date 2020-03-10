@@ -73,11 +73,14 @@ class CourseShow extends StatelessWidget {
     return Container(
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-              child: Image(
-                image: NetworkImage('https://picsum.photos/200/300?random=${course.id}'),
-                height: 150.0,
+          Hero(
+             tag: course.id,
+                      child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+                child: Image(
+                  image: NetworkImage('https://picsum.photos/200/300?random=${course.id}'),
+                  height: 150.0,
+              ),
             ),
           ),
           SizedBox(width: 20.0,),
@@ -250,7 +253,7 @@ class CourseShow extends StatelessWidget {
     return SizedBox(
       height: height * 1,
       child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
+        // physics: const NeverScrollableScrollPhysics(),
         itemCount: sections.length,
         itemBuilder: (context, i) {
           return Center(

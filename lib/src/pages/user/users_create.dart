@@ -16,12 +16,12 @@ class _UserCreateState extends State<UserCreate> {
 
   final formKey = GlobalKey<FormState>();
   final usersProvider = new UsersProvider();
-  UsuarioModel user = new UsuarioModel();
+  UserModel user = new UserModel();
 
 
   @override
   Widget build(BuildContext context) {
-    final UsuarioModel userData =  ModalRoute.of(context).settings.arguments;
+    final UserModel userData =  ModalRoute.of(context).settings.arguments;
   if (userData !=null){
     user = userData;
   }

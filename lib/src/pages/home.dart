@@ -245,7 +245,7 @@ class HomePage extends StatelessWidget {
           return Container(
             height: 190.2,
             child: PageView.builder(
-              pageSnapping: false,
+              pageSnapping: true,
               // reverse:true,
               // physics:ScrollPhysics(),
               controller: PageController(
