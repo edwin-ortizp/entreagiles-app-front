@@ -185,7 +185,7 @@ class CourseShow extends StatelessWidget {
         trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),   
 
 
-        title: Text("Sección ${section.order+1}"),
+        title: Text("Sección ${section.order}"),
         subtitle: Text("${section.name}"),
         
         children: <Widget>[
@@ -264,7 +264,7 @@ class CourseShow extends StatelessWidget {
                   
                   new ExpansionTile(
                     trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),   
-                    title: new Text('Sección ${sections[i].order+1}'),
+                    title: new Text('Sección ${sections[i].order}'),
                      subtitle: Text("${sections[i].name}"),
                     children: <Widget>[
                       new Column(

@@ -138,7 +138,7 @@ class Section {
         description: json["description"],
         courseId: json["course_id"],
         order: json["order"],
-        quizzes: List<Quiz>.from(json["quizzes"].map((x) => Quiz.fromJson(x))),
+        quizzes:["quizzes"] != null ? new List<Quiz>.from(json["quizzes"].map((x) => Quiz.fromJson(x))):List<Quiz>(),
     );
 
     Map<String, dynamic> toJson() => {
@@ -147,7 +147,7 @@ class Section {
         "description": description,
         "course_id": courseId,
         "order": order,
-        "quizzes": ["quizzes"] != null ? new List<dynamic>.from(quizzes.map((x) => x.toJson())) : List<dynamic>(),
+        "quizzes": List<dynamic>.from(quizzes.map((x) => x.toJson())) ,
     };
 }
 class Quiz {
