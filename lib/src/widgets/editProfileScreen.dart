@@ -1,42 +1,75 @@
+// import 'dart:js';
+
+import 'package:QuizLab/src/utils/preferencesUser.dart';
+import 'package:QuizLab/src/widgets/menuSidebarProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   EditProfileScreen({
     Key key,
   }) : super(key: key);
 
   @override
+  _EditProfileScreenState createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  final prefs = new PreferencesUser();
+  bool _colorSecundario = true;
+  @override
+   void initState() {
+    super.initState();
+    // prefs.ultimaPagina = SettingPage.routeName;
+    _colorSecundario = prefs.colorSecundario;
+  }
   Widget build(BuildContext context) {
+  Color color = (prefs.colorSecundario)? Colors.purple[400] : Colors.indigoAccent[400];
+  theme: ThemeData (primarySwatch:(prefs.colorSecundario)?  Colors.purple :Colors.red ) ;
     return Scaffold(
+        appBar: AppBar(
+          title: Text('Perfil'),
+          leading: IconButton(
+            tooltip: 'Previous choice',
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+             Navigator.of(context).popAndPushNamed('settings');
+            },
+          ),
+          backgroundColor: (prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
+          ),
       resizeToAvoidBottomPadding: false,
-      body: Column(
-        children: <Widget>[
-          topBar(),
-          HomePageContent(),
-        ],
+      endDrawer: MenuSiderbarProfile(),
+      //  SingleChildScrollView(
+      //       child: Container(
+      body: SingleChildScrollView(
+              child: Container(
+          child: Column(
+            children: <Widget>[
+              topBar(context,color),
+              _homePageContent(color),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  SizedBox topBar() {
+  SizedBox topBar(BuildContext context,color) {
     return SizedBox(
       height: 150,
       child: Stack(
         overflow: Overflow.visible,
         children: <Widget>[
-          PurpleBar(),
-          CircleAvatar(),
+          _purpleBar(),
+          _circleAvatar(context,color),
         ],
       ),
     );
   }
-}
 
-class PurpleBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+Widget _purpleBar() {
     return ControlledAnimation(
       duration: Duration(milliseconds: 600),
       tween: Tween<double>(begin: 0, end: 150),
@@ -45,12 +78,14 @@ class PurpleBar extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
           height: animation,
           width: double.infinity,
-          color: Colors.purple[200],
+          color: (prefs.colorSecundario) ? Colors.purple[200]:Colors.white70 ,
           child: ListView( children: <Widget>[
             ListTile(
               title: new Center (
                 child: Text('Alexander Ortiz',
-                  style: TextStyle(color: Colors.white, fontSize: 30.0))),
+                  style: (prefs.colorSecundario) ? TextStyle(color: Colors.white, fontSize: 30.0) :TextStyle(color: Colors.grey[400], fontSize: 30.0) 
+                  ),
+                ),
                 subtitle: new Center (child: Text('alexander@gesthor.org',
                   style: TextStyle(fontSize: 15.0))),
               ),
@@ -60,11 +95,8 @@ class PurpleBar extends StatelessWidget {
       }
     );
   }
-}
 
-class CircleAvatar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+Widget _circleAvatar(BuildContext context,color){
     final size = MediaQuery.of(context).size;
     return ControlledAnimation(
       duration: Duration(milliseconds: 600),
@@ -78,67 +110,65 @@ class CircleAvatar extends StatelessWidget {
           child: Transform.scale(
             scale: scaleValue,
             alignment: Alignment.center,
-            child: purpleCircle(),
+            child: _purpleCircle(color),
           ),
         );
       },
     );
   }
 
-  Widget purpleCircle() {
+  Widget _purpleCircle(color) {
     return Container(
       height: 100,
       width: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        color: Colors.purple[400],
+        color: color,
         image: DecorationImage(
           image: AssetImage('assets/images/finn.jpg'),
           fit: BoxFit.cover,
         ),
         border: Border.all(
           width: 4,
-          color: Colors.purple[400]
+          color: color
         ),
       ),
     );
   }
-}
 
-class HomePageContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+Widget _homePageContent(color) {
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
         children: <Widget>[
           largeWhitespace(),
-          contentPlaceHolder(),
+          contentPlaceHolder(color),
         ],
       ),
     );
   }
 
-  Widget contentPlaceHolder() {
+  Widget contentPlaceHolder(color) {
     return ControlledAnimation(
       duration: Duration(milliseconds: 600),
       delay: Duration(milliseconds: (300 * 3).round()),
       tween: Tween<double>(begin: 0, end: 1),
       builder: (context, opacityValue) {
         return Opacity(
-          opacity: opacityValue,
-          child: Column(children: <Widget>[
-          _nameField('Nombres'),
-          smallWhitespace(),
-          _nameField('Apellidos'),
-          smallWhitespace(),
-          _emailField(),
-          smallWhitespace(),
-          _phoneField(),
-          smallWhitespace(),
-          _saveButton()
-          ]),
-        );
+            opacity: opacityValue,
+            child: Column(children: <Widget>[
+            _colorSecundary(),
+            _nameField('Nombres',color),
+            smallWhitespace(),
+            _nameField('Apellidos',color),
+            smallWhitespace(),
+            _emailField(color),
+            smallWhitespace(),
+            _phoneField(color),
+            smallWhitespace(),
+            _saveButton(color)
+            ]),
+          );
       },
     );
   }
@@ -147,9 +177,7 @@ class HomePageContent extends StatelessWidget {
 
   Widget smallWhitespace() => SizedBox(height: 8);
 
-}
-
-Widget _nameField(String data){
+Widget _nameField(String data,color){
   return TextField(
       // autofocus: true, es para activar  al entrar el texto
       keyboardType: TextInputType.text,
@@ -159,8 +187,8 @@ Widget _nameField(String data){
         ),
         hintText: '$data',
         helperText: '$data',
-        suffixIcon: Icon(Icons.text_fields,color: Colors.purple[400],),
-        icon: Icon(Icons.account_circle,color: Colors.purple[400])
+        suffixIcon: Icon(Icons.text_fields,color: color,),
+        icon: Icon(Icons.account_circle,color: color)
       ),
       // onChanged: (valor) => setState(() {
       //   _email = valor;
@@ -169,7 +197,7 @@ Widget _nameField(String data){
 
 }
 
-Widget _emailField() {
+Widget _emailField(color) {
     
       return TextField(
       // autofocus: true, es para activar  al entrar el texto
@@ -180,8 +208,8 @@ Widget _emailField() {
         ),
         hintText: 'Email',
         helperText: 'Email',
-        suffixIcon: Icon(Icons.alternate_email,color: Colors.purple[400],),
-        icon: Icon(Icons.email,color: Colors.purple[400])
+        suffixIcon: Icon(Icons.alternate_email,color: color,),
+        icon: Icon(Icons.email,color: color)
       ),
       // onChanged: (valor) =>setState(() {
       //   _email = valor;
@@ -189,7 +217,7 @@ Widget _emailField() {
     );
   }
 
-Widget _phoneField() {
+Widget _phoneField(color) {
     
       return TextField(
       // autofocus: true, es para activar  al entrar el texto
@@ -200,8 +228,8 @@ Widget _phoneField() {
         ),
         hintText: 'Telefono',
         helperText: 'Telefono',
-        suffixIcon: Icon(Icons.phonelink_setup,color: Colors.purple[400],),
-        icon: Icon(Icons.phone_iphone,color: Colors.purple[400])
+        suffixIcon: Icon(Icons.phonelink_setup,color: color,),
+        icon: Icon(Icons.phone_iphone,color: color)
       ),
       // onChanged: (valor) =>setState(() {
       //   _email = valor;
@@ -209,12 +237,12 @@ Widget _phoneField() {
     );
   }
 
-Widget _saveButton(){
+Widget _saveButton(color){
 
   return RaisedButton.icon(
     onPressed: () {},
     icon: Icon(Icons.save, color: Colors.white,),
-    color: Colors.purple[400],
+    color: color,
     label: Text('Guardar', 
       style: TextStyle(
       fontSize: 20.0,
@@ -222,7 +250,26 @@ Widget _saveButton(){
     ),
     shape: RoundedRectangleBorder(
       borderRadius: new BorderRadius.circular(18.0),
-),
-  );
+    ),
+    );
 
+  }
+  Widget _colorSecundary(){
+
+    return Center(
+      child: SwitchListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 80),
+        value: _colorSecundario, 
+        title: Text('Color secundario',style: TextStyle(fontSize: 16,color: Colors.grey[700]),),
+        onChanged: (value){
+          setState(() {
+          _colorSecundario = value;
+          prefs.colorSecundario = value;
+          });
+        },
+      ),
+    );
+  }
 }
+
+

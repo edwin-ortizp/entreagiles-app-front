@@ -1,4 +1,5 @@
 // Llamados Dependencias
+import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:QuizLab/src/widgets/menuSidebarProfile.dart';
 import 'package:QuizLab/src/widgets/editProfileScreen.dart';
 import 'package:flutter/material.dart';
@@ -9,21 +10,28 @@ import 'package:QuizLab/src/providers/userProvider.dart';
 class UserProfile extends StatelessWidget {
 
   final usersProvider = new UsersProvider();
-
+  final prefs = new PreferencesUser();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.purple),
+        // theme:(prefs.colorSecundario) ? ThemeData (primarySwatch:  Colors.purple) :ThemeData (primarySwatch:  Colors.red) ,
         home: Scaffold(
           appBar: AppBar(
           title: Text('Perfil'),
-          backgroundColor: Colors.purple[400],
+          leading: IconButton(
+            tooltip: 'Previous choice',
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+             Navigator.of(context).popAndPushNamed('settings');
+            },
+          ),
+          backgroundColor:  Colors.purple[400] ,
           ),
           resizeToAvoidBottomPadding: false,
           endDrawer: MenuSiderbarProfile(),
-          body: EditProfileScreen(),
+          // body: EditProfileScreen(),
         ),
     );
   }

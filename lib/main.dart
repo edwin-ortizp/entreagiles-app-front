@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
         // home: HomePage()
 
         // para declara la pagina   de inicio de la apk
-        initialRoute: 'login',
-        // initialRoute: prefs.ultimaPagina,
+        // initialRoute: 'login',
+        initialRoute: (prefs.ultimaPagina != null) ? prefs.ultimaPagina : 'login',
         // Rutas de la aplicacion
         routes:getApplicationRoutes(),
         onGenerateRoute: ( RouteSettings  settings ){
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
 
         },
         theme: ThemeData(
-          primaryColor: Colors.indigoAccent[700],fontFamily: 'TTFirs',
+          primarySwatch:(prefs.colorSecundario)? Colors.purple :Colors.indigo,fontFamily: 'TTFirs',
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:QuizLab/src/pages/home.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
 import 'package:QuizLab/src/pages/user/userIndex.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
+import 'package:QuizLab/src/widgets/editProfileScreen.dart';
 import 'package:flutter/material.dart';
 
 // class ButtonBarBottom extends StatelessWidget {
@@ -80,7 +81,7 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
       // case 0: return HomePage();
       case 0: return HomePage();
       case 1: return UsersIndex();
-      case 2: return SettingPage();
+      case 2: return EditProfileScreen();
       default:
       return SettingPage();
 
@@ -92,8 +93,8 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        canvasColor: Color.fromRGBO(55, 57, 84, 1.0),  
-        primaryColor: Colors.pinkAccent,
+        canvasColor:(prefs.colorSecundario) ? Color.fromRGBO(55, 57, 84, 1.0): Color.fromRGBO(255, 255, 255, 1.0),  
+        primaryColor: (prefs.colorSecundario) ? Colors.pinkAccent : Colors.indigoAccent[700],
         textTheme: Theme.of(context).textTheme.copyWith( caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)) )
       ),
       child:BottomNavigationBar(
