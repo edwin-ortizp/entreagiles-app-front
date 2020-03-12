@@ -465,7 +465,7 @@ class CourseIndex extends StatelessWidget {
   Widget _coursesLoad(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return FutureBuilder(
-      future: coursesProvider.allCourse(),
+      future: coursesProvider.missingCourses(),
       builder:
           (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
         if (snapshot.hasData) {

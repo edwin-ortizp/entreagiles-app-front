@@ -267,7 +267,7 @@ class CourseShow extends StatelessWidget {
                   
                   new ExpansionTile(
                     trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),   
-                    title: new Text('Sección ${sections[i].order}'),
+                    title: new Text('Sección ${i+1}'),
                      subtitle: Text("${sections[i].name}"),
                     children: <Widget>[
                       new Column(
@@ -301,16 +301,27 @@ class CourseShow extends StatelessWidget {
 
   _quizContent(Section section) {
     List<Widget> quizContent = [];
-
+    if(section.quizzes.isNotEmpty){
     for (Quiz quiz in section.quizzes)
       quizContent.add(
         new ListTile(
             title: new Text("${ quiz.title}"),
-             leading: Icon(Icons.description, color: Colors.green),
+             leading: Icon(Icons.description, color: Colors.blueAccent),
           subtitle: Text('subtitulo'),
           trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
         ),
       );
+    }else{
+       for (Article article in section.articles)
+      quizContent.add(
+        new ListTile(
+            title: new Text("${ article.name}"),
+             leading: (article.video != null) ? Icon(Icons.video_call, color: Colors.blue) : Icon(Icons.assignment, color: Colors.green[300]),
+          subtitle: Text('subtitulo'),
+          trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey), 
+        ),
+      );
+    }
 
     return quizContent;
   }

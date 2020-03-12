@@ -18,7 +18,7 @@ Future<List<CourseModel>> courseForUser() async {
   final  decodedData = json.decode(resp.body);
   // print( decodedData);
     List datos = decodedData ['myCourse'];
-  // print(datos);
+  print(datos);
     final List<CourseModel> myCourses = new List ();
 
     if( datos == null ) return null;
@@ -34,8 +34,8 @@ Future<List<CourseModel>> courseForUser() async {
     return myCourses;
 
 }
-Future<List<CourseModel>> allCourse() async {
-  final url = '$_url/courses?token=${_prefs.token}';
+Future<List<CourseModel>> missingCourses() async {
+  final url = '$_url/courses/missing-courses/show?token=${_prefs.token}';
   final resp = await http.get(url);
   final  decodedData = json.decode(resp.body);
   // print( url);

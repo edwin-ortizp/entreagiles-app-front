@@ -121,6 +121,7 @@ class Section {
     String description;
     int courseId;
     int order;
+     List<Article> articles;
     List<Quiz> quizzes;
 
     Section({
@@ -129,6 +130,7 @@ class Section {
         this.description,
         this.courseId,
         this.order,
+        this.articles,
         this.quizzes,
     });
 
@@ -138,7 +140,8 @@ class Section {
         description: json["description"],
         courseId: json["course_id"],
         order: json["order"],
-        quizzes:["quizzes"] != null ? new List<Quiz>.from(json["quizzes"].map((x) => Quiz.fromJson(x))):List<Quiz>(),
+        articles:["articles"] != null ? List<Article>.from(json["articles"].map((x) => Article.fromJson(x))) :List<Article>(),
+        quizzes:["quizzes"] != null ? new List<Quiz>.from(json["quizzes"].map((x) => Quiz.fromJson(x))) : List<Quiz>(),
     );
 
     Map<String, dynamic> toJson() => {
@@ -147,9 +150,52 @@ class Section {
         "description": description,
         "course_id": courseId,
         "order": order,
+        "articles": List<dynamic>.from(articles.map((x) => x.toJson())),
         "quizzes": List<dynamic>.from(quizzes.map((x) => x.toJson())) ,
     };
 }
+
+class Article {
+    int id;
+    String name;
+    String content;
+    dynamic video;
+    dynamic menu;
+    int userId;
+    int sectionId;
+
+    Article({
+        this.id,
+        this.name,
+        this.content,
+        this.video,
+        this.menu,
+        this.userId,
+        this.sectionId,
+    });
+
+    factory Article.fromJson(Map<String, dynamic> json) => Article(
+        id: json["id"],
+        name: json["name"],
+        content: json["content"],
+        video: json["video"],
+        menu: json["menu"],
+        userId: json["user_id"],
+        sectionId: json["section_id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "content": content,
+        "video": video,
+        "menu": menu,
+        "user_id": userId,
+        "section_id": sectionId,
+    };
+}
+
+
 class Quiz {
     int id;
     String title;

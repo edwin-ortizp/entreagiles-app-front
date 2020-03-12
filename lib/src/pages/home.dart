@@ -214,7 +214,7 @@ class HomePage extends StatelessWidget {
         if (snapshot.hasData) {
           final myCourses = snapshot.data;
           return Container(
-            height: 190.2,
+            height: 150.2,
             child: PageView.builder(
               pageSnapping: false,
               controller: PageController(
@@ -237,13 +237,13 @@ class HomePage extends StatelessWidget {
 
   Widget _allCoursesLoad() {
     return FutureBuilder(
-      future: coursesProvider.allCourse(),
+      future: coursesProvider.missingCourses(),
       builder:
           (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
         if (snapshot.hasData) {
           final allCourses = snapshot.data;
           return Container(
-            height: 190.2,
+            height: 150.2,
             child: PageView.builder(
               pageSnapping: true,
               // reverse:true,
