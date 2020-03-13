@@ -278,7 +278,7 @@ class HomePage extends StatelessWidget {
                 placeholder: AssetImage('assets/cat-loading.gif'),
                 // , image: NetworkImage('https://novapixel.org/eureka/imgs/courses/$course.name.jpg'),
                 image: NetworkImage(
-                    'https://picsum.photos/200/300?random=${course.id}'),
+                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
                 fit: BoxFit.cover,
                 // width: 100.0,
                 height: 120.0,

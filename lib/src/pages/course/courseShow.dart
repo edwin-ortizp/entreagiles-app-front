@@ -57,7 +57,7 @@ class CourseShow extends StatelessWidget {
           TextStyle(color: Colors.black,fontSize: 15)
           ),
         background: FadeInImage( 
-          image: NetworkImage('https://picsum.photos/200/300?random=${course.id}'),
+          image: NetworkImage('https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
            placeholder: AssetImage('assets/cat-loading.gif'),
            fadeInDuration: Duration(microseconds: 150),
            fit: BoxFit.cover,
