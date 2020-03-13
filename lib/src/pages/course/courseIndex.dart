@@ -538,9 +538,8 @@ class CourseIndex extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: FadeInImage(
-                placeholder: AssetImage('assets/cat-loading.gif'),
-                // , image: NetworkImage('https://novapixel.org/eureka/imgs/courses/$course.name.jpg'),
-                image: NetworkImage(
+                placeholder: AssetImage('assets/cargando1.gif'),
+                image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
                     'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
                 fit: BoxFit.cover,
                 // width: 100.0,

@@ -57,9 +57,10 @@ class CourseShow extends StatelessWidget {
           TextStyle(color: Colors.black,fontSize: 15)
           ),
         background: FadeInImage( 
-          image: NetworkImage('https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
-           placeholder: AssetImage('assets/cat-loading.gif'),
-           fadeInDuration: Duration(microseconds: 150),
+          placeholder: AssetImage('assets/cargando1.gif'),
+                image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
+                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
+          //  fadeInDuration: Duration(microseconds: 60),
            fit: BoxFit.cover,
           ),
       ),
