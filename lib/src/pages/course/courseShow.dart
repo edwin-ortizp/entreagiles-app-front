@@ -19,53 +19,82 @@ class CourseShow extends StatelessWidget {
     course = courseData;
   }
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          _appbarCustom(course),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                SizedBox(height: 10.0,),
-                // _title(context,course),
-                // _sectionLoad( context),
-                 _sectionsLoad(context)
-                
-                // _cardexpansiontiletipo2(context),
-              ]
-            ),
-          )
-        ],
-      ),
-    );
-    // return Scaffold(
-    //   body: _accordion(),
-    // );
+      body: _appbarCustom(course, context)
+      );
   }
 
-  Widget _appbarCustom( CourseModel course ){
+  Widget _appbarCustom( CourseModel course,BuildContext context){
 
-    return SliverAppBar(
-      elevation: 2.0,
-      backgroundColor:(prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
-      expandedHeight: 200.0,
-      floating: false,
-      pinned: true,
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
-        title: Text('${course.name}',style: (prefs.colorSecundario)? 
-          TextStyle(color: Colors.white,fontSize: 15): 
-          TextStyle(color: Colors.black,fontSize: 15)
-          ),
-        background: FadeInImage( 
-          placeholder: AssetImage('assets/cargando1.gif'),
-                image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
-                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
-          //  fadeInDuration: Duration(microseconds: 60),
-           fit: BoxFit.cover,
-          ),
+    final sections = course.sections;
+    var height = MediaQuery.of(context).size.height;
+
+
+    return CustomScrollView(
+    slivers: <Widget>[
+      SliverAppBar(
+        elevation: 2.0,
+        backgroundColor:(prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
+        expandedHeight: 200.0,
+        floating: false,
+        pinned: true,
+        flexibleSpace: FlexibleSpaceBar(
+          centerTitle: true,
+          title: Text('${course.name}',style: (prefs.colorSecundario)? 
+            TextStyle(color: Colors.white,fontSize: 15): 
+            TextStyle(color: Colors.black,fontSize: 15)
+            ),
+          background: FadeInImage( 
+            image: NetworkImage('https://picsum.photos/200/300?random=${course.id}'),
+            placeholder: AssetImage('assets/cat-loading.gif'),
+            fadeInDuration: Duration(microseconds: 150),
+            fit: BoxFit.cover,
+            ),
+        ),
       ),
-    );
+    
+    
+    SliverList(
 
+    // itemExtent: 120.0,
+    // return SizedBox(
+      // height: height * 1,
+      // child: ListView.builder(
+        // physics: const NeverScrollableScrollPhysics(),
+        // itemCount: sections.length,
+        // itemBuilder: (context, i) {
+      // );
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int i) {
+          return Center(
+            child: Card(
+       margin: EdgeInsets.all(20.0),
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),),
+              child: Column(
+                children: <Widget>[
+                  
+                  new ExpansionTile(
+                    trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),   
+                    title: new Text('Sección ${i+1}'),
+                     subtitle: Text("${sections[i].name}"),
+                    children: <Widget>[
+                      new Column(
+                        children: _quizContent(sections[i]),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+         },
+        childCount: sections.length,
+
+      ),
+    ),
+  ],
+);
   }
 
 
@@ -248,41 +277,42 @@ class CourseShow extends StatelessWidget {
 
   Widget _sectionsLoad(BuildContext context){
 
-   var height = MediaQuery.of(context).size.height;
-  final sections = course.sections;
-  // physics: NeverScrollableScrollPhysics(),
-    return SizedBox(
-      height: height * 1,
-      child: ListView.builder(
-        // physics: const NeverScrollableScrollPhysics(),
-        itemCount: sections.length,
-        itemBuilder: (context, i) {
-          return Center(
-            child: Card(
-       margin: EdgeInsets.all(20.0),
-      elevation: 8,
-      shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20.0),),
-              child: Column(
-                children: <Widget>[
+  //  var height = MediaQuery.of(context).size.height;
+  // final sections = course.sections;
+  //   return SizedBox(
+  //     height: height * 1,
+  //     child: ListView.builder(
+  //       // physics: const NeverScrollableScrollPhysics(),
+  //       itemCount: sections.length,
+  //       itemBuilder: (context, i) {
+  //         return Center(
+  //           child: Card(
+  //      margin: EdgeInsets.all(20.0),
+  //     elevation: 8,
+  //     shape: RoundedRectangleBorder(
+  //     borderRadius: BorderRadius.circular(20.0),),
+  //             child: Column(
+  //               children: <Widget>[
                   
-                  new ExpansionTile(
-                    trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),   
-                    title: new Text('Sección ${i+1}'),
-                     subtitle: Text("${sections[i].name}"),
-                    children: <Widget>[
-                      new Column(
-                        children: _quizContent(sections[i]),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-      );
+  //                 new ExpansionTile(
+  //                   trailing:  Icon(Icons.add,color: Colors.indigoAccent[700],),   
+  //                   title: new Text('Sección ${i+1}'),
+  //                    subtitle: Text("${sections[i].name}"),
+  //                   children: <Widget>[
+  //                     new Column(
+  //                       children: _quizContent(sections[i]),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //     );
+
+  
 
   }
 
