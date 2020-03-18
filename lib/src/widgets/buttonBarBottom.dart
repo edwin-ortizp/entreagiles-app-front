@@ -1,8 +1,9 @@
+import 'package:QuizLab/src/pages/course/courseIndex.dart';
 import 'package:QuizLab/src/pages/home.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
-import 'package:QuizLab/src/pages/user/userIndex.dart';
+import 'package:QuizLab/src/pages/user/profile.dart';
+// import 'package:QuizLab/src/pages/user/userIndex.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
-import 'package:QuizLab/src/widgets/editProfileScreen.dart';
 import 'package:flutter/material.dart';
 
 // class ButtonBarBottom extends StatelessWidget {
@@ -80,8 +81,8 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
 
       // case 0: return HomePage();
       case 0: return HomePage();
-      case 1: return UsersIndex();
-      case 2: return EditProfileScreen();
+      case 1: return CourseIndex();
+      case 2: return ProfilePage();
       default:
       return SettingPage();
 
@@ -111,11 +112,11 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
             title: Container(),
            ),
            BottomNavigationBarItem(
-            icon: Icon( Icons.supervised_user_circle,size: 30.0,),
+            icon: Icon( Icons.shopping_cart,size: 30.0,),
             title: Container(),
            ),
            BottomNavigationBarItem(
-            icon: Icon( Icons.settings,size: 30.0,),
+            icon: Icon( Icons.person_pin,size: 30.0,),
             title: Container(), 
            ),
           ],

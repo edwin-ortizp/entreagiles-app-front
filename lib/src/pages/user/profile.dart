@@ -1,22 +1,26 @@
 // import 'dart:js';
 
+import 'package:QuizLab/src/models/User.dart';
+import 'package:QuizLab/src/providers/userProvider.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:QuizLab/src/widgets/menuSidebarProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 
-class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({
+class ProfilePage extends StatefulWidget {
+  ProfilePage({
     Key key,
   }) : super(key: key);
 
   @override
-  _EditProfileScreenState createState() => _EditProfileScreenState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _ProfilePageState extends State<ProfilePage> {
+  final usersProvider = new UsersProvider();
   final prefs = new PreferencesUser();
+  // UserModel user = new UserModel();
   bool _colorSecundario = true;
   @override
    void initState() {
@@ -25,18 +29,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _colorSecundario = prefs.colorSecundario;
   }
   Widget build(BuildContext context) {
+    final  user = usersProvider.userProfile();
+    // final UserModel userData =  usersProvider.userProfile(user).user;
+    // final  UserModel user = User;
+    // final UserModel u =  
+    print('asdasd ${user}');
   Color color = (prefs.colorSecundario)? Colors.purple[400] : Colors.indigoAccent[400];
   theme: ThemeData (primarySwatch:(prefs.colorSecundario)?  Colors.purple :Colors.red ) ;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Perfil'),
-          leading: IconButton(
-            tooltip: 'Previous choice',
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-             Navigator.of(context).popAndPushNamed('settings');
-            },
-          ),
+          title: Text('Perfil',style: (prefs.colorSecundario)
+           ?TextStyle(color:Colors.white)
+           : TextStyle(color: Colors.black),),
+          
+                  // ? TextStyle(color: Colors.white)
+                  // : TextStyle(color: Colors.black)),
+          // backgroundColor: Colors.purple[400],
+          iconTheme: (prefs.colorSecundario)
+              ? new IconThemeData(color: Colors.white)
+              : new IconThemeData(color: Colors.black),
+          // leading: IconButton(
+          //   tooltip: 'Previous choice',
+          //   icon: const Icon(Icons.arrow_back),
+          //   onPressed: () {
+          //    Navigator.of(context).popAndPushNamed('settings');
+          //   },
+          // ),
           backgroundColor: (prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
           ),
       resizeToAvoidBottomPadding: false,
@@ -166,7 +184,7 @@ Widget _homePageContent(color) {
             smallWhitespace(),
             _phoneField(color),
             smallWhitespace(),
-            _saveButton(color)
+            // _saveButton(color)
             ]),
           );
       },
@@ -179,6 +197,8 @@ Widget _homePageContent(color) {
 
 Widget _nameField(String data,color){
   return TextField(
+     enableInteractiveSelection: false,
+    focusNode: FocusNode(),
       // autofocus: true, es para activar  al entrar el texto
       keyboardType: TextInputType.text,
       decoration: InputDecoration(

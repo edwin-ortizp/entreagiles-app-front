@@ -58,5 +58,11 @@ class PreferencesUser{
   set page(int value) {
     _prefs.setInt('page', value);
   }
+  get user{
+    return _prefs.getStringList('user') ?? null;
+  }
+  set user( value) {
+    _prefs.setStringList('user', value);
+  }
 
 }

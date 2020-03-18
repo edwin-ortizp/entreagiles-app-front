@@ -1,9 +1,9 @@
 import 'package:QuizLab/src/pages/course/courseIndex.dart';
 import 'package:QuizLab/src/pages/course/courseShow.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
+import 'package:QuizLab/src/pages/user/profile.dart';
 import 'package:QuizLab/src/pages/user/users_create.dart';
 import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
-import 'package:QuizLab/src/widgets/editProfileScreen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:QuizLab/src/pages/auth/login.dart';
@@ -21,7 +21,7 @@ return <String, WidgetBuilder>{
         'buttonBarBottom'   : ( BuildContext context ) => ButtonBarBottom(),
         'home'   : ( BuildContext context ) => HomePage(),
         'users' : ( BuildContext context ) => UsersIndex(),
-        'userProfile' : ( BuildContext context ) => EditProfileScreen(),
+        'userProfile' : ( BuildContext context ) => ProfilePage(),
         'userCreate' : ( BuildContext context ) => UserCreate(),
         'userProfile' : ( BuildContext context ) => UserProfile(),
         'settings' : ( BuildContext context ) => SettingPage(),

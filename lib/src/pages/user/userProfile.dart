@@ -1,7 +1,6 @@
 // Llamados Dependencias
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:QuizLab/src/widgets/menuSidebarProfile.dart';
-import 'package:QuizLab/src/widgets/editProfileScreen.dart';
 import 'package:flutter/material.dart';
 // Llamados Paginas
 import 'package:QuizLab/src/providers/userProvider.dart';

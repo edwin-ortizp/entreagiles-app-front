@@ -1,11 +1,8 @@
 import 'dart:ui';
 
 import 'package:QuizLab/src/models/Course.dart';
-import 'package:QuizLab/src/pages/settting/settings.dart';
-import 'package:QuizLab/src/pages/user/userIndex.dart';
 import 'package:QuizLab/src/providers/courseProvider.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
-import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
 import 'package:QuizLab/src/widgets/menuSiderbar.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +39,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
+            // Se cargar los widgets necesarios en el body 
             _cardUser(),
             _colum1(),
             (prefs.genero ==1)? _carouselHead("Mis Cursos", Colors.indigoAccent[700], Colors.orange,context, 'users'):Text('data'),
@@ -50,11 +48,9 @@ class HomePage extends StatelessWidget {
             _carouselHead("Todos los Cursos", Colors.purpleAccent[700],Colors.orange, context, 'courses'),
             SizedBox(height: 15.0,),
             _allCoursesLoad(),
-            // print(object);
           ],
         ),
       ),
-      // bottomNavigationBar: _bottomNavigatioBar(context),
     );
   }
 
@@ -93,7 +89,9 @@ class HomePage extends StatelessWidget {
     });
     return opciones;
   }
-
+  /*
+   *Se utiliza para manter alineado  las dos targetas  
+   */
   Widget _colum1() {
     return Table(
       children: [
@@ -105,12 +103,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  /*
+   *Card de tu ranking
+   */
   Widget _cardRanking() {
     return Container(
       height: 100.0,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-        // color:Color.fromRGBO(37,37,233,0.59),
         gradient: LinearGradient(
             colors: [Colors.indigoAccent[700], Colors.purple[400]]),
         borderRadius: BorderRadius.circular(20.0),
@@ -127,12 +127,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  /*
+   *Card de  erurocoins 
+   */
   Widget _cardCoins() {
     return Container(
       height: 100.0,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-        // color:Color.fromRGBO(0,143,7,0.5),
         gradient: LinearGradient(
             colors: [Colors.greenAccent[700], Colors.green[100]]),
         borderRadius: BorderRadius.circular(20.0),
@@ -149,6 +151,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  /*
+   *Card para mostrar cuando el usuario no tiene cursos 
+   */
   Widget _cardNull() {
     return Column(
       children: <Widget>[
@@ -174,6 +179,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  /*
+   *Card para mostrar el nombre del usuario
+   */
   Widget _cardUser() {
     return Column(
       children: <Widget>[
@@ -186,7 +194,6 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(5.0),
-                // child: Text('shadisyai'),
               ),
               CircleAvatar(
                 backgroundImage:
@@ -206,6 +213,10 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  /*
+   *se cargar  los  cursos que Tiene el usuario usuario
+   * mediante el builder se cargar y  gracias al leng del objeto se pueden estraer de uno en uno  mediante  [i]
+   */
   Widget _myCoursesLoad() {
     return FutureBuilder(
       future: coursesProvider.courseForUser(),
@@ -230,11 +241,13 @@ class HomePage extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        // return Container();
       },
     );
   }
-
+  /*
+   *se cargar  los  cursos qu ele faltan al usuario
+   * mediante el builder se cargar y  gracias al leng del objeto se pueden estraer de uno en uno  mediante  [i]
+   */
   Widget _allCoursesLoad() {
     return FutureBuilder(
       future: coursesProvider.missingCourses(),
@@ -265,6 +278,10 @@ class HomePage extends StatelessWidget {
     );
   }
 
+/*
+ *Se cargar el courso  en unidad en el widget   
+ * Course de tipo CourseModel El es list del course
+ */
   Widget _courses(BuildContext context, CourseModel course) {
     return Container(
       margin: EdgeInsets.only(right: 15.0),
@@ -275,8 +292,6 @@ class HomePage extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: FadeInImage(
-                // placeholder: AssetImage('assets/cat-loading.gif'),
-                // , image: NetworkImage('https://novapixel.org/eureka/imgs/courses/$course.name.jpg'),
                 placeholder: AssetImage('assets/cargando1.gif'),
                 image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
                     'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
@@ -312,6 +327,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
+/*
+ *Se crea el botonde de ver todos 
+ */
   Widget _carouselButton(
       String text, Color textColor, BuildContext context, String route,
       {double height = 0, bool isPrimaryCard = false}) {
@@ -333,6 +351,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
+/*
+ *Se crea el letrero que acompaña los  caruseles (Mis coursos) 
+ */
   Widget _carouselHead(
     String title,
     Color primary,

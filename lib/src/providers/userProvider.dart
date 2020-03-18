@@ -10,6 +10,10 @@ import 'package:QuizLab/src/models/User.dart';
 class UsersProvider{
 // login(String email, String password){
   final _prefs = new PreferencesUser();
+  //android estudio
+  final String _url = 'http://10.0.2.2:3000';
+  //red local
+  // final String _url = 'http://192.168.1.132:3000';
 
   Future<Map<String, dynamic>> login(String email, String password) async{
 
@@ -20,11 +24,8 @@ class UsersProvider{
       // 'token' :true
     };
     // android studio
-    // final resp = await http.post('http://10.0.2.2:3000/login',
-    //red Local
-    final resp = await http.post('http://192.168.0.7:3000/login',
-      body: (authData)
-      );
+    final url = '$_url/login';
+    final resp = await http.post(url,body: (authData));
 
     Map<String, dynamic> decodeResp = json.decode(resp.body);
 
@@ -39,16 +40,52 @@ class UsersProvider{
        return { 'ok': false, 'mensaje': decodeResp['message'] };
     }
   }
+  /*
+   *No borrar  inicio de register 
+   */
+  // Future register( String email,String password, UserModel user) async {
+  // // Future register( String email,String password,String fistName, String lastName, String country, String phone, String type, int username) async {
+  //   final authData = {
+  //       'email'     : email,
+  //     'password'  :password,
+  //       // 'fist_name'     : user.lastName,
+  //     // 'last_name'  :lastName,
+  //     //   'country_id'     : country,
+  //     // 'phone'  :phone,
+  //     //   'type'     : type,
+  //     'username'  :user.username,
+  //   };
+  //   final url = '$_url/register';
 
-// }
+  //   final resp = await http.post(url,body: json.encode(authData));
+  //   Map<String, dynamic> decodeResp = json.decode(resp.body);
+  //   print(decodeResp);
+  // }
 
 
-  //android estudio
-// final String _url = 'http://10.0.2.2:3000';
-//red local
-final String _url = 'http://192.168.0.7:3000';
-  
-  // final _token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJLZXdpbiBFcmlrc29uIiwiYXBlbGxpZG8iOiJDYWxkZXJvbiIsImVtYWlsIjoia2V3aW5lcmlrc29uQGhvdG1haWwuY29tIiwiaWQiOiIyMjk2IiwidGlwbyI6ImFkbWluIiwiaWF0IjoxNTgyODM2ODQ3LCJleHAiOjE1ODI4NTEyNDd9.FZt9XFYqGP0bn7PftKH_s3nzB7L2b1TiCiT-fZxIkdk';
+  Future<UserModel> userProfile() async{
+    final url = '$_url/users/myProfile?token=${_prefs.token}';
+    final resp = await http.get(url);
+
+    final  decodedData = json.decode(resp.body);
+    //  Map<String, dynamic>  decodedData = json.decode(resp.body);
+    final user = UserModel.fromJson(decodedData['user']);
+final List<String> users = new List ();
+    // List user = decodedData ;
+    // final List<UserModel> usuariosTemp = decodedData['user'];
+    // final List<UserModel> user = new List ();
+    // if( datos == null ) return [];
+
+    // datos.forEach(( user ){
+    //   final usuariosTemp = UserModel.fromJson(user);
+    //   // cursosTemp.id = cursos ['id'];
+    //   usuarios.add(usuariosTemp);
+      
+    // });
+     print(user.username);
+    return user;
+
+  }
 
   Future<List<UserModel>> cargarUsuarios() async{
     final url = '$_url/users?token=${_prefs.token}';
@@ -72,10 +109,10 @@ final String _url = 'http://192.168.0.7:3000';
 
   Future<bool> crearUsuario( UserModel user) async{
 
-  final url = '$_url/users?';    
+  final url = '$_url/register';    
   final resp = await http.post(url, body:userModelToJson(user));
   final decodeData = json.decode(resp.body);
-  print(decodeData);
+  print(user.toJson());
   return true;
   }
   // Future<bool> editarUsuario( UsuarioModel user) async{
