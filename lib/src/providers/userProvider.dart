@@ -26,7 +26,7 @@ class UsersProvider{
     // android studio
     final url = '$_url/login';
     final resp = await http.post(url,body: (authData));
-
+ 
     Map<String, dynamic> decodeResp = json.decode(resp.body);
 
     print(resp.body);
@@ -36,6 +36,7 @@ class UsersProvider{
 
       _prefs.token= decodeResp['token'];
       return { 'ok': true, 'token': decodeResp['token'] };
+      
     }else{
        return { 'ok': false, 'mensaje': decodeResp['message'] };
     }
@@ -63,26 +64,29 @@ class UsersProvider{
   // }
 
 
-  Future<UserModel> userProfile() async{
+  Future <UserModel>userProfile() async{
     final url = '$_url/users/myProfile?token=${_prefs.token}';
     final resp = await http.get(url);
 
     final  decodedData = json.decode(resp.body);
     //  Map<String, dynamic>  decodedData = json.decode(resp.body);
-    final user = UserModel.fromJson(decodedData['user']);
-final List<String> users = new List ();
+    final  user = UserModel.fromJson(decodedData['user']);
+    _prefs.user= user;
+    // UserModel usuario = new user
+// final List<String> users = new List ();
     // List user = decodedData ;
     // final List<UserModel> usuariosTemp = decodedData['user'];
-    // final List<UserModel> user = new List ();
+    // final List<UserModel> users = new List ();
     // if( datos == null ) return [];
 
     // datos.forEach(( user ){
     //   final usuariosTemp = UserModel.fromJson(user);
     //   // cursosTemp.id = cursos ['id'];
-    //   usuarios.add(usuariosTemp);
+      // users.add(user[0]);
       
     // });
-     print(user.username);
+     print(user.id);
+    //  Navigator.pushNamed(context, 'userCreate', arguments: user)
     return user;
 
   }

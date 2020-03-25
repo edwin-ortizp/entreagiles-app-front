@@ -59,10 +59,10 @@ class PreferencesUser{
     _prefs.setInt('page', value);
   }
   get user{
-    return _prefs.getStringList('user') ?? null;
+    return _prefs.getString('user') ?? null;
   }
   set user( value) {
-    _prefs.setStringList('user', value);
+    _prefs.setString('user', value.toString());
   }
 
 }

@@ -1,8 +1,10 @@
+import 'package:QuizLab/src/models/User.dart';
 import 'package:QuizLab/src/pages/course/courseIndex.dart';
 import 'package:QuizLab/src/pages/course/courseShow.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
 import 'package:QuizLab/src/pages/user/profile.dart';
 import 'package:QuizLab/src/pages/user/users_create.dart';
+import 'package:QuizLab/src/providers/userProvider.dart';
 import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
 import 'package:flutter/material.dart';
 

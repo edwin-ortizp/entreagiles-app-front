@@ -2,6 +2,7 @@
 
 import 'package:QuizLab/src/models/User.dart';
 import 'package:QuizLab/src/providers/userProvider.dart';
+// import 'package:QuizLab/src/providers/userProvider.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:QuizLab/src/widgets/menuSidebarProfile.dart';
 import 'package:flutter/material.dart';
@@ -9,18 +10,21 @@ import 'package:simple_animations/simple_animations.dart';
 
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({
-    Key key,
-  }) : super(key: key);
+  // ProfilePage({
+  //   Key key,
+  // }) : super(key: key);
 
+    // final UsersProvider user ;
+    // ProfilePage(this.user);
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final usersProvider = new UsersProvider();
+   bool get hasFocus => false;
+  var usersProvider = new UsersProvider();
   final prefs = new PreferencesUser();
-  // UserModel user = new UserModel();
+  // UserModel userw = null;
   bool _colorSecundario = true;
   @override
    void initState() {
@@ -29,13 +33,8 @@ class _ProfilePageState extends State<ProfilePage> {
     _colorSecundario = prefs.colorSecundario;
   }
   Widget build(BuildContext context) {
-    final  user = usersProvider.userProfile();
-    // final UserModel userData =  usersProvider.userProfile(user).user;
-    // final  UserModel user = User;
-    // final UserModel u =  
-    print('asdasd ${user}');
   Color color = (prefs.colorSecundario)? Colors.purple[400] : Colors.indigoAccent[400];
-  theme: ThemeData (primarySwatch:(prefs.colorSecundario)?  Colors.purple :Colors.red ) ;
+  // theme: ThemeData (primarySwatch:(prefs.colorSecundario)?  Colors.purple :Colors.red ) ;
     return Scaffold(
         appBar: AppBar(
           title: Text('Perfil',style: (prefs.colorSecundario)
@@ -62,32 +61,46 @@ class _ProfilePageState extends State<ProfilePage> {
       //  SingleChildScrollView(
       //       child: Container(
       body: SingleChildScrollView(
-              child: Container(
-          child: Column(
-            children: <Widget>[
-              topBar(context,color),
-              _homePageContent(color),
-            ],
-          ),
+          child: FutureBuilder(
+            future: usersProvider.userProfile(),
+            builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
+             if(snapshot.hasData){
+              final user = snapshot.data;
+            return Container(
+              child: Column(
+                children: <Widget>[
+                  topBar(context,color,user),
+                  _homePageContent(color,user),
+               ],
+              ),
+            );
+             }else{
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+           }
+          }
         ),
       ),
     );
   }
+  
 
-  SizedBox topBar(BuildContext context,color) {
+  SizedBox topBar(BuildContext context,color,user) {
     return SizedBox(
-      height: 150,
+      height: 120,
       child: Stack(
         overflow: Overflow.visible,
         children: <Widget>[
-          _purpleBar(),
-          _circleAvatar(context,color),
+          _purpleBar(user),
+          _circleAvatar(context,color,user),
         ],
       ),
     );
   }
 
-Widget _purpleBar() {
+Widget _purpleBar(UserModel user) {
     return ControlledAnimation(
       duration: Duration(milliseconds: 600),
       tween: Tween<double>(begin: 0, end: 150),
@@ -100,11 +113,11 @@ Widget _purpleBar() {
           child: ListView( children: <Widget>[
             ListTile(
               title: new Center (
-                child: Text('Alexander Ortiz',
+                child: Text(' ${user.firstName}',
                   style: (prefs.colorSecundario) ? TextStyle(color: Colors.white, fontSize: 30.0) :TextStyle(color: Colors.grey[400], fontSize: 30.0) 
                   ),
                 ),
-                subtitle: new Center (child: Text('alexander@gesthor.org',
+                subtitle: new Center (child: Text('${user.email}',
                   style: TextStyle(fontSize: 15.0))),
               ),
             ]
@@ -114,7 +127,7 @@ Widget _purpleBar() {
     );
   }
 
-Widget _circleAvatar(BuildContext context,color){
+Widget _circleAvatar(BuildContext context,color,user){
     final size = MediaQuery.of(context).size;
     return ControlledAnimation(
       duration: Duration(milliseconds: 600),
@@ -128,14 +141,14 @@ Widget _circleAvatar(BuildContext context,color){
           child: Transform.scale(
             scale: scaleValue,
             alignment: Alignment.center,
-            child: _purpleCircle(color),
+            child: _purpleCircle(color,user),
           ),
         );
       },
     );
   }
 
-  Widget _purpleCircle(color) {
+  Widget _purpleCircle(color,UserModel user) {
     return Container(
       height: 100,
       width: 100,
@@ -143,8 +156,14 @@ Widget _circleAvatar(BuildContext context,color){
         borderRadius: BorderRadius.circular(100),
         color: color,
         image: DecorationImage(
-          image: AssetImage('assets/images/finn.jpg'),
-          fit: BoxFit.cover,
+           image: (user.imagePath == null || user.imagePath == "")
+                  ? AssetImage('assets/banner.png')
+                  : NetworkImage(
+                      'https://scontent.fbog4-1.fna.fbcdn.net/v/t1.0-1/c27.0.160.160a/p160x160/47317608_4030223027020387_7188427802004160512_o.jpg?_nc_cat=104&_nc_sid=dbb9e7&_nc_ohc=hAmXaZqmR40AX-v9lUX&_nc_ht=scontent.fbog4-1.fna&oh=266c5d30bbe75bf0575fd7e555b04642&oe=5E9F7747'),
+                      // 'https://novapixel.org/eureka/public/${user.imagePath}.jpg'),
+              // fadeInDuration: Duration(microseconds: 60),
+          // image: AssetImage('assets/images/finn.jpg'),
+          // fit: BoxFit.cover,
         ),
         border: Border.all(
           width: 4,
@@ -154,19 +173,19 @@ Widget _circleAvatar(BuildContext context,color){
     );
   }
 
-Widget _homePageContent(color) {
+Widget _homePageContent(color,user) {
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
         children: <Widget>[
           largeWhitespace(),
-          contentPlaceHolder(color),
+          contentPlaceHolder(color,user),
         ],
       ),
     );
   }
 
-  Widget contentPlaceHolder(color) {
+  Widget contentPlaceHolder(color ,user) {
     return ControlledAnimation(
       duration: Duration(milliseconds: 600),
       delay: Duration(milliseconds: (300 * 3).round()),
@@ -176,13 +195,13 @@ Widget _homePageContent(color) {
             opacity: opacityValue,
             child: Column(children: <Widget>[
             _colorSecundary(),
-            _nameField('Nombres',color),
+            _nameField('Nombres',color,user),
             smallWhitespace(),
-            _nameField('Apellidos',color),
+            _nameLast('Apellidos',color,user),
             smallWhitespace(),
-            _emailField(color),
+            _emailField(color,user),
             smallWhitespace(),
-            _phoneField(color),
+            _phoneField(color,user),
             smallWhitespace(),
             // _saveButton(color)
             ]),
@@ -195,8 +214,36 @@ Widget _homePageContent(color) {
 
   Widget smallWhitespace() => SizedBox(height: 8);
 
-Widget _nameField(String data,color){
-  return TextField(
+Widget _nameField(String data,color,UserModel user){
+
+  return TextFormField(
+    
+    initialValue: user.firstName,
+    //  enableInteractiveSelection: false,
+     readOnly: true,
+    focusNode: FocusNode(),
+      // autofocus: true, es para activar  al entrar el texto
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border:   OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        hintText: '$data',
+        helperText: '$data',
+        suffixIcon: Icon(Icons.text_fields,color: color,),
+        icon: Icon(Icons.account_circle,color: color)
+      ),
+      // onChanged: (valor) => setState(() {
+      //   _email = valor;
+      //   })
+    );
+
+}
+Widget _nameLast(String data,color,UserModel user){
+
+  return TextFormField(
+    readOnly: true,
+    initialValue: user.lastName,
      enableInteractiveSelection: false,
     focusNode: FocusNode(),
       // autofocus: true, es para activar  al entrar el texto
@@ -217,10 +264,12 @@ Widget _nameField(String data,color){
 
 }
 
-Widget _emailField(color) {
+Widget _emailField(color,user) {
     
-      return TextField(
+      return TextFormField(
+        readOnly: true,
       // autofocus: true, es para activar  al entrar el texto
+      initialValue: user.email,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border:   OutlineInputBorder(
@@ -237,10 +286,12 @@ Widget _emailField(color) {
     );
   }
 
-Widget _phoneField(color) {
+Widget _phoneField(color,user) {
     
-      return TextField(
+      return TextFormField(
+        readOnly: true,
       // autofocus: true, es para activar  al entrar el texto
+      initialValue: user.phone,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         border:   OutlineInputBorder(
@@ -290,6 +341,7 @@ Widget _saveButton(color){
       ),
     );
   }
+  
 }
 
 
