@@ -121,7 +121,9 @@ class Section {
     String description;
     int courseId;
     int order;
-     List<Article> articles;
+    int countArticule;
+    int countCompleted;
+    List<Article> articles;
     List<Quiz> quizzes;
 
     Section({
@@ -130,6 +132,8 @@ class Section {
         this.description,
         this.courseId,
         this.order,
+        this.countArticule,
+        this.countCompleted,
         this.articles,
         this.quizzes,
     });
@@ -140,6 +144,8 @@ class Section {
         description: json["description"],
         courseId: json["course_id"],
         order: json["order"],
+        countArticule: json["count_articule"],
+        countCompleted: json["count_completed"],
         articles:["articles"] != null ? List<Article>.from(json["articles"].map((x) => Article.fromJson(x))) :List<Article>(),
         quizzes:["quizzes"] != null ? new List<Quiz>.from(json["quizzes"].map((x) => Quiz.fromJson(x))) : List<Quiz>(),
     );
@@ -161,8 +167,11 @@ class Article {
     String content;
     dynamic video;
     dynamic menu;
+    int order;
     int userId;
     int sectionId;
+    String status;
+
 
     Article({
         this.id,
@@ -170,8 +179,10 @@ class Article {
         this.content,
         this.video,
         this.menu,
+        this.order,
         this.userId,
         this.sectionId,
+        this.status,
     });
 
     factory Article.fromJson(Map<String, dynamic> json) => Article(
@@ -180,8 +191,10 @@ class Article {
         content: json["content"],
         video: json["video"],
         menu: json["menu"],
+        order: json["order"],
         userId: json["user_id"],
         sectionId: json["section_id"],
+        status: json["status"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -190,8 +203,10 @@ class Article {
         "content": content,
         "video": video,
         "menu": menu,
+        "order": order,
         "user_id": userId,
         "section_id": sectionId,
+        "status": status,
     };
 }
 

@@ -29,7 +29,8 @@ class HomePage extends StatelessWidget {
               ? new IconThemeData(color: Colors.white)
               : new IconThemeData(color: Colors.black),
           backgroundColor:
-              (prefs.colorSecundario) ? Colors.purple[400] : Colors.white),
+              (prefs.colorSecundario) ? Colors.purple[400] : Colors.white
+          ),
 
       drawer: MenuSiderbar(),
       body: SingleChildScrollView(
@@ -294,7 +295,7 @@ class HomePage extends StatelessWidget {
               child: FadeInImage(
                 placeholder: AssetImage('assets/cargando1.gif'),
                 image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
-                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
+                    'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
                 fit: BoxFit.cover,
                 // width: 100.0,
                 height: 120.0,

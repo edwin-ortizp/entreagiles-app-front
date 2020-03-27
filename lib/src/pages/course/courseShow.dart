@@ -41,7 +41,7 @@ class CourseShow extends StatelessWidget {
               image: (course.imagePath == null || course.imagePath == "")
                   ? AssetImage('assets/banner.png')
                   : NetworkImage(
-                      'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
+                      'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
               // fadeInDuration: Duration(microseconds: 60),
               fit: BoxFit.cover,
             ),
@@ -72,10 +72,10 @@ class CourseShow extends StatelessWidget {
                       color: Colors.indigoAccent[700],
                     ),
                     title: new Text('Sección ${i + 1}'),
-                    subtitle: Text("${sections[i].name}"),
+                    subtitle: Text("${sections[i].name} (${sections[i].countCompleted}/${sections[i].countArticule})"),
                     children: <Widget>[
                       new Column(
-                        children: _quizContent(sections[i]),
+                        children: _quizContent(context,sections[i]),
                       ),
                     ],
                   ),
@@ -89,7 +89,7 @@ class CourseShow extends StatelessWidget {
     );
   }
 
-  _quizContent(Section section) {
+  _quizContent(BuildContext context, Section section) {
     List<Widget> quizContent = [];
     if (section.quizzes.isNotEmpty) {
       for (Quiz quiz in section.quizzes)
@@ -104,13 +104,16 @@ class CourseShow extends StatelessWidget {
     } else {
       for (Article article in section.articles)
         quizContent.add(
-          new ListTile(
-            title: new Text("${article.name}"),
-            leading: (article.video != null)
-                ? Icon(Icons.video_call, color: Colors.blue)
-                : Icon(Icons.assignment, color: Colors.green[300]),
-            subtitle: Text('subtitulo'),
-            trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey),
+          GestureDetector(
+            onTap:  () => Navigator.pushNamed(context, 'articleShow',arguments: article),
+            child: new ListTile(
+              title: new Text("${article.name}"),
+              leading: (article.video != null)
+                  ? Icon(Icons.video_call, color: Colors.blue)
+                  : Icon(Icons.assignment, color: Colors.green[300]),
+              subtitle: Text('subtitulo ${article.status}'),
+              trailing: (article.status == "completed")?Icon(Icons.check_box, color: Colors.green):Icon(Icons.check_box_outline_blank, color: Colors.grey),
+            ),
           ),
         );
     }
