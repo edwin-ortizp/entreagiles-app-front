@@ -16,6 +16,10 @@ class HomePage extends StatelessWidget {
   // static final String routeName = 'home';
   @override
   Widget build(BuildContext context) {
+    // Se utilizan para poder activar la funcion del course
+  var  mycourses=  coursesProvider.courseForUser();
+  var  nocourses=  coursesProvider.missingCourses();
+    print("${prefs.myCourses}");
     // prefs.ultimaPagina = HomePage.routeName;
     return Scaffold(
       appBar: AppBar(
@@ -43,12 +47,12 @@ class HomePage extends StatelessWidget {
             // Se cargar los widgets necesarios en el body 
             _cardUser(),
             _colum1(),
-            (prefs.genero ==1)? _carouselHead("Mis Cursos", Colors.indigoAccent[700], Colors.orange,context, 'users'):Text('data'),
+            (prefs.myCourses)? _carouselHead("Mis Cursos", Colors.indigoAccent[700], Colors.orange,context, 'myCourses'):Text(''),
             SizedBox(height: 15.0,),
-            (prefs.genero ==1)?_myCoursesLoad():_cardNull(),
-            _carouselHead("Todos los Cursos", Colors.purpleAccent[700],Colors.orange, context, 'courses'),
+            (prefs.myCourses)?_myCoursesLoad():_cardNull(),
+            (prefs.noCourses)?_carouselHead("Todos los Cursos", Colors.purpleAccent[700],Colors.orange, context, 'courses'):Text(''),
             SizedBox(height: 15.0,),
-            _allCoursesLoad(),
+            (prefs.noCourses)?_allCoursesLoad():_cardNull(),
           ],
         ),
       ),

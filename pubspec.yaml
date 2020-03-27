@@ -31,7 +31,7 @@ dependencies:
   flutter_html: 
   simple_animations: ^1.3.9
   webview_flutter: 
-
+  flutter_widget_from_html: ^0.3.2+2
 dev_dependencies:
   flutter_test:
     sdk: flutter

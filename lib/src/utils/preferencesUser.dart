@@ -64,5 +64,17 @@ class PreferencesUser{
   set user( value) {
     _prefs.setString('user', value.toString());
   }
+  get myCourses{
+    return _prefs.getBool('myCourses') ?? null;
+  }
+  set myCourses( value) {
+    _prefs.setBool('myCourses', value);
+  }
+  get noCourses{
+    return _prefs.getBool('noCourses') ?? null;
+  }
+  set noCourses( value) {
+    _prefs.setBool('noCourses', value);
+  }
 
 }

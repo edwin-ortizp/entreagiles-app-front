@@ -5,7 +5,7 @@ import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-class CourseIndex extends StatelessWidget {
+class MyCourseIndex extends StatelessWidget {
    double width;
    final prefs = new PreferencesUser();
   final coursesProvider = new CourseProvider();
@@ -465,7 +465,7 @@ class CourseIndex extends StatelessWidget {
   Widget _coursesLoad(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return FutureBuilder(
-      future: coursesProvider.missingCourses(),
+      future: coursesProvider.courseForUser(),
       builder:
           (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
         if (snapshot.hasData) {
@@ -540,7 +540,8 @@ class CourseIndex extends StatelessWidget {
               child: FadeInImage(
                 placeholder: AssetImage('assets/cargando1.gif'),
                 image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
-                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
+                    'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
+                    // 'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
                 fit: BoxFit.cover,
                 // width: 100.0,
                 height: 160.0,
@@ -600,7 +601,7 @@ class CourseIndex extends StatelessWidget {
                         SizedBox(
                           width: 5,
                         ),
-                        Text('12 secciones',
+                        Text('${course.sections.length} secciones',
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
@@ -656,18 +657,14 @@ class CourseIndex extends StatelessWidget {
                     // ),
 
                   SizedBox(height: 15),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    child: Row(
-                      children: <Widget>[
-                        _chip("Comprar", Colors.purple[700], height: 5),
-                        // _chip("ver", Colors.purple[700], height: 5),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        _chip("ver", Colors.blue, height: 5),
-                      ],
-                    ),
+                  Row(
+                    children: <Widget>[
+                      // _chip("Ver", Colors.purple[700], height: 5),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      // _chip("model.tag2", Colors.blue, height: 5),
+                    ],
                   ),
                 ],
               )),

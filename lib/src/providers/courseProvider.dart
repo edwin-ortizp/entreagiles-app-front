@@ -18,11 +18,16 @@ Future<List<CourseModel>> courseForUser() async {
   final  decodedData = json.decode(resp.body);
   // print( decodedData);
     List datos = decodedData ['myCourse'];
-  print(datos);
+  print(datos.length);
+  if( datos.length == 0 || datos == null ){
+    _prefs.myCourses= false;
+  } else{
+    _prefs.myCourses= true;
+  }
     final List<CourseModel> myCourses = new List ();
 
     if( datos == null ) return null;
-
+    // _prefs.myCourses= true;
     datos.forEach(( myCourse ){
       final myCoursesTemp = CourseModel.fromJson(myCourse);
       // cursosTemp.id = cursos ['id'];
@@ -40,7 +45,12 @@ Future<List<CourseModel>> missingCourses() async {
   final  decodedData = json.decode(resp.body);
   // print( url);
     List datos = decodedData ['cursos'];
-  // print(datos);
+  // print(datos.length);
+  if( datos.length == 0 || datos == null ){
+    _prefs.noCourses= false;
+  } else{
+    _prefs.noCourses= true;
+  }
     final List<CourseModel> allCourses = new List ();
 
     if( datos == null ) return [];

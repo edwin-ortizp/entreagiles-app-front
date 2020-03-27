@@ -74,8 +74,11 @@ class CourseShow extends StatelessWidget {
                     title: new Text('Sección ${i + 1}'),
                     subtitle: Text("${sections[i].name} (${sections[i].countCompleted}/${sections[i].countArticule})"),
                     children: <Widget>[
-                      new Column(
-                        children: _quizContent(context,sections[i]),
+                      GestureDetector(
+                        onTap:  () => Navigator.pushNamed(context, 'buttonBarBottomArticle',arguments: sections[i]),
+                        child: new Column(
+                          children: _quizContent(context,sections[i]),
+                        ),
                       ),
                     ],
                   ),
