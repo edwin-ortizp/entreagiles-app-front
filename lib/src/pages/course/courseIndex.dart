@@ -660,7 +660,7 @@ class CourseIndex extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     child: Row(
                       children: <Widget>[
-                        _chip("Comprar", Colors.purple[700], height: 5),
+                        // _chip("Comprar", Colors.purple[700], height: 5),
                         // _chip("ver", Colors.purple[700], height: 5),
                         SizedBox(
                           width: 10,
