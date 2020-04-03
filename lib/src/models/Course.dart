@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
 CourseModel courseModelFromJson(String str) => CourseModel.fromJson(json.decode(str));
 
 String courseModelToJson(CourseModel data) => json.encode(data.toJson());
@@ -23,6 +25,8 @@ class CourseModel {
     dynamic learn;
     dynamic top;
     dynamic carreraId;
+    List<Teacher> teacher;
+    String course; 
     List<Section> sections;
     List<MySection> mySections;
         //wliminar
@@ -47,6 +51,8 @@ class CourseModel {
         this.learn,
         this.top,
         this.carreraId,
+        this.teacher,
+        this.course,
         this.sections,
         this.mySections,
          //eliminar
@@ -71,6 +77,8 @@ class CourseModel {
         learn: json["learn"],
         top: json["top"],
         carreraId: json["carrera_id"],
+        teacher: json["teacher"] != null ? new List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))) : List<Teacher>(),
+        course: json["course"],
         sections: json["sections"] != null ? new List<Section>.from(json["sections"].map((x) => Section.fromJson(x))) : List<Section>(),
         mySections: json["mySections"] != null ? new List<MySection>.from(json["mySections"].map((x) => MySection.fromJson(x))):List<MySection>(),
     );
@@ -90,31 +98,68 @@ class CourseModel {
         "learn": learn,
         "top": top,
         "carrera_id": carreraId,
+        "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
+        "course": course,
         "sections": List<dynamic>.from(sections.map((x) => x.toJson())),
         "mySections": List<dynamic>.from(mySections.map((x) => x.toJson())),
     };
 }
 
-class MySection {
-    int idCourse;
-    int countSection;
+class Teacher {
+    String id;
+    String username;
+    String firstName;
+    String lastName;
+    String email;
+    String type;
+    String imagePath;
+    String rememberToken;
+    int avatarId;
+    int countryId;
+    String phone;
 
-    MySection({
-        this.idCourse,
-        this.countSection,
+    Teacher({
+        this.id,
+        this.username ,
+        this.firstName,
+        this.lastName,
+        this.email,
+        this.type,
+        this.imagePath,
+        this.rememberToken,
+        this.avatarId,
+        this.countryId,
+        this.phone,
     });
 
-    factory MySection.fromJson(Map<String, dynamic> json) => MySection(
-        idCourse: json["idCourse"],
-        countSection: json["countSection"],
+    factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
+       id: json["id"],
+        username: json["username"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        email: json["email"],
+        type: json["type"],
+        imagePath: json["image_path"],
+        rememberToken: json["remember_token"],
+        avatarId: json["avatar_id"],
+        countryId: json["country_id"],
+        phone: json["phone"],
     );
 
     Map<String, dynamic> toJson() => {
-        "idCourse": idCourse,
-        "countSection": countSection,
+        "id": id,
+        "username": username,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "type": type,
+        "image_path": imagePath,
+        "remember_token": rememberToken,
+        "avatar_id": avatarId,
+        "country_id": countryId,
+        "phone": phone,
     };
 }
-
 class Section {
     int id;
     String name;
@@ -168,6 +213,7 @@ class Article {
     dynamic video;
     dynamic menu;
     int order;
+    String ppt;
     int userId;
     int sectionId;
     String status;
@@ -180,6 +226,7 @@ class Article {
         this.video,
         this.menu,
         this.order,
+        this.ppt,
         this.userId,
         this.sectionId,
         this.status,
@@ -192,6 +239,7 @@ class Article {
         video: json["video"],
         menu: json["menu"],
         order: json["order"],
+        ppt: json["ppt"],
         userId: json["user_id"],
         sectionId: json["section_id"],
         status: json["status"],
@@ -204,6 +252,7 @@ class Article {
         "video": video,
         "menu": menu,
         "order": order,
+        "ppt": ppt,
         "user_id": userId,
         "section_id": sectionId,
         "status": status,
@@ -248,6 +297,26 @@ class Quiz {
         "bank_id": bankId,
         "limit_tries": limitTries,
         "duration": duration,
+    };
+}
+
+class MySection {
+    int idCourse;
+    int countSection;
+
+    MySection({
+        this.idCourse,
+        this.countSection,
+    });
+
+    factory MySection.fromJson(Map<String, dynamic> json) => MySection(
+        idCourse: json["idCourse"],
+        countSection: json["countSection"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "idCourse": idCourse,
+        "countSection": countSection,
     };
 }
 

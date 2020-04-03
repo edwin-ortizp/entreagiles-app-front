@@ -10,8 +10,10 @@ import 'package:QuizLab/src/models/User.dart';
 class UsersProvider{
 // login(String email, String password){
   final _prefs = new PreferencesUser();
+  // servidor
+  final String _url = 'http://181.143.182.50:3000';
   //android estudio
-  final String _url = 'http://10.0.2.2:3000';
+  //  final String _url = 'http://10.0.2.2:3000';
   //red local
   // final String _url = 'http://192.168.1.132:3000';
 
@@ -30,6 +32,7 @@ class UsersProvider{
     Map<String, dynamic> decodeResp = json.decode(resp.body);
 
     print(resp.body);
+    
 
     print( _prefs.token);
     if(decodeResp.containsKey('token')){

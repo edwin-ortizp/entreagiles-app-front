@@ -540,8 +540,8 @@ class MyCourseIndex extends StatelessWidget {
               child: FadeInImage(
                 placeholder: AssetImage('assets/cargando1.gif'),
                 image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
-                    'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
-                    // 'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
+                    // 'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
+                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
                 fit: BoxFit.cover,
                 // width: 100.0,
                 height: 160.0,
@@ -610,12 +610,18 @@ class MyCourseIndex extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Text('Teacher',
+                   Text((course.teacher[0] != null) ?'Instructor: ${course.teacher[0].firstName} ${course.teacher[0].lastName}':'Instructor: SIn asignar',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                       )
                       ),
+                      // Text('${course.teacher[0].email}',
+                      //  style: TextStyle(
+                      //   fontSize: 12,
+                      //   color: Colors.grey,
+                      // )),
+                      
                   SizedBox(height: 15),
                     //  Popup(
                 // content: getSampleBox1(CrossAxisAlignment.start,course,),
@@ -699,5 +705,18 @@ class MyCourseIndex extends StatelessWidget {
 
        Tooltip(message: 'sjdhaksdhk',);
     }
-  
+
+  //  _teacher(BuildContext context, Teacher teacher) {
+  //   List<Widget> teacherContent = [];
+  //   if (teacher != null) {
+  //     for (Quiz quiz in teacher)
+  //       teacherContent.add(
+  //         new ListTile(
+  //           title: new Text("${quiz.title}"),
+  //           leading: Icon(Icons.description, color: Colors.blueAccent),
+  //           subtitle: Text('subtitulo'),
+  //           trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey),
+  //         ),
+  //       );
+  //   }
 }

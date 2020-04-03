@@ -24,10 +24,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: Text('Welcome ${prefs.nombre}',
-              style: (prefs.colorSecundario)
-                  ? TextStyle(color: Colors.white)
-                  : TextStyle(color: Colors.black)),
+          // title: Text('Welcome ${prefs.nombre}',
+          //     style: (prefs.colorSecundario)
+          //         ? TextStyle(color: Colors.white)
+          //         : TextStyle(color: Colors.black)),
+          title:(prefs.colorSecundario) ? Image.asset('assets/logo-blanco.png',fit: BoxFit.cover,height: 42,):Image.asset('assets/QuizLab-Logo.png',fit: BoxFit.cover,height: 32),
           // backgroundColor: Colors.purple[400],
           iconTheme: (prefs.colorSecundario)
               ? new IconThemeData(color: Colors.white)
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
               (prefs.colorSecundario) ? Colors.purple[400] : Colors.white
           ),
 
-      drawer: MenuSiderbar(),
+      // drawer: MenuSiderbar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,12 +48,12 @@ class HomePage extends StatelessWidget {
             // Se cargar los widgets necesarios en el body 
             _cardUser(),
             _colum1(),
-            (prefs.myCourses)? _carouselHead("Mis Cursos", Colors.indigoAccent[700], Colors.orange,context, 'myCourses'):Text(''),
+            (prefs.myCourses == true )? _carouselHead("Mis Cursos", Colors.indigoAccent[700], Colors.orange,context, 'myCourses'):Text(''),
             SizedBox(height: 15.0,),
-            (prefs.myCourses)?_myCoursesLoad():_cardNull(),
-            (prefs.noCourses)?_carouselHead("Todos los Cursos", Colors.purpleAccent[700],Colors.orange, context, 'courses'):Text(''),
+            (prefs.myCourses == true )?_myCoursesLoad():_cardNull(),
+            (prefs.myCourses == true )?_carouselHead("Todos los Cursos", Colors.purpleAccent[700],Colors.orange, context, 'courses'):Text(''),
             SizedBox(height: 15.0,),
-            (prefs.noCourses)?_allCoursesLoad():_cardNull(),
+            (prefs.myCourses == true )?_allCoursesLoad():_cardNull(),
           ],
         ),
       ),
@@ -125,7 +126,7 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           SizedBox(height: 5.0,),
           Text('Tu Ranking',style: TextStyle(color: Colors.white),),
-          Text('# 015454545',style: TextStyle(color: Colors.white, fontSize: 25),),
+          Text('# 0',style: TextStyle(color: Colors.white, fontSize: 25),),
           SizedBox(height: 5.0,)
         ],
       ),
@@ -148,8 +149,8 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           SizedBox(height: 5.0,),
-          Text('Eurocoins',style: TextStyle(color: Colors.white),),
-          Text('5.4545',style: TextStyle(color: Colors.white, fontSize: 25),),
+          Text('Créditos',style: TextStyle(color: Colors.white),),
+          Text('0',style: TextStyle(color: Colors.white, fontSize: 25),),
           SizedBox(height: 5.0)
         ],
       ),
@@ -229,6 +230,7 @@ class HomePage extends StatelessWidget {
           (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
         if (snapshot.hasData) {
           final myCourses = snapshot.data;
+          print(myCourses.length);
           return Container(
             height: 150.2,
             child: PageView.builder(
@@ -299,7 +301,7 @@ class HomePage extends StatelessWidget {
               child: FadeInImage(
                 placeholder: AssetImage('assets/cargando1.gif'),
                 image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
-                    'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
+                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
                 fit: BoxFit.cover,
                 // width: 100.0,
                 height: 120.0,

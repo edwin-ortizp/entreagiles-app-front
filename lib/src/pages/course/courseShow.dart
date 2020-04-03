@@ -30,6 +30,9 @@ class CourseShow extends StatelessWidget {
           expandedHeight: 200.0,
           floating: false,
           pinned: true,
+          iconTheme: (prefs.colorSecundario)
+              ? new IconThemeData(color: Colors.white)
+              : new IconThemeData(color: Colors.black),
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
             title: Text('${course.name}',
@@ -41,7 +44,7 @@ class CourseShow extends StatelessWidget {
               image: (course.imagePath == null || course.imagePath == "")
                   ? AssetImage('assets/banner.png')
                   : NetworkImage(
-                      'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
+                      'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
               // fadeInDuration: Duration(microseconds: 60),
               fit: BoxFit.cover,
             ),
@@ -72,7 +75,7 @@ class CourseShow extends StatelessWidget {
                       color: Colors.indigoAccent[700],
                     ),
                     title: new Text('Sección ${i + 1}'),
-                    subtitle: Text("${sections[i].name} (${sections[i].countCompleted}/${sections[i].countArticule})"),
+                    subtitle: (course.course == "Belong") ? Text("${sections[i].name} (${sections[i].countCompleted}/${sections[i].countArticule})"):Text("${sections[i].name}"),
                     children: <Widget>[
                       GestureDetector(
                         onTap:  () => Navigator.pushNamed(context, 'buttonBarBottomArticle',arguments: sections[i]),
@@ -108,14 +111,14 @@ class CourseShow extends StatelessWidget {
       for (Article article in section.articles)
         quizContent.add(
           GestureDetector(
-            onTap:  () => Navigator.pushNamed(context, 'articleShow',arguments: article),
+            onTap:   () => (course.course == "Belong") ?Navigator.pushNamed(context, 'articleShow',arguments: article):{},
             child: new ListTile(
               title: new Text("${article.name}"),
               leading: (article.video != null)
                   ? Icon(Icons.video_call, color: Colors.blue)
                   : Icon(Icons.assignment, color: Colors.green[300]),
               subtitle: Text('subtitulo ${article.status}'),
-              trailing: (article.status == "completed")?Icon(Icons.check_box, color: Colors.green):Icon(Icons.check_box_outline_blank, color: Colors.grey),
+              trailing: (course.course != "Belong") ?null:(article.status == "completed")?Icon(Icons.check_box, color: Colors.green):Icon(Icons.check_box_outline_blank, color: Colors.grey),
             ),
           ),
         );

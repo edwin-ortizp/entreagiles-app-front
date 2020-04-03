@@ -37,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
   // theme: ThemeData (primarySwatch:(prefs.colorSecundario)?  Colors.purple :Colors.red ) ;
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text('Perfil',style: (prefs.colorSecundario)
            ?TextStyle(color:Colors.white)
            : TextStyle(color: Colors.black),),

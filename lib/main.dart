@@ -1,10 +1,12 @@
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
 import 'package:flutter/material.dart';
+
 // import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:QuizLab/src/routes/route.dart';
 import 'package:QuizLab/src/validations/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 
@@ -12,6 +14,8 @@ import 'package:QuizLab/src/validations/provider.dart';
  
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  //  ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
+        // connectionStatus.initialize();
   final prefs = new PreferencesUser();
   
   await prefs.intPrefs();
@@ -27,17 +31,15 @@ class MyApp extends StatelessWidget {
         title: 'QuizLab',
         // theme: ThemeData(fontFamily: 'TTFirs'),
         debugShowCheckedModeBanner: false,
-        // localizationsDelegates: [
-        //   // ... app-specific localization delegate[s] here
-        //   GlobalMaterialLocalizations.delegate,
-        //   GlobalWidgetsLocalizations.delegate,
-        //   GlobalCupertinoLocalizations.delegate,
-        // ],
-        // supportedLocales: [
-        //   const Locale('es'), // English
-        // ],
-        // home: HomePage()
-
+        localizationsDelegates: [
+          // ... app-specific localization delegate[s] here
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('es'), // English
+        ],
         // para declara la pagina   de inicio de la apk
         // initialRoute: 'login',
         initialRoute: (prefs.ultimaPagina != null) ? prefs.ultimaPagina : 'login',

@@ -609,7 +609,7 @@ class CourseIndex extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Text('Teacher',
+                  Text((course.teacher[0] != null) ?'Instructor: ${course.teacher[0].firstName} ${course.teacher[0].lastName}':'Instructor: SIn asignar',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,

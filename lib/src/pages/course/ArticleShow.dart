@@ -21,7 +21,7 @@ class ArticleShowPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Welcome ${prefs.nombre}',
+          title: Text('${articleData.name}',
               style: (prefs.colorSecundario)
                   ? TextStyle(color: Colors.white)
                   : TextStyle(color: Colors.black)),
@@ -44,14 +44,15 @@ class ArticleShowPage extends StatelessWidget {
               children: <Widget>[
                 _video(articleData),
                 SizedBox(height: 15.0,),
-                Text(articleData.name,style: TextStyle(fontSize: 25.0,color: Color(0XFFF004368)),),
-                Divider(
-                  indent:  15,
-                  endIndent: 15,
-                  color: Color(0XFFF004368),
-                  thickness: 2,
-                ),
-                _content(articleData)
+                // Text(articleData.name,style: TextStyle(fontSize: 25.0,color: Color(0XFFF004368)),),
+                // Divider(
+                //   indent:  15,
+                //   endIndent: 15,
+                //   color: Color(0XFFF004368),
+                //   thickness: 2,
+                // ),
+                _content(articleData),
+                _ppt(articleData),
               ],
             ),
           ),
@@ -70,9 +71,11 @@ class ArticleShowPage extends StatelessWidget {
 // return  IFrameElement()
 return HtmlWidget(
           """
-          <html><body><br><iframe src="${article.video}" width="560" height="415"></iframe></body></html>
+          <html><body><br><iframe width="460" height="415" src="${article.video}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></body></html>
           """,
+          // <html><body><br><iframe src="https://www.youtube.com/watch?v=AFR724bf_5I" width="560" height="415"></iframe></body></html>
           webView: true,
+
         );
   }
   Widget _content(Article article){
@@ -93,6 +96,22 @@ return Container(
             """
   
             ${article.content}
+  
+            """,
+  
+            webView: true,
+  
+          ),
+);
+  }
+  Widget _ppt(Article article){
+    return Container(
+  padding: EdgeInsets.all(15.0),
+  child:   HtmlWidget(
+  
+            """
+  
+            ${article.ppt}
   
             """,
   

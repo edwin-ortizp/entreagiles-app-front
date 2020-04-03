@@ -6,6 +6,7 @@ import 'package:QuizLab/src/pages/course/myCourseIndex.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
 import 'package:QuizLab/src/pages/user/profile.dart';
 import 'package:QuizLab/src/pages/user/users_create.dart';
+import 'package:QuizLab/src/providers/conex_provider.dart';
 import 'package:QuizLab/src/providers/userProvider.dart';
 import 'package:QuizLab/src/widgets/buttonBarBottom.dart';
 import 'package:QuizLab/src/widgets/buttonBarBottomArticle.dart';
@@ -35,5 +36,7 @@ return <String, WidgetBuilder>{
         'myCourses' : ( BuildContext context ) => MyCourseIndex(),
         'courseShow' : ( BuildContext context ) => CourseShow(),
         'articleShow' : ( BuildContext context ) => ArticleShowPage(),
+        // 'conec' : ( BuildContext context ) => ConecPage(),
       };
 }
+
