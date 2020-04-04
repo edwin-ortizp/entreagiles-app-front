@@ -203,14 +203,15 @@ class HomePage extends StatelessWidget {
               ),
               CircleAvatar(
                 backgroundImage:
-                    NetworkImage('https://picsum.photos/200/300?random=1'),
+                    // NetworkImage('https://picsum.photos/200/300?random=1'),
+                    AssetImage('assets/user.png'),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  'Kewin erikson calderon montano',
-                  style: TextStyle(fontSize: 15.0, color: Colors.black54),
-                ),
+                  child: Text(
+                   (prefs.userFistname == null)? 'Te damos la bienvenida a QuizLab!': '${prefs.userFistname} ${prefs.userLastname}',
+                    style: TextStyle(fontSize: 15.0, color: Colors.black54),
+                  ),
               ),
             ],
           ),

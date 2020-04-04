@@ -114,16 +114,16 @@ class CourseShow extends StatelessWidget {
             onTap:   () => (course.course == "Belong") ?Navigator.pushNamed(context, 'articleShow',arguments: article):{},
             child: new ListTile(
               title: new Text("${article.name}"),
-              leading: (article.video != null)
+              leading: (article.video != null && article.video != "")
                   ? Icon(Icons.video_call, color: Colors.blue)
-                  : Icon(Icons.assignment, color: Colors.green[300]),
-              subtitle: Text('subtitulo ${article.status}'),
+                  : (article.content != null && article.ppt == null)?Icon(Icons.assignment, color: Colors.green[300]):Icon(Icons.book, color: Colors.red[300]),
+                  
+              // subtitle: Text('subtitulo ${article.status}'),
               trailing: (course.course != "Belong") ?null:(article.status == "completed")?Icon(Icons.check_box, color: Colors.green):Icon(Icons.check_box_outline_blank, color: Colors.grey),
             ),
           ),
         );
     }
-
     return quizContent;
   }
 }

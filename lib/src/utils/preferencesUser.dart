@@ -65,16 +65,27 @@ class PreferencesUser{
     _prefs.setString('user', value.toString());
   }
   get myCourses{
-    return _prefs.getBool('myCourses') ?? null;
+    return _prefs.getBool('myCourses') ?? false;
   }
   set myCourses( value) {
     _prefs.setBool('myCourses', value);
   }
   get noCourses{
-    return _prefs.getBool('noCourses') ?? null;
+    return _prefs.getBool('noCourses') ?? false;
   }
   set noCourses( value) {
     _prefs.setBool('noCourses', value);
   }
-
+  get userFistname{
+    return _prefs.getString('userFistname') ?? null;
+  }
+  set userFistname( value) {
+    _prefs.setString('userFistname', value);
+  }
+  get userLastname{
+    return _prefs.getString('userLastname') ?? null;
+  }
+  set userLastname( value) {
+    _prefs.setString('userLastname', value);
+  }
 }

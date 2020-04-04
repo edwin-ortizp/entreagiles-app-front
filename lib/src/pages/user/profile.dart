@@ -102,6 +102,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
 Widget _purpleBar(UserModel user) {
+  prefs.userFistname = user.firstName;
+  prefs.userLastname = user.lastName;
     return ControlledAnimation(
       duration: Duration(milliseconds: 600),
       tween: Tween<double>(begin: 0, end: 150),
@@ -114,7 +116,7 @@ Widget _purpleBar(UserModel user) {
           child: ListView( children: <Widget>[
             ListTile(
               title: new Center (
-                child: Text(' ${user.firstName}',
+                child: Text(' ${user.firstName} ${user.lastName}',
                   style: (prefs.colorSecundario) ? TextStyle(color: Colors.white, fontSize: 30.0) :TextStyle(color: Colors.grey[400], fontSize: 30.0) 
                   ),
                 ),
@@ -159,8 +161,9 @@ Widget _circleAvatar(BuildContext context,color,user){
         image: DecorationImage(
            image: (user.imagePath == null || user.imagePath == "")
                   ? AssetImage('assets/banner.png')
-                  : NetworkImage(
-                      'https://scontent.fbog4-1.fna.fbcdn.net/v/t1.0-1/c27.0.160.160a/p160x160/47317608_4030223027020387_7188427802004160512_o.jpg?_nc_cat=104&_nc_sid=dbb9e7&_nc_ohc=hAmXaZqmR40AX-v9lUX&_nc_ht=scontent.fbog4-1.fna&oh=266c5d30bbe75bf0575fd7e555b04642&oe=5E9F7747'),
+                  // : NetworkImage(
+                  //     'https://scontent.fbog4-1.fna.fbcdn.net/v/t1.0-1/c27.0.160.160a/p160x160/47317608_4030223027020387_7188427802004160512_o.jpg?_nc_cat=104&_nc_sid=dbb9e7&_nc_ohc=hAmXaZqmR40AX-v9lUX&_nc_ht=scontent.fbog4-1.fna&oh=266c5d30bbe75bf0575fd7e555b04642&oe=5E9F7747'),
+                  : AssetImage('assets/user.png')
                       // 'https://novapixel.org/eureka/public/${user.imagePath}.jpg'),
               // fadeInDuration: Duration(microseconds: 60),
           // image: AssetImage('assets/images/finn.jpg'),

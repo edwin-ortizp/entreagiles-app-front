@@ -19,8 +19,31 @@ class ArticleShowPage extends StatelessWidget {
     final Article articleData = ModalRoute.of(context).settings.arguments;
     final Article sectionData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   title: Text('${articleData.name}',
+        //       style: (prefs.colorSecundario)
+        //           ? TextStyle(color: Colors.white)
+        //           : TextStyle(color: Colors.black)),
+        //   // backgroundColor: Colors.purple[400],
+        //   iconTheme: (prefs.colorSecundario)
+        //       ? new IconThemeData(color: Colors.white)
+        //       : new IconThemeData(color: Colors.black),
+        //   backgroundColor:
+        //       (prefs.colorSecundario) ? Colors.purple[400] : Colors.white
+        //   ),
+        //  body: HtmlWidget(
+        //   """
+        //   <html><body><br><iframe src="${articleData.video}" width="560" height="415"></iframe></body></html>
+        //   """,
+        //   webView: true,
+        // ),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            // Add the app bar to the CustomScrollView.
+            SliverAppBar(
+              // Provide a standard title.
+               centerTitle: true,
           title: Text('${articleData.name}',
               style: (prefs.colorSecundario)
                   ? TextStyle(color: Colors.white)
@@ -30,20 +53,18 @@ class ArticleShowPage extends StatelessWidget {
               ? new IconThemeData(color: Colors.white)
               : new IconThemeData(color: Colors.black),
           backgroundColor:
-              (prefs.colorSecundario) ? Colors.purple[400] : Colors.white
-          ),
-        //  body: HtmlWidget(
-        //   """
-        //   <html><body><br><iframe src="${articleData.video}" width="560" height="415"></iframe></body></html>
-        //   """,
-        //   webView: true,
-        // ),
-        body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                _video(articleData),
-                SizedBox(height: 15.0,),
+              (prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
+              floating: true,
+            ),
+            SliverList(
+              // Use a delegate to build items as they're scrolled on screen.
+              delegate: SliverChildBuilderDelegate(
+                //  _ppt(articleData),
+                // The builder function returns a ListTile with a title that
+                // displays the index of the current item.
+                // (context, index) =>  
+                //   _video(articleData),
+                // SizedBox(height: 15.0,),
                 // Text(articleData.name,style: TextStyle(fontSize: 25.0,color: Color(0XFFF004368)),),
                 // Divider(
                 //   indent:  15,
@@ -51,11 +72,46 @@ class ArticleShowPage extends StatelessWidget {
                 //   color: Color(0XFFF004368),
                 //   thickness: 2,
                 // ),
-                _content(articleData),
-                _ppt(articleData),
-              ],
+                // (context, index) =>   _content(articleData),
+                (context, index) =>    _video(articleData),
+                // Builds 1000 ListTiles
+                childCount: 1,
+              ),
             ),
-          ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) =>   _content(articleData),
+                childCount: 1,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) =>   _ppt(articleData),
+                childCount: 1,
+              ),
+            ),
+          ],
+
+
+
+        // SingleChildScrollView(
+        //   child: Container(
+        //     child: Column(
+        //       children: <Widget>[
+        //         _video(articleData),
+        //         SizedBox(height: 15.0,),
+        //         // Text(articleData.name,style: TextStyle(fontSize: 25.0,color: Color(0XFFF004368)),),
+        //         // Divider(
+        //         //   indent:  15,
+        //         //   endIndent: 15,
+        //         //   color: Color(0XFFF004368),
+        //         //   thickness: 2,
+        //         // ),
+        //         _content(articleData),
+        //         _ppt(articleData),
+        //       ],
+        //     ),
+        //   ),
         ),
         
                    );
@@ -70,9 +126,10 @@ class ArticleShowPage extends StatelessWidget {
 //     );
 // return  IFrameElement()
 return HtmlWidget(
+    (article.video != null && article.video != "")?
           """
-          <html><body><br><iframe width="460" height="415" src="${article.video}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></body></html>
-          """,
+          <iframe width="560" height="315" src="${article.video}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          """:"",
           // <html><body><br><iframe src="https://www.youtube.com/watch?v=AFR724bf_5I" width="560" height="415"></iframe></body></html>
           webView: true,
 
@@ -105,13 +162,21 @@ return Container(
 );
   }
   Widget _ppt(Article article){
+    var ppt = article.ppt;
+    if(ppt == null){
+      ppt = "";
+    }
     return Container(
   padding: EdgeInsets.all(15.0),
+  // height: 2000,
   child:   HtmlWidget(
   
             """
-  
-            ${article.ppt}
+               <div class="vimeo" align="center" id="ppt" style="background:#333;min-height:500px">
+            <br> ${ppt}
+            <hr>
+        </div>
+           
   
             """,
   
