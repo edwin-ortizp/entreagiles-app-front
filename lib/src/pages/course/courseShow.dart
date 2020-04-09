@@ -6,12 +6,21 @@ import 'package:QuizLab/src/providers/courseProvider.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
 
-class CourseShow extends StatelessWidget {
+class CourseShow extends StatefulWidget {
+  @override
+  _CourseShowState createState() => _CourseShowState();
+}
+
+class _CourseShowState extends State<CourseShow> {
   final prefs = new PreferencesUser();
+
   final coursesProvider = new CourseProvider();
+
   CourseModel course = new CourseModel();
+
   @override
   Widget build(BuildContext context) {
+    // super.initState();
     var height = MediaQuery.of(context).size.height;
     final CourseModel courseData = ModalRoute.of(context).settings.arguments;
     if (courseData != null) {
@@ -78,7 +87,7 @@ class CourseShow extends StatelessWidget {
                     subtitle: (course.course == "Belong") ? Text("${sections[i].name} (${sections[i].countCompleted}/${sections[i].countArticule})"):Text("${sections[i].name}"),
                     children: <Widget>[
                       GestureDetector(
-                        onTap:  () => Navigator.pushNamed(context, 'buttonBarBottomArticle',arguments: sections[i]),
+                        // onTap:  () => Navigator.pushNamed(context, 'buttonBarBottomArticle',arguments: sections[i]),
                         child: new Column(
                           children: _quizContent(context,sections[i]),
                         ),
@@ -95,7 +104,7 @@ class CourseShow extends StatelessWidget {
     );
   }
 
-  _quizContent(BuildContext context, Section section) {
+   _quizContent(BuildContext context, Section section) {
     List<Widget> quizContent = [];
     if (section.quizzes.isNotEmpty) {
       for (Quiz quiz in section.quizzes)
@@ -111,7 +120,10 @@ class CourseShow extends StatelessWidget {
       for (Article article in section.articles)
         quizContent.add(
           GestureDetector(
-            onTap:   () => (course.course == "Belong") ?Navigator.pushNamed(context, 'articleShow',arguments: article):{},
+            onTap:   () {
+              (course.course == "Belong") ? Navigator.pushNamed(context, 'articleShow',arguments : article):null;
+               (course.course == "Belong") ? coursesProvider.articleLoad(article.id.toString()): null;
+            },
             child: new ListTile(
               title: new Text("${article.name}"),
               leading: (article.video != null && article.video != "")
@@ -124,6 +136,9 @@ class CourseShow extends StatelessWidget {
           ),
         );
     }
+    //             setState(() {
+      
+    // });
     return quizContent;
   }
 }

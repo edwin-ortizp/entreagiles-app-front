@@ -52,11 +52,18 @@ class ArticleShowPage extends StatelessWidget {
           iconTheme: (prefs.colorSecundario)
               ? new IconThemeData(color: Colors.white)
               : new IconThemeData(color: Colors.black),
+                 // leading: IconButton(
+          //   tooltip: 'Previous choice',
+          //   icon: const Icon(Icons.arrow_back),
+          //   onPressed: () {
+          //    Navigator.of(context).popAndPushNamed('settings');
+          //   },
+          // ),
           backgroundColor:
               (prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
               floating: true,
             ),
-            SliverList(
+           SliverList(
               // Use a delegate to build items as they're scrolled on screen.
               delegate: SliverChildBuilderDelegate(
                 //  _ppt(articleData),
@@ -125,6 +132,8 @@ class ArticleShowPage extends StatelessWidget {
 //       javascriptMode: JavascriptMode.unrestricted,
 //     );
 // return  IFrameElement()
+if(article.video != null || article.video != ""){
+
 return HtmlWidget(
     (article.video != null && article.video != "")?
           """
@@ -134,6 +143,9 @@ return HtmlWidget(
           webView: true,
 
         );
+}else{
+  return null;
+}
   }
   Widget _content(Article article){
   // return  Container(
@@ -146,6 +158,7 @@ return HtmlWidget(
   //                       ),
   //             ),
   // );
+  if(article.content != null || article.content != ""){
 return Container(
   padding: EdgeInsets.all(15.0),
   child:   HtmlWidget(
@@ -160,22 +173,24 @@ return Container(
   
           ),
 );
+}else{
+  return null;
+}
   }
   Widget _ppt(Article article){
     var ppt = article.ppt;
     if(ppt == null){
       ppt = "";
     }
+     if(article.ppt != null || article.ppt != ""){
     return Container(
   padding: EdgeInsets.all(15.0),
   // height: 2000,
   child:   HtmlWidget(
   
             """
-               <div class="vimeo" align="center" id="ppt" style="background:#333;min-height:500px">
-            <br> ${ppt}
-            <hr>
-        </div>
+            ${ppt}
+        
            
   
             """,
@@ -184,18 +199,14 @@ return Container(
   
           ),
 );
+}else{
+  return null;
+}
   }
-  // Widget _ppt(Article article){
-  // return Container(
-  //           child: Card(
-  //             child: Html(data:"${article.p}",
-  //                 // style: TextStyle(
-  //                 //     fontSize: 12, color: Colors.purple),
-  //                 // overflow: TextOverflow.ellipsis,
-  //                 // maxLines: 3, 
-  //                     ),
-  //           ),
-  //         );
+  Widget _vacio(){
+  return Container(
+           child: Text('data'),
+          );
 
-  // }
+  }
 }

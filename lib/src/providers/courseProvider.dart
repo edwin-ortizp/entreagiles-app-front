@@ -9,9 +9,9 @@ import 'package:connectivity/connectivity.dart';
 class CourseProvider{
 final _prefs = new PreferencesUser();
 // Servidor
-final String _url = 'http://181.143.182.50:3000';
+// final String _url = 'http://181.143.182.50:3000';
 //android estudio
-//  final String _url = 'http://10.0.2.2:3000';
+ final String _url = 'http://10.0.2.2:3000';
 // red local
 // final String _url = 'http://192.168.1.132:3000';
 // http://localhost:3000/courses/1/mycourses?token=
@@ -80,5 +80,19 @@ Future<List<CourseModel>> missingCourses() async {
 
 }
 
+ Future<int> articleLoad(String article_id)async{
+    final authData ={
+
+      'article_id'     : article_id,
+      // 'password'  :password,
+      // 'token' :true
+    };
+
+    final url   = '$_url/article/?token=${_prefs.token}';
+    final resp  = await http.post(url,body: (authData));
+    //  final resp = await http.post(url,body: (authData));
+    // print(json.decode(resp.body));
+    return 1;
+  }
 
 }
