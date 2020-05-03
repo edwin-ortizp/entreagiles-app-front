@@ -3,6 +3,7 @@ import 'package:QuizLab/src/pages/course/ArticleShow.dart';
 import 'package:QuizLab/src/pages/course/courseIndex.dart';
 import 'package:QuizLab/src/pages/course/courseShow.dart';
 import 'package:QuizLab/src/pages/course/myCourseIndex.dart';
+import 'package:QuizLab/src/pages/course/pdfShow.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
 import 'package:QuizLab/src/pages/user/profile.dart';
 import 'package:QuizLab/src/pages/user/users_create.dart';
@@ -36,7 +37,8 @@ return <String, WidgetBuilder>{
         'myCourses' : ( BuildContext context ) => MyCourseIndex(),
         'courseShow' : ( BuildContext context ) => CourseShow(),
         'articleShow' : ( BuildContext context ) => ArticleShowPage(),
-        // 'conec' : ( BuildContext context ) => ConecPage(),
+        'conec' : ( BuildContext context ) => ConecPage(),
+        'pdfShow' : ( BuildContext context ) => PdfShow(),
       };
 }
 

@@ -46,7 +46,7 @@ class MenuSiderbarProfile extends StatelessWidget {
               leading: Icon(Icons.monetization_on,color: (prefs.colorSecundario) ?Colors.purple[400]:Colors.indigoAccent[700],),
               title: Text('Ganar monedas'),
               onTap: (){
-                Navigator.pushReplacementNamed(context, 'users');
+                Navigator.pushReplacementNamed(context, 'conec');
               } 
             ),
               ListTile(

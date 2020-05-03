@@ -1,13 +1,25 @@
 // llamado de dependencias
+import 'dart:async';
 import 'dart:convert';
 import 'package:QuizLab/src/models/Course.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:http/http.dart' as http;
-import 'package:connectivity/connectivity.dart';
+// import 'package:connectivity/connectivity.dart';
 
 
 class CourseProvider{
 final _prefs = new PreferencesUser();
+int _pageCourse = 0;
+
+// List<CourseModel> _missingCoursesSt new List();
+final _allCoursesStreamController = StreamController<List<CourseModel>>.broadcast(); 
+
+Function(List<CourseModel>) get allCoursesSink => _allCoursesStreamController.sink.add;
+Stream<List<CourseModel>> get allCoursesStream => _allCoursesStreamController.stream;
+
+void disposeStream(){
+  _allCoursesStreamController?.close();
+}
 // Servidor
 // final String _url = 'http://181.143.182.50:3000';
 //android estudio
@@ -22,6 +34,7 @@ Future<List<CourseModel>> courseForUser() async {
   final  decodedData = json.decode(resp.body);
   // print( decodedData);
     List datos = decodedData ['myCourse'];
+  print(datos.length);
   print(datos);
     final List<CourseModel> myCourses = new List ();
 
@@ -54,8 +67,9 @@ Future<List<CourseModel>> missingCourses() async {
   final  decodedData = json.decode(resp.body);
   // print( url);
     List datos = decodedData ['cursos'];
-  // print(datos);
-    final List<CourseModel> allCourses = new List ();
+  print(datos.length);
+    final List<CourseModel> _allCourses = new List ();
+    
 
     if( datos == null ) return [];
   if( datos.length == 0 || datos == null ) {
@@ -65,14 +79,16 @@ Future<List<CourseModel>> missingCourses() async {
   }
   print( "misccursos ${_prefs.noCourses}");
     datos.forEach(( course ){
+      // _pageCourse++;
       final myCoursesTemp = CourseModel.fromJson(course);
       // cursosTemp.id = cursos ['id'];
-      allCourses.add(myCoursesTemp);
+      _allCourses.add(myCoursesTemp);
+      
       
     });
-      // print(allCourses);
-     
-    return allCourses;
+      print(_pageCourse);
+     allCoursesSink(_allCourses);
+    return _allCourses;
      } else {
     // Si esta respuesta no fue OK, lanza un error.
     throw Exception('Failed to load post');

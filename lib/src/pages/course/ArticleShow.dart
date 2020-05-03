@@ -4,20 +4,23 @@ import 'package:QuizLab/src/models/Course.dart';
 import 'package:QuizLab/src/providers/courseProvider.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+// import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticleShowPage extends StatelessWidget {
   // const name({Key key}) : super(key: key);
+   @required
+  // final CourseModel curso;
+  
   final prefs = new PreferencesUser();
   final coursesProvider = new CourseProvider();
 
   @override
   Widget build(BuildContext context) {
+    // print("courses  ${curso}");
     final Article articleData = ModalRoute.of(context).settings.arguments;
-    final Article sectionData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         // appBar: AppBar(
         //   centerTitle: true,
@@ -52,13 +55,24 @@ class ArticleShowPage extends StatelessWidget {
           iconTheme: (prefs.colorSecundario)
               ? new IconThemeData(color: Colors.white)
               : new IconThemeData(color: Colors.black),
-                 // leading: IconButton(
-          //   tooltip: 'Previous choice',
-          //   icon: const Icon(Icons.arrow_back),
-          //   onPressed: () {
-          //    Navigator.of(context).popAndPushNamed('settings');
-          //   },
-          // ),
+                 leading: IconButton(
+            tooltip: 'Previous choice',
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+            Navigator.pop(context);
+            },
+          ),
+  // (course.course != "Belong") ?
+          //      actions: <Widget>[
+          //   IconButton(
+          //     icon: const Icon(Icons.add_shopping_cart),
+          //     tooltip: 'Comprar Curso',
+          //        onPressed: () {
+          //    Navigator.pushNamed(context, 'articleShow',arguments : articleData);
+          //     },
+          //   ),
+          // ],
+          // :[],
           backgroundColor:
               (prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
               floating: true,
@@ -91,12 +105,12 @@ class ArticleShowPage extends StatelessWidget {
                 childCount: 1,
               ),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) =>   _ppt(articleData),
-                childCount: 1,
-              ),
-            ),
+            // SliverList(
+            //   delegate: SliverChildBuilderDelegate(
+            //     (context, index) =>   _ppt(articleData),
+            //     childCount: 1,
+            //   ),
+            // ),
           ],
 
 
@@ -178,10 +192,11 @@ return Container(
 }
   }
   Widget _ppt(Article article){
-    var ppt = article.ppt;
+    var ppt = article.ppt.substring(12,2);
     if(ppt == null){
       ppt = "";
     }
+    print(article.ppt);
      if(article.ppt != null || article.ppt != ""){
     return Container(
   padding: EdgeInsets.all(15.0),
@@ -198,6 +213,7 @@ return Container(
             webView: true,
   
           ),
+          
 );
 }else{
   return null;

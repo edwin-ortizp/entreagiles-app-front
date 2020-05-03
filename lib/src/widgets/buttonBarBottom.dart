@@ -2,6 +2,7 @@ import 'package:QuizLab/src/pages/course/courseIndex.dart';
 import 'package:QuizLab/src/pages/home.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
 import 'package:QuizLab/src/pages/user/profile.dart';
+import 'package:QuizLab/src/providers/conex_provider.dart';
 // import 'package:QuizLab/src/pages/user/userIndex.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
@@ -81,8 +82,8 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
 
       // case 0: return HomePage();
       case 0: return HomePage();
-      case 1: return CourseIndex();
-      case 2: return ProfilePage();
+      // case 1: return ConecPage();
+      case 1: return ProfilePage();
       default:
       return SettingPage();
 
@@ -111,10 +112,10 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
             icon: Icon( Icons.home,size: 30.0,),
             title: Container(),
            ),
-           BottomNavigationBarItem(
-            icon: Icon( Icons.shopping_cart,size: 30.0,),
-            title: Container(),
-           ),
+          //  BottomNavigationBarItem(
+          //   icon: Icon( Icons.shopping_cart,size: 30.0,),
+          //   title: Container(),
+          //  ),
            BottomNavigationBarItem(
             icon: Icon( Icons.person_pin,size: 30.0,),
             title: Container(), 

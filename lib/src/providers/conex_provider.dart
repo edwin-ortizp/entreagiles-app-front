@@ -1,6 +1,6 @@
-// import 'dart:io'; //InternetAddress utility
-// import 'dart:async'; //For StreamController/Stream
-// import 'package:connectivity/connectivity.dart';
+import 'dart:io'; //InternetAddress utility
+import 'dart:async'; //For StreamController/Stream
+import 'package:connectivity/connectivity.dart';
 
 // class ConnectionStatusSingleton {
 //   //This creates the single instance by calling the `_internal` constructor specified below
@@ -56,7 +56,7 @@
 
 
 
-import 'package:connectivity/connectivity.dart';
+// import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 
 class ConecPage extends StatefulWidget {
@@ -76,13 +76,13 @@ class _ConecPageState extends State<ConecPage> {
       body: Center(
         child: RaisedButton(
           child: Text('Check connectivity'),
-          onPressed: _checkInternetConnectivity,
+          onPressed: checkInternetConnectivity,
         )
       )
     );
   }
 
-  _checkInternetConnectivity() async {
+  checkInternetConnectivity() async {
     var result = await Connectivity().checkConnectivity();
     if (result == ConnectivityResult.none) {
       _showDialog(

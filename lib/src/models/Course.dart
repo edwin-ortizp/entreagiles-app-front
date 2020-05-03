@@ -26,6 +26,7 @@ class CourseModel {
     dynamic top;
     dynamic carreraId;
     List<Teacher> teacher;
+    int pageCourse; 
     String course; 
     List<Section> sections;
     List<MySection> mySections;
@@ -52,6 +53,7 @@ class CourseModel {
         this.top,
         this.carreraId,
         this.teacher,
+        this.pageCourse,
         this.course,
         this.sections,
         this.mySections,
@@ -78,6 +80,7 @@ class CourseModel {
         top: json["top"],
         carreraId: json["carrera_id"],
         teacher: json["teacher"] != null ? new List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))) : List<Teacher>(),
+        pageCourse: json["pageCourse"],
         course: json["course"],
         sections: json["sections"] != null ? new List<Section>.from(json["sections"].map((x) => Section.fromJson(x))) : List<Section>(),
         mySections: json["mySections"] != null ? new List<MySection>.from(json["mySections"].map((x) => MySection.fromJson(x))):List<MySection>(),
@@ -99,6 +102,7 @@ class CourseModel {
         "top": top,
         "carrera_id": carreraId,
         "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
+        "pageCourse": pageCourse,
         "course": course,
         "sections": List<dynamic>.from(sections.map((x) => x.toJson())),
         "mySections": List<dynamic>.from(mySections.map((x) => x.toJson())),
@@ -214,9 +218,13 @@ class Article {
     dynamic menu;
     int order;
     String ppt;
+    String pdf;
     int userId;
     int sectionId;
     String status;
+    int pageArticule;
+    int courseId;
+
 
 
     Article({
@@ -227,9 +235,12 @@ class Article {
         this.menu,
         this.order,
         this.ppt,
+        this.pdf,
         this.userId,
         this.sectionId,
         this.status,
+        this.pageArticule,
+        this.courseId,
     });
 
     factory Article.fromJson(Map<String, dynamic> json) => Article(
@@ -240,9 +251,12 @@ class Article {
         menu: json["menu"],
         order: json["order"],
         ppt: json["ppt"],
+        pdf: json["pdf"],
         userId: json["user_id"],
         sectionId: json["section_id"],
         status: json["status"],
+        pageArticule: json["pageArticule"],
+        courseId: json["courseId"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -253,9 +267,12 @@ class Article {
         "menu": menu,
         "order": order,
         "ppt": ppt,
+        "pdf": pdf,
         "user_id": userId,
         "section_id": sectionId,
         "status": status,
+        "pageArticule": pageArticule,
+        "courseId": courseId,
     };
 }
 

@@ -3,44 +3,41 @@ import 'package:QuizLab/src/pages/home.dart';
 import 'package:QuizLab/src/providers/courseProvider.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+// import 'package:flutter_html/flutter_html.dart';
 
 class MyCourseIndex extends StatelessWidget {
-   double width;
-   final prefs = new PreferencesUser();
+  double width;
+  final prefs = new PreferencesUser();
   final coursesProvider = new CourseProvider();
   @override
   Widget build(BuildContext context) {
-     var width = MediaQuery.of(context).size.width;
+    var width = MediaQuery.of(context).size.width;
     //  print(width);
     return Scaffold(
         appBar: AppBar(
-        centerTitle: true,
-        title: Text('Courses',style:(prefs.colorSecundario) ? TextStyle(color: Colors.black):TextStyle(color: Colors.black)),
-        // backgroundColor: Colors.purple[400],
-        iconTheme:(prefs.colorSecundario) ? new IconThemeData(color: Colors.white): new IconThemeData(color: Colors.black),
-        backgroundColor:(prefs.colorSecundario) ? Colors.purple[400] : Colors.white
-      ),
-   body: SingleChildScrollView(
+            centerTitle: true,
+            title: Text('Courses',
+                style: (prefs.colorSecundario)
+                    ? TextStyle(color: Colors.black)
+                    : TextStyle(color: Colors.black)),
+            // backgroundColor: Colors.purple[400],
+            iconTheme: (prefs.colorSecundario)
+                ? new IconThemeData(color: Colors.white)
+                : new IconThemeData(color: Colors.black),
+            backgroundColor:
+                (prefs.colorSecundario) ? Colors.purple[400] : Colors.white),
+        body: SingleChildScrollView(
             child: Container(
           child: Column(
             children: <Widget>[
               SizedBox(height: 20),
-              // _categoryRow("Start a new career"),
-              // _courseList()
-              // _categoryRow("Start a new career"),
-              // _courseList(),
               _coursesLoad(context)
             ],
           ),
-        )
-      )
-      
-    );
+        )));
   }
 
-
-   Widget _circularContainer(double height, Color color,
+  Widget _circularContainer(double height, Color color,
       {Color borderColor = Colors.transparent, double borderWidth = 2}) {
     return Container(
       height: height,
@@ -52,6 +49,7 @@ class MyCourseIndex extends StatelessWidget {
       ),
     );
   }
+
 //menu de arriba
   Widget _categoryRow(String title) {
     return Container(
@@ -65,9 +63,8 @@ class MyCourseIndex extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               title,
-              style: TextStyle(
-                  color: Colors.purple,
-                  fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(
@@ -95,36 +92,6 @@ class MyCourseIndex extends StatelessWidget {
     );
   }
 
-  Widget _courseList() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _courceInfo(CourseList.list[0],
-                _decorationContainerA(Colors.redAccent, -110, -85),
-                background: Colors.blue),
-            Divider(
-              thickness: 1,
-              endIndent: 20,
-              indent: 20,
-            ),
-            _courceInfo(CourseList.list[1], _decorationContainerB(),
-                background: Colors.blue),
-            Divider(
-              thickness: 1,
-              endIndent: 20,
-              indent: 20,
-            ),
-            _courceInfo(CourseList.list[2], _decorationContainerC(),
-                background: Colors.orange[200]),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _card(
       {Color primaryColor = Colors.redAccent,
       String imgPath,
@@ -145,60 +112,7 @@ class MyCourseIndex extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(20)),
           child: backWidget,
-        )
-        );
-  }
-
-
-
-   Widget _card2(
-      {Color primaryColor = Colors.redAccent,
-      String imgPath,
-      Widget backWidget}) {
-    return Container(
-       height: 190,
-        width: 392.72727272727275 * .34,
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      // margin: EdgeInsets.only(right: 15.0),
-      child: Stack(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/cat-loading.gif'),
-              // , image: NetworkImage('https://novapixel.org/eureka/imgs/courses/$course.name.jpg'),
-              image: NetworkImage(
-                  'https://picsum.photos/200/300?random=1'),
-              fit: BoxFit.cover,
-              // width: 100.0,
-              height: 160.0,
-              width: 100,
-            ),
-          ),
-          SizedBox( height: 5.0,),
-          Container(
-            height: 160.0,
-            width: 100,
-             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-                color:Color.fromRGBO(37,37,233,0.29),
-              ),
-            child: Center(
-              // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
-              
-              // child: Text(
-              //   course.name,
-              //   // TextAlign.center,
-              //   overflow: TextOverflow.ellipsis,
-              //   // style: Theme.of(context).textTheme.caption,
-              //   style: TextStyle(color: Colors.white, fontSize: 11),textAlign: TextAlign.center,
-              // ),
-            ),
-          )
-        ],
-      ),
-      
-    );
+        ));
   }
 
   Widget _courceInfo(CourseModel model, Widget decoration, {Color background}) {
@@ -247,13 +161,10 @@ class MyCourseIndex extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
-                    )
-                    ),
+                    )),
                 SizedBox(height: 15),
                 Text(model.description,
-                    style: TextStyle(
-                        fontSize: 12, color: Colors.purple)
-                        ),
+                    style: TextStyle(fontSize: 12, color: Colors.purple)),
                 SizedBox(height: 15),
                 Row(
                   children: <Widget>[
@@ -287,93 +198,6 @@ class MyCourseIndex extends StatelessWidget {
     );
   }
 
-  Widget _decorationContainerA(Color primaryColor, double top, double left) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: top,
-          left: left,
-          child: CircleAvatar(
-            radius: 100,
-            backgroundColor: Colors.red,
-          ),
-        ),
-        _smallContainer(Colors.red, 40, 20),
-        Positioned(
-          top: -30,
-          right: -10,
-          child: _circularContainer(80, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-        Positioned(
-          top: 110,
-          right: -50,
-          child: CircleAvatar(
-            radius: 60,
-            backgroundColor: Colors.blue,
-            child:
-                CircleAvatar(radius: 40, backgroundColor: Colors.blue),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _decorationContainerB() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: -65,
-          left: -65,
-          child: CircleAvatar(
-            radius: 70,
-            backgroundColor: Colors.orange[200],
-            child: CircleAvatar(
-                radius: 30, backgroundColor: Colors.orange),
-          ),
-        ),
-        Positioned(
-            bottom: -35,
-            right: -40,
-            child:
-                CircleAvatar(backgroundColor: Colors.yellow, radius: 40)),
-        Positioned(
-          top: 50,
-          left: -40,
-          child: _circularContainer(70, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-      ],
-    );
-  }
-
-  Widget _decorationContainerC() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          bottom: -65,
-          left: -35,
-          child: CircleAvatar(
-            radius: 70,
-            backgroundColor: Color(0xfffeeaea),
-          ),
-        ),
-        Positioned(
-            bottom: -30,
-            right: -25,
-            child: ClipRect(
-                // clipper: QuadClipper(),
-                child: CircleAvatar(
-                    backgroundColor: Colors.yellow, radius: 40))),
-        _smallContainer(
-          Colors.yellow,
-          35,
-          70,
-        ),
-      ],
-    );
-  }
-
   Positioned _smallContainer(Color primaryColor, double top, double left,
       {double radius = 10}) {
     return Positioned(
@@ -392,76 +216,6 @@ class MyCourseIndex extends StatelessWidget {
         title: Text(""));
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   width = MediaQuery.of(context).size.width;
-  //   return Scaffold(
-  //       bottomNavigationBar: BottomNavigationBar(
-  //         showSelectedLabels: false,
-  //         showUnselectedLabels: false,
-  //         selectedItemColor: Colors.purple,
-  //         unselectedItemColor: Colors.grey.shade300,
-  //         type: BottomNavigationBarType.fixed,
-  //         currentIndex: 1,
-  //         items: [
-  //           _bottomIcons(Icons.home),
-  //           _bottomIcons(Icons.star_border),
-  //           _bottomIcons(Icons.book),
-  //           _bottomIcons(Icons.person),
-  //         ],
-  //         onTap: (index) {
-  //           Navigator.pushReplacement(
-  //               context, MaterialPageRoute(builder: (context) => HomePage()));
-  //         },
-  //       ),
-  //       body: SingleChildScrollView(
-  //           child: Container(
-  //         child: Column(
-  //           children: <Widget>[
-  //             // _header(context),
-  //             SizedBox(height: 20),
-  //             _categoryRow("Start a new career"),
-  //             _courseList()
-  //           ],
-  //         ),
-  //       )
-  //     )
-  //   );
-  // }
-
-
-  // Widget _coursesLoad() {
-  //   return FutureBuilder(
-  //     future: coursesProvider.allCourse(),
-  //     builder:
-  //         (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
-  //       if (snapshot.hasData) {
-  //         final allCourses = snapshot.data;
-  //         return SingleChildScrollView(
-  //     scrollDirection: Axis.vertical,
-  //     child: Container(
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.start,
-  //         children: <Widget>[
-           
-  //           Divider(
-  //             thickness: 1,
-  //             endIndent: 20,
-  //             indent: 20,
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  //       } else {
-  //         return Center(
-  //           child: CircularProgressIndicator(),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
-
   Widget _coursesLoad(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return FutureBuilder(
@@ -472,24 +226,23 @@ class MyCourseIndex extends StatelessWidget {
           final allCourses = snapshot.data;
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
-          child: Container(
-            height: height *1 -100,
-            child: ListView.builder(
-              
-              itemCount: allCourses.length,
-              itemBuilder: (context, i) => _courses(context, allCourses[i]),
-            // ),SizedBox(height: 10)
+            child: Container(
+              height: height * 1 - 100,
+              child: ListView.builder(
+                itemCount: allCourses.length,
+                itemBuilder: (context, i) => _courses(context, allCourses[i]),
+                // ),SizedBox(height: 10)
 
-              //  _courceInfo(CourseList.list[0],
-              //   _decorationContainerA(Colors.redAccent, -110, -85),
-              //   background: Colors.blue),
-            //    Divider(
-            //   thickness: 1,
-            //   endIndent: 20,
-            //   indent: 20,
-            // ),
-            ),
-            // child: Column(),
+                //  _courceInfo(CourseList.list[0],
+                //   _decorationContainerA(Colors.redAccent, -110, -85),
+                //   background: Colors.blue),
+                //    Divider(
+                //   thickness: 1,
+                //   endIndent: 20,
+                //   indent: 20,
+                // ),
+              ),
+              // child: Column(),
             ),
           );
         } else {
@@ -515,208 +268,159 @@ class MyCourseIndex extends StatelessWidget {
   //             indent: 20,
   //           ),
 
-    Widget _courses(BuildContext context, CourseModel course,) {
-         final width = MediaQuery.of(context).size.width;
+  Widget _courses(
+    BuildContext context,
+    CourseModel course,
+  ) {
+    final width = MediaQuery.of(context).size.width;
 
-    return Column(
-       children: <Widget>[
-      Container(
-          height: 200,
-          width: width - 20,
-        // margin: EdgeInsets.only(right: 15.0),
-        child: Row(
-            children: <Widget>[
-              AspectRatio(
-                aspectRatio: .7,
-                child:  Container(
-         height: 190,
-          width: width * .34,
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        // margin: EdgeInsets.only(right: 15.0),
-        child: Stack(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: FadeInImage(
-                placeholder: AssetImage('assets/cargando1.gif'),
-                image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
-                    // 'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
-                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
-                fit: BoxFit.cover,
-                // width: 100.0,
-                height: 160.0,
-                width: 100,
-              ),
-            ),
-            SizedBox( height: 5.0,),
-            Container(
-              height: 160.0,
-              width: 100,
-               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                  color:Color.fromRGBO(37,37,233,0.29),
-                ),
-              child: Center(
-                // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
-                
-                // child: Text(
-                //   course.name,
-                //   // TextAlign.center,
-                //   overflow: TextOverflow.ellipsis,
-                //   // style: Theme.of(context).textTheme.caption,
-                //   style: TextStyle(color: Colors.white, fontSize: 11),textAlign: TextAlign.center,
-                // ),
-              ),
-            )
-          ],
-        ),
-        
-      ),
-                
-                // _card2(primaryColor: Colors.red, ),
-              ),
-              Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  
-                  SizedBox(height: 15),
-                  Container(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, 'courseShow', arguments: course);
+      },
+      child: Column(children: <Widget>[
+        Container(
+            height: 200,
+            width: width - 20,
+            // margin: EdgeInsets.only(right: 15.0),
+            child: Row(
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: .7,
+                  child: Container(
+                    height: 190,
+                    width: width * .34,
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    // margin: EdgeInsets.only(right: 15.0),
+                    child: Stack(
                       children: <Widget>[
-                        Expanded(
-                          child: Text(course.name,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: FadeInImage(
+                            placeholder: AssetImage('assets/cargando1.gif'),
+                            image: (course.imagePath == null ||
+                                    course.imagePath == "")
+                                ? AssetImage('assets/banner.png')
+                                : NetworkImage(
+                                    // 'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
+                                    'https://quizlab.app/public/img/courses/${course.name}.jpg'),
+                            fit: BoxFit.cover,
+                            // width: 100.0,
+                            height: 160.0,
+                            width: 100,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Container(
+                          height: 160.0,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Color.fromRGBO(37, 37, 233, 0.29),
+                          ),
+                          child: Center(
+                              // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
+
+                              // child: Text(
+                              //   course.name,
+                              //   // TextAlign.center,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   // style: Theme.of(context).textTheme.caption,
+                              //   style: TextStyle(color: Colors.white, fontSize: 11),textAlign: TextAlign.center,
+                              // ),
+                              ),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  // _card2(primaryColor: Colors.red, ),
+                ),
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 15),
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              course.name,
                               style: TextStyle(
                                   color: Colors.purple,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
-                                   overflow: TextOverflow.ellipsis,
-                              maxLines: 3,),
-                        ),
-                        CircleAvatar(
-                          radius: 3,
-                          backgroundColor:Colors.blue,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('${course.sections.length} secciones',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            )),
-                        SizedBox(width: 10)
-                      ],
-                    ),
-                  ),
-                   Text((course.teacher[0] != null) ?'Instructor: ${course.teacher[0].firstName} ${course.teacher[0].lastName}':'Instructor: SIn asignar',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      )
-                      ),
-                      // Text('${course.teacher[0].email}',
-                      //  style: TextStyle(
-                      //   fontSize: 12,
-                      //   color: Colors.grey,
-                      // )),
-                      
-                  SizedBox(height: 15),
-                    //  Popup(
-                // content: getSampleBox1(CrossAxisAlignment.start,course,),
-                // child: Icon(Icons.info),
-                    // GestureDetector(
-                    //   onTap:
-                    //   () => _pupPop(context,course) ,
-                      
-                      // Tooltip(
-                      //   message: 'sdjalsjdslka',
-                        // child:my
-                         Tooltip(
-                           
-                           message: '${course.description}',
-                           verticalOffset: 48,
-                           height: 24,
-                           child: Text("${course.description}",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.grey[700]),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 3,
-                              
-                                  ),
-                         ),
-                                  //  _pupPop(context,course),
-                      // ),
-                              // new Tooltip(message: "Hello World", child: new Text("foo")),
-                    // ),
-              // ),
-
-                   /**Parta poder leer  codigo html */
-                    // Container(
-                    //   child: Html(data:"${course.description}",
-                    //       // style: TextStyle(
-                    //       //     fontSize: 12, color: Colors.purple),
-                    //       // overflow: TextOverflow.ellipsis,
-                    //       // maxLines: 3, 
-                    //           ),
-                    // ),
-
-                  SizedBox(height: 15),
-                  Row(
-                    children: <Widget>[
-                      // _chip("Ver", Colors.purple[700], height: 5),
-                      SizedBox(
-                        width: 10,
+                            ),
+                          ),
+                          CircleAvatar(
+                            radius: 3,
+                            backgroundColor: Colors.blue,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text('${course.sections.length} secciones',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              )),
+                          SizedBox(width: 10)
+                        ],
                       ),
-                      // _chip("model.tag2", Colors.blue, height: 5),
-                    ],
-                  ),
-                ],
-              )),
-            ],
-          )
-      ),
-          Divider(
-              thickness: 1,
-              endIndent: 20,
-              indent: 20,
-            ),
-       ]
+                    ),
+                    Text(
+                        (course.teacher[0] != null)
+                            ? 'Instructor: ${course.teacher[0].firstName} ${course.teacher[0].lastName}'
+                            : 'Instructor: SIn asignar',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        )),
+                    // Text('${course.teacher[0].email}',
+                    //  style: TextStyle(
+                    //   fontSize: 12,
+                    //   color: Colors.grey,
+                    // )),
+
+                    SizedBox(height: 15),
+                    Tooltip(
+                      message: '${course.description}',
+                      verticalOffset: 48,
+                      height: 24,
+                      child: Text(
+                        "${course.description}",
+                        style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                      ),
+                    ),
+
+                    SizedBox(height: 15),
+                    Row(
+                      children: <Widget>[
+                        // _chip("Ver", Colors.purple[700], height: 5),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        // _chip("model.tag2", Colors.blue, height: 5),
+                      ],
+                    ),
+                  ],
+                )),
+              ],
+            )),
+        Divider(
+          thickness: 1,
+          endIndent: 20,
+          indent: 20,
+        ),
+      ]),
     );
-              
   }
-  //  Widget getSampleBox1(CrossAxisAlignment align,CourseModel course,) {
-  //   return Container(
-  //     child: Column(
-  //       crossAxisAlignment: align,
-  //       children: <Widget>[
-  //         Text(
-  //           '${course.description}',
-  //           style: TextStyle(fontSize: 12, color: Colors.purple),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-    Widget _pupPop(BuildContext context,course){
-
-
-       Tooltip(message: 'sjdhaksdhk',);
-    }
-
-  //  _teacher(BuildContext context, Teacher teacher) {
-  //   List<Widget> teacherContent = [];
-  //   if (teacher != null) {
-  //     for (Quiz quiz in teacher)
-  //       teacherContent.add(
-  //         new ListTile(
-  //           title: new Text("${quiz.title}"),
-  //           leading: Icon(Icons.description, color: Colors.blueAccent),
-  //           subtitle: Text('subtitulo'),
-  //           trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey),
-  //         ),
-  //       );
-  //   }
 }

@@ -1,24 +1,83 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:QuizLab/src/models/Course.dart';
+import 'package:QuizLab/src/providers/conex_provider.dart';
 import 'package:QuizLab/src/providers/courseProvider.dart';
+import 'package:QuizLab/src/utils/courses_bloc.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
+import 'package:QuizLab/src/validations/provider.dart';
 import 'package:QuizLab/src/widgets/menuSiderbar.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 
 import 'package:QuizLab/src/pages/auth/login.dart';
 import 'package:QuizLab/src/providers/menuProvider.dart';
 import 'package:QuizLab/src/utils/iconStringUtil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+  // final Function nextAllCourses;
+}
+
+class _HomePageState extends State<HomePage> {
   final prefs = new PreferencesUser();
+
   final coursesProvider = new CourseProvider();
-  // static final String routeName = 'home';
+  final _pageController = new PageController(
+    initialPage: 1,
+    viewportFraction: 0.3
+    );
+
+ Future<void> _launched;
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  // checkInternetConnectivity();
+    if(prefs.noCourses == null){
+  //     // Navigator.of(context).pushNamed("home");
+  // //       Timer.run(() {
+  // //   Navigator.of(context).pushNamed("buttonBarBottom");
+  // // });
+  // final duration = new Duration( seconds:2);
+    Timer.run((){
+     _preLoading(context);
+  //     // Navigator.pushNamed(context, 'courses');
+  //     // Navigator.of(context).pushNamed("buttonBarBottom");
+  //     // bool _isLoading = true;
+  //     // setState(() { });
+    });
+    }
+  
+    // _myCoursesLoad();
+    _allCoursesLoad();
+    // setState(() {
+    // _myCoursesLoad();
+    // _allCoursesLoad();
+      
+    // });
+  // var  mycourses=  coursesProvider.courseForUser();
+  // var  nocourses=  coursesProvider.missingCourses();
+  // var myCourses = prefs.myCourses;
+    // _scrollController.addListener((){
+    //   if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent)
+    //   // _agregar10();
+    //   fetchData();
+    // }
+    // );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // final myCoursesBloc = Provider.myCoursesBloc(context);
+    // myCoursesBloc.cargarCurso();
+    coursesProvider.missingCourses();
+    coursesProvider.courseForUser();
     // Se utilizan para poder activar la funcion del course
-  var  mycourses=  coursesProvider.courseForUser();
-  var  nocourses=  coursesProvider.missingCourses();
+  // print("no cursos ${nocourses}");
     print("${prefs.myCourses}");
     // prefs.ultimaPagina = HomePage.routeName;
     return Scaffold(
@@ -48,12 +107,12 @@ class HomePage extends StatelessWidget {
             // Se cargar los widgets necesarios en el body 
             _cardUser(),
             _colum1(),
-            (prefs.myCourses == true )? _carouselHead("Mis Cursos", Colors.indigoAccent[700], Colors.orange,context, 'myCourses'):Text(''),
+            (prefs.myCourses == true )? _carouselHead("Mis Cursos", Colors.indigoAccent[700], Colors.orange,context, 'myCourses'):(prefs.myCourses == null )?Text(''):Text(''),
             SizedBox(height: 15.0,),
-            (prefs.myCourses == true )?_myCoursesLoad():_cardNull(),
-            (prefs.myCourses == true )?_carouselHead("Todos los Cursos", Colors.purpleAccent[700],Colors.orange, context, 'courses'):Text(''),
-            SizedBox(height: 15.0,),
-            (prefs.myCourses == true )?_allCoursesLoad():_cardNull(),
+            (prefs.myCourses  == true)?_myCoursesLoad():(prefs.myCourses == null )?Text(''):_cardNull(),
+            // (prefs.noCourses == true )?_carouselHead("Todos los Cursos", Colors.purpleAccent[700],Colors.orange, context, 'courses'):(prefs.noCourses == null )?Text(''):Text(''),
+            // SizedBox(height: 15.0,),
+            // (prefs.noCourses  == true)?_allCoursesLoad():(prefs.noCourses == null )?Text(''):_allCourses(),
           ],
         ),
       ),
@@ -95,9 +154,7 @@ class HomePage extends StatelessWidget {
     });
     return opciones;
   }
-  /*
-   *Se utiliza para manter alineado  las dos targetas  
-   */
+
   Widget _colum1() {
     return Table(
       children: [
@@ -109,9 +166,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  /*
-   *Card de tu ranking
-   */
   Widget _cardRanking() {
     return Container(
       height: 100.0,
@@ -133,9 +187,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  /*
-   *Card de  erurocoins 
-   */
   Widget _cardCoins() {
     return Container(
       height: 100.0,
@@ -157,9 +208,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  /*
-   *Card para mostrar cuando el usuario no tiene cursos 
-   */
   Widget _cardNull() {
     return Column(
       children: <Widget>[
@@ -169,15 +217,19 @@ class HomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0)),
             child: Column(children: <Widget>[
               ListTile(
-                leading: Icon(Icons.photo_album, color: Colors.purple[400]),
-                title: Text('Titulo De la card'),
-                subtitle: Text('Esto es un texto para ver como se ve la card'),
+                leading: Icon(Icons.do_not_disturb_alt, color:(prefs.colorSecundario) ?  Colors.purple[400]:Colors.indigoAccent[700]),
+                title: Text('Ushhh  no tienes cursos !!'),
+                subtitle: Text('Por favor dale click en ir  para adquirir nuevos cursos'),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  FlatButton(onPressed: () {}, child: Text('Cancelar')),
-                  FlatButton(onPressed: () {}, child: Text('OK'))
+                  // FlatButton(onPressed: () {}, child: Text('Cancelar')),
+                  FlatButton(
+                    onPressed: () => setState(() {
+                     _launched = _launchInBrowser('https://novapixel.org/eureka/public/more-courses');
+                }),
+                     child: Text('ir'))
                 ],
               )
             ]))
@@ -185,9 +237,20 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  /*
-   *Card para mostrar el nombre del usuario
-   */
+  Widget _allCourses(){
+      return Center(
+        
+                          child: Text("Ya tienes todos los cursos",
+                              style: TextStyle(
+                                  color:(prefs.colorSecundario) ?  Colors.purple[400]:Colors.indigoAccent[700],
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                                   overflow: TextOverflow.ellipsis,
+                              maxLines: 3,),
+                        );
+  }
+
   Widget _cardUser() {
     return Column(
       children: <Widget>[
@@ -220,10 +283,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  /*
-   *se cargar  los  cursos que Tiene el usuario usuario
-   * mediante el builder se cargar y  gracias al leng del objeto se pueden estraer de uno en uno  mediante  [i]
-   */
   Widget _myCoursesLoad() {
     return FutureBuilder(
       future: coursesProvider.courseForUser(),
@@ -232,6 +291,7 @@ class HomePage extends StatelessWidget {
         if (snapshot.hasData) {
           final myCourses = snapshot.data;
           print(myCourses.length);
+
           return Container(
             height: 150.2,
             child: PageView.builder(
@@ -252,136 +312,304 @@ class HomePage extends StatelessWidget {
       },
     );
   }
-  /*
-   *se cargar  los  cursos qu ele faltan al usuario
-   * mediante el builder se cargar y  gracias al leng del objeto se pueden estraer de uno en uno  mediante  [i]
-   */
+
   Widget _allCoursesLoad() {
-    return FutureBuilder(
-      future: coursesProvider.missingCourses(),
+    return StreamBuilder(
+      stream: coursesProvider.allCoursesStream,
       builder:
           (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
         if (snapshot.hasData) {
           final allCourses = snapshot.data;
-          return Container(
-            height: 150.2,
-            child: PageView.builder(
-              pageSnapping: true,
-              // reverse:true,
-              // physics:ScrollPhysics(),
-              controller: PageController(
-                initialPage: 3,
-                viewportFraction: 0.3,
-              ),
-              itemCount: allCourses.length,
-              itemBuilder: (context, i) => _courses(context, allCourses[i]),
-            ),
-          );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    );
-  }
+          nextAllCourses: coursesProvider.missingCourses;
+          _pageController.addListener((){
+            if (_pageController.position.pixels >= _pageController.position.maxScrollExtent - 200){
+            nextAllCourses();
+                        }
+                      });
+                      return Container(
+                        height: 150.2,
+                        child: PageView.builder(
+                          pageSnapping: true,
+                          // reverse:true,
+                          // physics:ScrollPhysics(),
+                          // controller: PageController(
+                          //   initialPage: 3,
+                          //   viewportFraction: 0.3,
+                          // ),
+                          controller: _pageController,
+                          itemCount: allCourses.length,
+                          itemBuilder: (context, i) => _courses(context, allCourses[i]),
+                        ),
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                );
+              }
+            
+              Widget _courses(BuildContext context, CourseModel course) {
+                return Container(
+                  margin: EdgeInsets.only(right: 15.0),
+                  child: GestureDetector(
+                    onTap:  () {
+                      // Navigator.pushNamed(context, 'courseShow',arguments: course);
+                      setState(() {
+                        
+                      checkInternetConnectivity(course);
+                      });
+                    },
+                    child: Stack(
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: FadeInImage(
+                            placeholder: AssetImage('assets/cargando1.gif'),
+                            image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
+                                'https://quizlab.app/public/img/courses/${course.name}.jpg'),
+                                // 'https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg'),
+                            fit: BoxFit.cover,
+                            // width: 100.0,
+                            height: 120.0,
+                            width: 100,
+                          ),
+                        ),
+                        SizedBox( height: 5.0,),
+                        Container(
+                          height: 120.0,
+                          width: 100,
+                           decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                              color:Color.fromRGBO(37,37,233,0.29),
+                            ),
+                          child: Center(
+                            // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
+                            
+                            child: Text(
+                              course.name,
+                              // TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              // style: Theme.of(context).textTheme.caption,
+                              style: TextStyle(color: Colors.white, fontSize: 11),textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }
+            
+              Widget _carouselButton(
+                  String text, Color textColor, BuildContext context, String route,
+                  {double height = 0, bool isPrimaryCard = false}) {
+                return GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, route),
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color: textColor.withAlpha(isPrimaryCard ? 200 : 50),
+                    ),
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                          color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
+                    ),
+                  ),
+                );
+              }
+            
+              Widget _carouselHead(
+                String title,
+                Color primary,
+                Color textColor,
+                BuildContext context,
+                String route,
+              ) {
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  height: 30,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                         _carouselButton("Ver todos", primary, context, route)
+                    ],
+                  ),
+                );
+              }
+                 Future<void> _launchInBrowser(String url) async {
+                if (await canLaunch(url)) {
+                  await launch(
+                    url,
+                    forceSafariVC: false,
+                    forceWebView: false,
+                    headers: <String, String>{'my_header_key': 'my_header_value'},
+                  );
+                } else {
+                  throw 'Could not launch $url';
+                }
+              }
+            
+              void nextAllCourses() {}
+    void _preLoading(BuildContext context){
+    
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context){
 
-/*
- *Se cargar el courso  en unidad en el widget   
- * Course de tipo CourseModel El es list del course
- */
-  Widget _courses(BuildContext context, CourseModel course) {
-    return Container(
-      margin: EdgeInsets.only(right: 15.0),
-      child: GestureDetector(
-        onTap:  () => Navigator.pushNamed(context, 'courseShow',arguments: course),
-        child: Stack(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: FadeInImage(
-                placeholder: AssetImage('assets/cargando1.gif'),
-                image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
-                    'https://novapixel.org/eureka/public/img/courses/${course.name}.jpg'),
-                fit: BoxFit.cover,
-                // width: 100.0,
-                height: 120.0,
-                width: 100,
-              ),
+        return GestureDetector(
+                  child: AlertDialog(
+            shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            title:  Text('Danos un momento '),
+            content:  Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Estamos Cargando tus datos'),
+                // FlutterLogo(size: 100.0,),
+                SizedBox(height: 30.0),
+                FadeInImage(
+                  image: NetworkImage('assets/cat-loading.gif'),
+                  placeholder:AssetImage('assets/robot-loading.gif') ,
+                  fadeInDuration: Duration(milliseconds: 200),
+                  height: 100.0,
+                  fit: BoxFit.cover,
+                  )
+              ],
             ),
-            SizedBox( height: 5.0,),
-            Container(
-              height: 120.0,
-              width: 100,
-               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                  color:Color.fromRGBO(37,37,233,0.29),
-                ),
-              child: Center(
-                // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
-                
-                child: Text(
-                  course.name,
-                  // TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  // style: Theme.of(context).textTheme.caption,
-                  style: TextStyle(color: Colors.white, fontSize: 11),textAlign: TextAlign.center,
-                ),
-              ),
+            // actions: <Widget>[
+            //   FlatButton(onPressed:  () => refresh(), child: Text('ok'),textColor: Colors.purple[300],),
+            //   // FlatButton(onPressed: () {Navigator.of(context).pop();}, child: Text('OK'),textColor: Colors.purple[300],)
+            // ],
+          ),
+        );
+      }
+       );
+        setState(() {
+           refresh();
+
+         });
+  }
+    void _noConection(BuildContext context){
+    
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context){
+
+        return GestureDetector(
+                  child: AlertDialog(
+            shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            title:  Text('Danos un momento '),
+            content:  Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Estamos Cargando tus datos'),
+                // FlutterLogo(size: 100.0,),
+                SizedBox(height: 30.0),
+                FadeInImage(
+                  image: NetworkImage('assets/cat-loading.gif'),
+                  placeholder:AssetImage('assets/robot-loading.gif') ,
+                  fadeInDuration: Duration(milliseconds: 200),
+                  height: 100.0,
+                  fit: BoxFit.cover,
+                  )
+              ],
+            ),
+             actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             )
           ],
-        ),
-      ),
-    );
-  }
-
-/*
- *Se crea el botonde de ver todos 
- */
-  Widget _carouselButton(
-      String text, Color textColor, BuildContext context, String route,
-      {double height = 0, bool isPrimaryCard = false}) {
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, route),
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          color: textColor.withAlpha(isPrimaryCard ? 200 : 50),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-              color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
-        ),
-      ),
-    );
-  }
-
-/*
- *Se crea el letrero que acompaña los  caruseles (Mis coursos) 
- */
-  Widget _carouselHead(
-    String title,
-    Color primary,
-    Color textColor,
-    BuildContext context,
-    String route,
-  ) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      height: 30,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            // actions: <Widget>[
+            //   FlatButton(onPressed:  () => refresh(), child: Text('ok'),textColor: Colors.purple[300],),
+            //   // FlatButton(onPressed: () {Navigator.of(context).pop();}, child: Text('OK'),textColor: Colors.purple[300],)
+            // ],
           ),
-             _carouselButton("Ver todos", primary, context, route)
-        ],
-      ),
+        );
+      }
+       );
+        setState(() {
+           refresh();
+
+         });
+  }
+    Future<Null> refresh()async{
+    final duration = new Duration( seconds:3);
+    new Timer(duration, (){
+      // Navigator.pushNamed(context, 'courses');
+      Navigator.of(context).pushNamed("buttonBarBottom");
+      // bool _isLoading = true;
+      // setState(() { });
+    });
+    return Future.delayed(duration);
+  }
+
+  //   checkInternetConnectivity() async {
+  //   var result = await Connectivity().checkConnectivity();
+  //   if (result == ConnectivityResult.mobile) {
+  //     _noConection(context);
+  //   }
+  // }
+
+
+  checkInternetConnectivity(course) async {
+    var result = await Connectivity().checkConnectivity();
+    if (result == ConnectivityResult.none) {
+      _showDialog();
+    } else{
+      Navigator.pushNamed(context, 'courseShow',arguments: course);
+    }
+    
+  }
+
+  _showDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+                  child: AlertDialog(
+            shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            title:  Text('!!Sin Conexión a internet!!'),
+            content:  Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                // Text('Estamos Cargando tus datos'),
+                // FlutterLogo(size: 100.0,),
+                SizedBox(height: 30.0),
+                FadeInImage(
+                  image: NetworkImage('assets/cat-loading.gif'),
+                  placeholder:AssetImage('assets/sinconexion.gif') ,
+                  fadeInDuration: Duration(milliseconds: 200),
+                  height: 100.0,
+                  fit: BoxFit.cover,
+                  )
+              ],
+            ),
+             actions: <Widget>[
+            FlatButton( 
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          ),
+        );
+      }
     );
   }
+ 
 }

@@ -1,3 +1,4 @@
+import 'package:QuizLab/src/utils/courses_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:QuizLab/src/validations/loginBloc.dart';
@@ -6,6 +7,8 @@ export 'package:QuizLab/src/validations/loginBloc.dart';
 
 
 class Provider extends InheritedWidget {
+
+  final _coursesbloc = new MyCoursesBloc();
 
   static Provider _instancia;
 
@@ -34,6 +37,9 @@ class Provider extends InheritedWidget {
 
   static LoginBloc of ( BuildContext context ) {
     return ( context.inheritFromWidgetOfExactType(Provider) as Provider ).loginBloc;
+  }
+  static MyCoursesBloc myCoursesBloc ( BuildContext context ) {
+    return ( context.inheritFromWidgetOfExactType(Provider) as Provider )._coursesbloc;
   }
 
 }
