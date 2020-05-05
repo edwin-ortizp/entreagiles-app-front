@@ -1,4 +1,4 @@
-package com.example.apk_eureka
+package app.apk_quizLab
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

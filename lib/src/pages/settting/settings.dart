@@ -2,7 +2,6 @@ import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../widgets/menuSiderbar.dart';
 
 class SettingPage extends StatefulWidget {
   // static final String routeName = 'settings';
@@ -43,7 +42,6 @@ class _SettingPageState extends State<SettingPage> {
         iconTheme:(prefs.colorSecundario) ? new IconThemeData(color: Colors.white): new IconThemeData(color: Colors.black),
         backgroundColor:(prefs.colorSecundario) ? Colors.purple[400] : Colors.white
       ),
-      drawer: MenuSiderbar(),
       body: ListView(
         children: <Widget>[
           Container(

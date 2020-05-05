@@ -21,9 +21,9 @@ void disposeStream(){
   _allCoursesStreamController?.close();
 }
 // Servidor
-// final String _url = 'http://181.143.182.50:3000';
+final String _url = 'http://54.149.151.17:3000';
 //android estudio
- final String _url = 'http://10.0.2.2:3000';
+//  final String _url = 'http://10.0.2.2:3000';
 // red local
 // final String _url = 'http://192.168.1.132:3000';
 // http://localhost:3000/courses/1/mycourses?token=
@@ -32,10 +32,7 @@ Future<List<CourseModel>> courseForUser() async {
   final resp = await http.get(url);
    if (resp.statusCode == 200) {
   final  decodedData = json.decode(resp.body);
-  // print( decodedData);
     List datos = decodedData ['myCourse'];
-  print(datos.length);
-  print(datos);
     final List<CourseModel> myCourses = new List ();
 
     if( datos == null ) return null;
@@ -44,14 +41,10 @@ Future<List<CourseModel>> courseForUser() async {
   } else{
     _prefs.myCourses= true;
   }
-    // _prefs.myCourses= true;
     datos.forEach(( myCourse ){
       final myCoursesTemp = CourseModel.fromJson(myCourse);
-      // cursosTemp.id = cursos ['id'];
       myCourses.add(myCoursesTemp);
-      
     });
-      // print(myCourses);
      
     return myCourses;
     } else {
@@ -65,11 +58,8 @@ Future<List<CourseModel>> missingCourses() async {
   final resp = await http.get(url);
    if (resp.statusCode == 200) {
   final  decodedData = json.decode(resp.body);
-  // print( url);
     List datos = decodedData ['cursos'];
-  print(datos.length);
     final List<CourseModel> _allCourses = new List ();
-    
 
     if( datos == null ) return [];
   if( datos.length == 0 || datos == null ) {
@@ -77,16 +67,12 @@ Future<List<CourseModel>> missingCourses() async {
   } else{
     _prefs.noCourses= true;
   }
-  print( "misccursos ${_prefs.noCourses}");
+  // print( "misccursos ${_prefs.noCourses}");
     datos.forEach(( course ){
-      // _pageCourse++;
       final myCoursesTemp = CourseModel.fromJson(course);
-      // cursosTemp.id = cursos ['id'];
       _allCourses.add(myCoursesTemp);
-      
-      
     });
-      print(_pageCourse);
+    
      allCoursesSink(_allCourses);
     return _allCourses;
      } else {

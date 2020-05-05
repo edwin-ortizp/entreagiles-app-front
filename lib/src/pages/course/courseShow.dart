@@ -34,34 +34,6 @@ class _CourseShowState extends State<CourseShow> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    
-
-
-  //  _loadSections();
-  // final coursesProvider = new CourseProvider();
-  // _loadSections.onWrite();
-  // setState(() {
-  //   // myCoursesBloc.courseForUser;
-  // //  _loadSections();
-  // });
-  //    setState(() {
-        
-  //     });
-  //  if(refreshw == false){
-  // //     // Navigator.of(context).pushNamed("home");
-  // // //       Timer.run(() {
-  // // //   Navigator.of(context).pushNamed("buttonBarBottom");
-  // // // });
-  // // final duration = new Duration( seconds:2);
-  //   Timer.run((){
-  //    refresh();
-  //    _agregar6();
-  //     Navigator.pushNamed(context, 'courseShow',arguments: course);
-  // //     // Navigator.of(context).pushNamed("buttonBarBottom");
-  // //     // bool _isLoading = true;
-  // //     // setState(() { });
-  //   });
-  //   }
   }
   @override
   Widget build(BuildContext context) {
@@ -149,7 +121,8 @@ class _CourseShowState extends State<CourseShow> {
                       color: Colors.indigoAccent[700],
                     ),
                     title: new Text('Sección ${i + 1}'),
-                    subtitle: (course.course == "Belong") ? Text("${sections[i].name} (${sections[i].countCompleted}/${sections[i].countArticule})"):Text("${sections[i].name}"),
+                    // subtitle: (course.course == "Belong") ? Text("${sections[i].name} (${sections[i].countCompleted}/${sections[i].countArticule})"):Text("${sections[i].name}"),
+                    subtitle: (course.course == "Belong") ? Text("${sections[i].name} "):Text("${sections[i].name}"),
                     children: <Widget>[
                       GestureDetector(
                         // onTap:  () => Navigator.pushNamed(context, 'buttonBarBottomArticle',arguments: sections[i]),
@@ -172,23 +145,9 @@ class _CourseShowState extends State<CourseShow> {
    quizContent(BuildContext context, Section section) {
     //  final todos = course.genera;
     List<Widget> quizContent = [];
-    if (section.quizzes.isNotEmpty) {
-      for (Quiz quiz in section.quizzes)
-        quizContent.add(
-          GestureDetector(
-            onTap:   () {
-            (course.course == "Belong") ?_showDialogQuiz()
-            : null;
-            },
-            child: new ListTile(
-              title: new Text("${quiz.title}"),
-              leading: Icon(Icons.description, color: Colors.blueAccent),
-              subtitle: Text('subtitulo'),
-              trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey),
-            ),
-          ),
-        );
-    } else {
+    // if (section.quizzes.isNotEmpty) {
+     
+    // } else if(section.articles != null){
               // bool cc = true;
       int i =1; 
       for (Article article in section.articles)
@@ -205,18 +164,35 @@ class _CourseShowState extends State<CourseShow> {
               //                 MaterialPageRoute(
               //                     builder: (context) =>
               //                         PdfShow(pdf:article.pdf))): null;
-            
+              int articlePdf;
+              int articleContent;
+              int articleVideo;
+              int articlePpt;
+              if(article.pdf.toString().isEmpty || article.pdf == null  )
+              articlePdf = 0;
+              if(article.content.toString().isEmpty || article.content == null  )
+              articleContent = 0;
+              if(article.video.toString().isEmpty || article.video == null  )
+              articleVideo = 0;
+              if(article.ppt.toString().isEmpty || article.ppt == null  )
+              articlePpt = 0;
               // (course.course == "Belong") ? coursesProvider.articleLoad(article.id.toString()): null;
               // (course.course == "Belong") ?
               if(course.course == "Belong"){
-                if(article.video == null && article.content == null&& article.ppt != null && article.pdf == null){
+                // if(article.video == null && article.content == null&& article.ppt != null && article.pdf == null ||article.video.toString().isEmpty  && article.content == "" && article.ppt != null && article.pdf == null ){
+                if(articleVideo == 0 && articleContent == 0 && articlePpt != 0 &&  articlePdf == 0){
                   setState(() {_launched = _launchInWebViewWithJavaScript('${article.ppt}');});
-                  // print("PDF${article.ppt}");
-                }else if(article.video == null && article.content == null&& article.ppt == null && article.pdf.length != null){
+                  coursesProvider.articleLoad(article.id.toString());
+                  print("Ppt ${article.ppt.toString()}");
+                }else if(articleVideo == 0 && articleContent == 0 && articlePpt == 0 ){
                   Navigator.pushNamed(context, 'pdfShow',arguments : article);
-                  // print("PDF${article.ppt}");
+                  coursesProvider.articleLoad(article.id.toString());
+                  print("PDF ${article.pdf.toString()}");
                 }else{
                   Navigator.pushNamed(context, 'articleShow',arguments : article);
+                  coursesProvider.articleLoad(article.id.toString());
+                  // print("video ${article.video.toString()}");
+                  // print("content ${article.content.toString()}");
                 }
               }else{
                 null;
@@ -240,14 +216,14 @@ class _CourseShowState extends State<CourseShow> {
             },
             child: 
             new ListTile(
-              title: new Text("${article.name} ${article.id}"),
-              leading: (article.video != null && article.content == null&& article.ppt == null && article.pdf == null)
+              title: new Text("${article.name} "),
+              leading: (article.video.toString() != '' && article.content.toString() == ''&& article.ppt.toString() == '' && article.pdf.toString() == '')
                   ? Icon(Icons.video_call, color: Colors.blue)
-                  : (article.video != null && article.content != null&& article.ppt == null && article.pdf == null)
+                  : (article.video.toString() != '' && article.content.toString() != ''&& article.ppt.toString() == '' && article.pdf.toString() == '')
                   ?Icon(Icons.video_call, color: Colors.red)
-                  :(article.video == null && article.content == null&& article.ppt != null && article.pdf == null)
+                  :(article.video.toString() == '' && article.content.toString() == ''&& article.ppt.toString() != '' && article.pdf.toString() == '')
                   ?Icon(Icons.assignment, color: Colors.blue[300])
-                  :(article.video == null && article.content == null&& article.ppt == null && article.pdf != null)
+                  :(article.video.toString() == '' && article.content.toString() == ''&& article.ppt.toString() == '' && article.pdf.toString() != '')
                   ?Icon(Icons.assignment, color: Colors.red[300])
                   :Icon(Icons.assignment, color: Colors.green[300])
                   
@@ -258,7 +234,22 @@ class _CourseShowState extends State<CourseShow> {
           ),
         // print(" sadjhaskjdhjkasdhjk ${article.name} ${article.status}"),
         );
-    }
+    // }
+
+     for (Quiz quiz in section.quizzes)
+        quizContent.add(
+          GestureDetector(
+            onTap:   () {
+            (course.course == "Belong") ?_showDialogQuiz()
+            : null;
+            },
+            child: new ListTile(
+              title: new Text("${quiz.title}"),
+              leading: Icon(Icons.description, color: Colors.blueAccent),
+              // trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey),
+            ),
+          ),
+        );
     return quizContent;
   }
 
@@ -332,8 +323,8 @@ Future<void> _launchInWebViewWithJavaScript(String url) async {
                 // FlutterLogo(size: 100.0,),
                 SizedBox(height: 30.0),
                 FadeInImage(
-                  image: NetworkImage('assets/cat-loading.gif'),
-                  placeholder:AssetImage('assets/sinconexion.gif') ,
+                  image: NetworkImage('assets/cargando1.gif'),
+                  placeholder:AssetImage('assets/logo-indigo.png') ,
                   fadeInDuration: Duration(milliseconds: 200),
                   height: 100.0,
                   fit: BoxFit.cover,
@@ -342,7 +333,7 @@ Future<void> _launchInWebViewWithJavaScript(String url) async {
             ),
              actions: <Widget>[
             FlatButton( 
-              child: Text('Ir'),
+              child: Text('Ir',style: TextStyle(fontSize: 20),),
               onPressed: () {
                 setState(() {
                     _launched = _launchInBrowser('https://quizlab.app/public/index.php/section-course/${course.id}');
@@ -357,5 +348,8 @@ Future<void> _launchInWebViewWithJavaScript(String url) async {
       }
     );
   }
+
+
+  
   
 }

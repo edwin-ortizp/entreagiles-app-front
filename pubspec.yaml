@@ -79,7 +79,6 @@ flutter:
   assets:
     - data/menuOpts.json
     - assets/
-    - assets/images/finn.jpg
     #  - images/a_dot_ham.jpeg
   # module:
   #   androidX: true 

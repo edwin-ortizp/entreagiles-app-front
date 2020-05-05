@@ -7,7 +7,6 @@ import 'package:QuizLab/src/providers/courseProvider.dart';
 import 'package:QuizLab/src/utils/courses_bloc.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:QuizLab/src/validations/provider.dart';
-import 'package:QuizLab/src/widgets/menuSiderbar.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 
@@ -31,50 +30,31 @@ class _HomePageState extends State<HomePage> {
     viewportFraction: 0.3
     );
 
+    bool isButtonDisabled;
+
  Future<void> _launched;
    @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  // checkInternetConnectivity();
-    if(prefs.noCourses == null){
-  //     // Navigator.of(context).pushNamed("home");
-  // //       Timer.run(() {
-  // //   Navigator.of(context).pushNamed("buttonBarBottom");
-  // // });
-  // final duration = new Duration( seconds:2);
+
+    if(prefs.myCourses == null){
     Timer.run((){
      _preLoading(context);
-  //     // Navigator.pushNamed(context, 'courses');
-  //     // Navigator.of(context).pushNamed("buttonBarBottom");
-  //     // bool _isLoading = true;
-  //     // setState(() { });
     });
     }
   
-    // _myCoursesLoad();
-    _allCoursesLoad();
-    // setState(() {
-    // _myCoursesLoad();
-    // _allCoursesLoad();
-      
+    _myCoursesLoad();
     // });
-  // var  mycourses=  coursesProvider.courseForUser();
-  // var  nocourses=  coursesProvider.missingCourses();
-  // var myCourses = prefs.myCourses;
-    // _scrollController.addListener((){
-    //   if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent)
-    //   // _agregar10();
-    //   fetchData();
-    // }
-    // );
+  var myCourses = prefs.myCourses;
   }
 
   @override
   Widget build(BuildContext context) {
-    // final myCoursesBloc = Provider.myCoursesBloc(context);
+  var  mycourses=  coursesProvider.courseForUser();
+    final myCoursesBloc = Provider.myCoursesBloc(context);
     // myCoursesBloc.cargarCurso();
-    coursesProvider.missingCourses();
+    // coursesProvider.missingCourses();
     coursesProvider.courseForUser();
     // Se utilizan para poder activar la funcion del course
   // print("no cursos ${nocourses}");
@@ -239,16 +219,16 @@ class _HomePageState extends State<HomePage> {
 
   Widget _allCourses(){
       return Center(
-        
-                          child: Text("Ya tienes todos los cursos",
-                              style: TextStyle(
-                                  color:(prefs.colorSecundario) ?  Colors.purple[400]:Colors.indigoAccent[700],
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                                   overflow: TextOverflow.ellipsis,
-                              maxLines: 3,),
-                        );
+
+    child: Text("Ya tienes todos los cursos",
+        style: TextStyle(
+            color:(prefs.colorSecundario) ?  Colors.purple[400]:Colors.indigoAccent[700],
+            fontSize: 15,
+            fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+        maxLines: 3,),
+  );
   }
 
   Widget _cardUser() {
@@ -313,42 +293,42 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _allCoursesLoad() {
-    return StreamBuilder(
-      stream: coursesProvider.allCoursesStream,
-      builder:
-          (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
-        if (snapshot.hasData) {
-          final allCourses = snapshot.data;
-          nextAllCourses: coursesProvider.missingCourses;
-          _pageController.addListener((){
-            if (_pageController.position.pixels >= _pageController.position.maxScrollExtent - 200){
-            nextAllCourses();
-                        }
-                      });
-                      return Container(
-                        height: 150.2,
-                        child: PageView.builder(
-                          pageSnapping: true,
-                          // reverse:true,
-                          // physics:ScrollPhysics(),
-                          // controller: PageController(
-                          //   initialPage: 3,
-                          //   viewportFraction: 0.3,
-                          // ),
-                          controller: _pageController,
-                          itemCount: allCourses.length,
-                          itemBuilder: (context, i) => _courses(context, allCourses[i]),
-                        ),
-                      );
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                );
-              }
+  // Widget _allCoursesLoad() {
+  //   return StreamBuilder(
+  //     stream: coursesProvider.allCoursesStream,
+  //     builder:
+  //         (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
+  //       if (snapshot.hasData) {
+  //         final allCourses = snapshot.data;
+  //         nextAllCourses: coursesProvider.missingCourses;
+  //         _pageController.addListener((){
+  //           if (_pageController.position.pixels >= _pageController.position.maxScrollExtent - 200){
+  //           nextAllCourses();
+  //                       }
+  //                     });
+  //                     return Container(
+  //                       height: 150.2,
+  //                       child: PageView.builder(
+  //                         pageSnapping: true,
+  //                         // reverse:true,
+  //                         // physics:ScrollPhysics(),
+  //                         // controller: PageController(
+  //                         //   initialPage: 3,
+  //                         //   viewportFraction: 0.3,
+  //                         // ),
+  //                         controller: _pageController,
+  //                         itemCount: allCourses.length,
+  //                         itemBuilder: (context, i) => _courses(context, allCourses[i]),
+  //                       ),
+  //                     );
+  //                   } else {
+  //                     return Center(
+  //                       child: CircularProgressIndicator(),
+  //                     );
+  //                   }
+  //                 },
+  //               );
+  //             }
             
               Widget _courses(BuildContext context, CourseModel course) {
                 return Container(
@@ -367,8 +347,11 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(20.0),
                           child: FadeInImage(
                             placeholder: AssetImage('assets/cargando1.gif'),
-                            image:( course.imagePath == null || course.imagePath == "") ? AssetImage('assets/banner.png') : NetworkImage(
-                                'https://quizlab.app/public/img/courses/${course.name}.jpg'),
+                            fadeInDuration: Duration(milliseconds: 200),
+                            
+                            image:( course.imagePath == null || course.imagePath == "") 
+                              ? AssetImage('assets/banner.png') 
+                              : NetworkImage('https://quizlab.app/public/img/courses/${course.name}.jpg'),
                                 // 'https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg'),
                             fit: BoxFit.cover,
                             // width: 100.0,
@@ -387,12 +370,17 @@ class _HomePageState extends State<HomePage> {
                           child: Center(
                             // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
                             
-                            child: Text(
-                              course.name,
-                              // TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              // style: Theme.of(context).textTheme.caption,
-                              style: TextStyle(color: Colors.white, fontSize: 11),textAlign: TextAlign.center,
+                            child: Tooltip(
+                              message: '${course.name}',
+                              verticalOffset: 48,
+                              height: 24,
+                              child: Text(
+                                course.name,
+                                // TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                // style: Theme.of(context).textTheme.caption,
+                                style: TextStyle(color: Colors.white, fontSize: 15,fontFamily: 'TTFirsBlods'),textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         )
@@ -477,61 +465,14 @@ class _HomePageState extends State<HomePage> {
                 // FlutterLogo(size: 100.0,),
                 SizedBox(height: 30.0),
                 FadeInImage(
-                  image: NetworkImage('assets/cat-loading.gif'),
-                  placeholder:AssetImage('assets/robot-loading.gif') ,
+                  image: AssetImage('assets/robot-loading.gif'),
+                  placeholder:AssetImage('assets/cargando1.gif') ,
                   fadeInDuration: Duration(milliseconds: 200),
                   height: 100.0,
                   fit: BoxFit.cover,
                   )
               ],
             ),
-            // actions: <Widget>[
-            //   FlatButton(onPressed:  () => refresh(), child: Text('ok'),textColor: Colors.purple[300],),
-            //   // FlatButton(onPressed: () {Navigator.of(context).pop();}, child: Text('OK'),textColor: Colors.purple[300],)
-            // ],
-          ),
-        );
-      }
-       );
-        setState(() {
-           refresh();
-
-         });
-  }
-    void _noConection(BuildContext context){
-    
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context){
-
-        return GestureDetector(
-                  child: AlertDialog(
-            shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            title:  Text('Danos un momento '),
-            content:  Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Estamos Cargando tus datos'),
-                // FlutterLogo(size: 100.0,),
-                SizedBox(height: 30.0),
-                FadeInImage(
-                  image: NetworkImage('assets/cat-loading.gif'),
-                  placeholder:AssetImage('assets/robot-loading.gif') ,
-                  fadeInDuration: Duration(milliseconds: 200),
-                  height: 100.0,
-                  fit: BoxFit.cover,
-                  )
-              ],
-            ),
-             actions: <Widget>[
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
             // actions: <Widget>[
             //   FlatButton(onPressed:  () => refresh(), child: Text('ok'),textColor: Colors.purple[300],),
             //   // FlatButton(onPressed: () {Navigator.of(context).pop();}, child: Text('OK'),textColor: Colors.purple[300],)
@@ -546,22 +487,13 @@ class _HomePageState extends State<HomePage> {
          });
   }
     Future<Null> refresh()async{
-    final duration = new Duration( seconds:3);
+    final duration = new Duration( seconds:2);
     new Timer(duration, (){
-      // Navigator.pushNamed(context, 'courses');
       Navigator.of(context).pushNamed("buttonBarBottom");
-      // bool _isLoading = true;
-      // setState(() { });
     });
     return Future.delayed(duration);
   }
 
-  //   checkInternetConnectivity() async {
-  //   var result = await Connectivity().checkConnectivity();
-  //   if (result == ConnectivityResult.mobile) {
-  //     _noConection(context);
-  //   }
-  // }
 
 
   checkInternetConnectivity(course) async {
@@ -577,6 +509,7 @@ class _HomePageState extends State<HomePage> {
   _showDialog() {
     showDialog(
       context: context,
+       barrierDismissible: false,
       builder: (context) {
         return GestureDetector(
                   child: AlertDialog(
@@ -588,10 +521,10 @@ class _HomePageState extends State<HomePage> {
                 // Text('Estamos Cargando tus datos'),
                 // FlutterLogo(size: 100.0,),
                 SizedBox(height: 30.0),
-                FadeInImage(
-                  image: NetworkImage('assets/cat-loading.gif'),
-                  placeholder:AssetImage('assets/sinconexion.gif') ,
-                  fadeInDuration: Duration(milliseconds: 200),
+                 FadeInImage(
+                  image: AssetImage('assets/sinconexion.gif'),
+                  placeholder:AssetImage('assets/cargando1.gif') ,
+                  fadeInDuration: Duration(milliseconds: 10),
                   height: 100.0,
                   fit: BoxFit.cover,
                   )
@@ -599,9 +532,13 @@ class _HomePageState extends State<HomePage> {
             ),
              actions: <Widget>[
             FlatButton( 
+
               child: Text('Ok'),
               onPressed: () {
-                Navigator.of(context).pop();
+               setState(() {
+               (isButtonDisabled != true)? refresh():null;
+               isButtonDisabled= true;
+               });
               },
             )
           ],

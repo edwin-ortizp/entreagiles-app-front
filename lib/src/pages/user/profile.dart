@@ -34,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
   Widget build(BuildContext context) {
   Color color = (prefs.colorSecundario)? Colors.purple[400] : Colors.indigoAccent[400];
+  var height = MediaQuery.of(context).size.height;
   // theme: ThemeData (primarySwatch:(prefs.colorSecundario)?  Colors.purple :Colors.red ) ;
     return Scaffold(
         appBar: AppBar(
@@ -77,8 +78,11 @@ class _ProfilePageState extends State<ProfilePage> {
             );
              }else{
 
-            return Center(
-              child: CircularProgressIndicator(),
+            return Container(
+              height: height *0.75,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
            }
           }
@@ -234,7 +238,7 @@ Widget _nameField(String data,color,UserModel user){
         ),
         hintText: '$data',
         helperText: '$data',
-        suffixIcon: Icon(Icons.text_fields,color: color,),
+        // suffixIcon: Icon(Icons.text_fields,color: color,),
         icon: Icon(Icons.account_circle,color: color)
       ),
       // onChanged: (valor) => setState(() {
@@ -258,7 +262,7 @@ Widget _nameLast(String data,color,UserModel user){
         ),
         hintText: '$data',
         helperText: '$data',
-        suffixIcon: Icon(Icons.text_fields,color: color,),
+        // suffixIcon: Icon(Icons.text_fields,color: color,),
         icon: Icon(Icons.account_circle,color: color)
       ),
       // onChanged: (valor) => setState(() {
@@ -281,7 +285,7 @@ Widget _emailField(color,user) {
         ),
         hintText: 'Email',
         helperText: 'Email',
-        suffixIcon: Icon(Icons.alternate_email,color: color,),
+        // suffixIcon: Icon(Icons.alternate_email,color: color,),
         icon: Icon(Icons.email,color: color)
       ),
       // onChanged: (valor) =>setState(() {
@@ -303,7 +307,7 @@ Widget _phoneField(color,user) {
         ),
         hintText: 'Telefono',
         helperText: 'Telefono',
-        suffixIcon: Icon(Icons.phonelink_setup,color: color,),
+        // suffixIcon: Icon(Icons.phonelink_setup,color: color,),
         icon: Icon(Icons.phone_iphone,color: color)
       ),
       // onChanged: (valor) =>setState(() {

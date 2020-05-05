@@ -7,11 +7,19 @@ import 'package:flutter/material.dart';
 // Llamados Paginas
 import 'package:QuizLab/src/validations/provider.dart';
 import 'package:QuizLab/src/providers/userProvider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
 
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final usersProvider = new UsersProvider();
+
   final _prefs = new PreferencesUser();
+  Future<void> _launched;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,6 @@ class LoginPage extends StatelessWidget {
       )
     );
   }
-
 
   Widget  _logo(BuildContext context){
 
@@ -45,9 +52,14 @@ class LoginPage extends StatelessWidget {
         //   ])
       ),    
     );
-       final register =Container(
+       final register =GestureDetector(
+            onTap: () => setState(() {
+                    _launched = _launchInBrowser('https://quizlab.app/public/index.php/login');
+                  }),
+          child: Container(
          padding: EdgeInsets.only(top:20, left:size.height*0.25 ),
-          child: Text('¿Nuevo usuario?'),
+            child: Text('¿Nuevo usuario?')
+            ),
       );
 
        final logoEureka = Container(
@@ -55,7 +67,7 @@ class LoginPage extends StatelessWidget {
           height: size.height * 1,
           child: Column(
             children: <Widget>[
-              register,
+              // register,
               SizedBox(height: 80),
               Image.asset('assets/QuizLab-Logo.png'),
             ],
@@ -70,7 +82,6 @@ class LoginPage extends StatelessWidget {
       ],
     );
   }
-
 
     Widget _loginForm(BuildContext context){
 
@@ -136,7 +147,6 @@ class LoginPage extends StatelessWidget {
     );
 
     }
-
 
     Widget _passwordInput(LoginBloc bloc){
 
@@ -211,4 +221,16 @@ class LoginPage extends StatelessWidget {
 
   }
 
+     Future<void> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

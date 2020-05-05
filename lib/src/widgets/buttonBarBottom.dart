@@ -85,7 +85,7 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
       // case 1: return ConecPage();
       case 1: return ProfilePage();
       default:
-      return SettingPage();
+      return HomePage();
 
     }
 
@@ -113,7 +113,7 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
             title: Container(),
            ),
           //  BottomNavigationBarItem(
-          //   icon: Icon( Icons.shopping_cart,size: 30.0,),
+          //   icon: Icon( Icons.lightbulb_outline,size: 30.0,),
           //   title: Container(),
           //  ),
            BottomNavigationBarItem(

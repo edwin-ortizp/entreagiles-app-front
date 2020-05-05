@@ -162,6 +162,10 @@ return HtmlWidget(
 }
   }
   Widget _content(Article article){
+     var content = article.content;
+    if(content == null){
+      content = "";
+    }
   // return  Container(
   //             child: Card(
   //               child: Html(data:"${article.content}",
@@ -172,6 +176,7 @@ return HtmlWidget(
   //                       ),
   //             ),
   // );
+    
   if(article.content != null || article.content != ""){
 return Container(
   padding: EdgeInsets.all(15.0),
@@ -179,7 +184,7 @@ return Container(
   
             """
   
-            ${article.content}
+            ${content}
   
             """,
   
