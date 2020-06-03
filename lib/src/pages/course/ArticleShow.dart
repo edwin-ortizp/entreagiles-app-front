@@ -22,6 +22,7 @@ class ArticleShowPage extends StatelessWidget {
     // print("courses  ${curso}");
     final Article articleData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
+      backgroundColor: (prefs.colorSecundario)?Colors.grey[850] :Color(0xFFEFEEEE),
         // appBar: AppBar(
         //   centerTitle: true,
         //   title: Text('${articleData.name}',
@@ -49,11 +50,11 @@ class ArticleShowPage extends StatelessWidget {
                centerTitle: true,
           title: Text('${articleData.name}',
               style: (prefs.colorSecundario)
-                  ? TextStyle(color: Colors.white)
+                  ? TextStyle(color: Colors.grey)
                   : TextStyle(color: Colors.black)),
           // backgroundColor: Colors.purple[400],
           iconTheme: (prefs.colorSecundario)
-              ? new IconThemeData(color: Colors.white)
+              ? new IconThemeData(color: Colors.grey)
               : new IconThemeData(color: Colors.black),
                  leading: IconButton(
             tooltip: 'Previous choice',
@@ -74,7 +75,7 @@ class ArticleShowPage extends StatelessWidget {
           // ],
           // :[],
           backgroundColor:
-              (prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
+              (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
               floating: true,
             ),
            SliverList(

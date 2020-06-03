@@ -1,4 +1,5 @@
 import 'package:QuizLab/src/pages/course/courseIndex.dart';
+import 'package:QuizLab/src/pages/course/coursesMicrolearningIndex.dart';
 import 'package:QuizLab/src/pages/home.dart';
 import 'package:QuizLab/src/pages/settting/settings.dart';
 import 'package:QuizLab/src/pages/user/profile.dart';
@@ -6,6 +7,7 @@ import 'package:QuizLab/src/providers/conex_provider.dart';
 // import 'package:QuizLab/src/pages/user/userIndex.dart';
 import 'package:QuizLab/src/utils/preferencesUser.dart';
 import 'package:flutter/material.dart';
+
 
 // class ButtonBarBottom extends StatelessWidget {
 
@@ -82,8 +84,8 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
 
       // case 0: return HomePage();
       case 0: return HomePage();
-      // case 1: return ConecPage();
-      case 1: return ProfilePage();
+      case 1: return CourseMicrolearningIndex();
+      case 2: return ProfilePage();
       default:
       return HomePage();
 
@@ -95,33 +97,53 @@ class _ButtonBarBottomState extends State<ButtonBarBottom> {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        canvasColor:(prefs.colorSecundario) ? Color.fromRGBO(55, 57, 84, 1.0): Color.fromRGBO(255, 255, 255, 1.0),  
-        primaryColor: (prefs.colorSecundario) ? Colors.pinkAccent : Colors.indigoAccent[700],
+        canvasColor:(prefs.colorSecundario) 
+        ? Colors.grey[850]: Color(0xFFEFEEEE),
+        primaryColor: (prefs.colorSecundario) 
+        ? Colors.grey : Colors.indigoAccent[700],
         textTheme: Theme.of(context).textTheme.copyWith( caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)) )
       ),
-      child:BottomNavigationBar(
-        // prefs.page= currentIndex,
-        currentIndex: currentIndex,
-        onTap: (index){
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        items: [
-           BottomNavigationBarItem(
-            icon: Icon( Icons.home,size: 30.0,),
-            title: Container(),
-           ),
-          //  BottomNavigationBarItem(
-          //   icon: Icon( Icons.lightbulb_outline,size: 30.0,),
-          //   title: Container(),
-          //  ),
-           BottomNavigationBarItem(
-            icon: Icon( Icons.person_pin,size: 30.0,),
-            title: Container(), 
-           ),
-          ],
-       ),
+    // return Theme(
+    //   data: Theme.of(context).copyWith(
+    //     canvasColor:(prefs.colorSecundario) ? Color.fromRGBO(55, 57, 84, 1.0): Color.fromRGBO(255, 255, 255, 1.0),  
+    //     primaryColor: (prefs.colorSecundario) ? Colors.pinkAccent : Colors.indigoAccent[700],
+    //     textTheme: Theme.of(context).textTheme.copyWith( caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)) )
+    //   ),
+      child:Container(
+          decoration: BoxDecoration(
+    boxShadow: [
+      BoxShadow(
+        color: Colors.transparent.withOpacity(0.0),
+      ),
+    ],
+  ),
+        
+        child: BottomNavigationBar(
+          // prefs.page= currentIndex,
+          currentIndex: currentIndex,
+          onTap: (index){
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          items: [
+             BottomNavigationBarItem(
+              icon: Icon( Icons.home,size: 30.0,),
+              title: Container(
+                
+              ),
+             ),
+             BottomNavigationBarItem(
+              icon: Icon( Icons.lightbulb_outline,size: 30.0,),
+              title: Container(),
+             ),
+             BottomNavigationBarItem(
+              icon: Icon( Icons.person_pin,size: 30.0,),
+              title: Container(), 
+             ),
+            ],
+         ),
+      ),
     );
 
 

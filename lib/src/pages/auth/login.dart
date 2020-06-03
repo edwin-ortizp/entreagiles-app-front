@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
+         backgroundColor: Color(0xFFEFEEEE),
       body: Stack(
         children: <Widget>[
           // SizedBox(height: 50,),
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       height: size.height * 1,  
       width:  double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white
+        color:  (_prefs.colorSecundario)?Colors.grey[850] :Color(0xFFEFEEEE),
         // gradient: LinearGradient(
         //   colors: <Color>[
         //     Color.fromRGBO(190, 63, 156, 1.0),
@@ -100,12 +101,12 @@ class _LoginPageState extends State<LoginPage> {
               margin: EdgeInsets.symmetric(vertical: 50.0),
               padding: EdgeInsets.symmetric(vertical: 50.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color:  (_prefs.colorSecundario)?Colors.grey[850] :Color(0xFFEFEEEE),
               ),
               child: Column(
                 children: <Widget>[
                   // Text('Login',style: TextStyle(fontSize: 20.0),),
-                  Text('Bienvenido a QuizLab',style:TextStyle(color: Colors.black,fontSize:20.0 ) ,),
+                  Text('Bienvenido a QuizLab',style:TextStyle(color:(_prefs.colorSecundario) ? Colors.grey :Colors.black,fontSize:20.0 ) ,),
                   SizedBox( height: 20.0,),
                   _emailInput(bloc),
                    SizedBox( height: 30.0,),
@@ -134,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
               // icon: Icon(Icons.alternate_email,color: Colors.indigoAccent[700]),
               hintText:  'example.quizlab.org',
               labelText: 'Correo electrónico',
-              suffixIcon: Icon(Icons.alternate_email,color: Colors.indigoAccent[700],),
+              suffixIcon: Icon(Icons.alternate_email,color: Colors.grey,),
               border:   OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.0),
             ),
@@ -165,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             // icon: Icon(Icons.lock_outline,color: Colors.indigoAccent[700]),
             labelText: 'Contraseña',
-            suffixIcon: Icon(Icons.lock_outline,color: Colors.indigoAccent[700],),
+            suffixIcon: Icon(Icons.lock_outline,color: Colors.grey,),
             errorText: snapshot.error
           ),
            onChanged: bloc.changePassword,

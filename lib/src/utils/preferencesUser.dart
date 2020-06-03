@@ -70,6 +70,18 @@ class PreferencesUser{
   set myCourses( value) {
     _prefs.setBool('myCourses', value);
   }
+  get mycoursesMicrolearning{
+    return _prefs.getBool('mycoursesMicrolearning') ?? null;
+  }
+  set mycoursesMicrolearning( value) {
+    _prefs.setBool('mycoursesMicrolearning', value);
+  }
+  get mycoursesSimulators{
+    return _prefs.getBool('mycoursesSimulators') ?? null;
+  }
+  set mycoursesSimulators( value) {
+    _prefs.setBool('mycoursesSimulators', value);
+  }
   get noCourses{
     return _prefs.getBool('noCourses') ?? null;
   }

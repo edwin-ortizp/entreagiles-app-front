@@ -51,12 +51,14 @@ super.initState();
      var width = MediaQuery.of(context).size.width;
     //  print(coursesProvider.missingCourses().len);
     return Scaffold(
+        backgroundColor: Color(0xFFEFEEEE),
         appBar: AppBar(
+        elevation: 0.0,
         centerTitle: true,
         title: Text('Courses',style:(prefs.colorSecundario) ? TextStyle(color: Colors.black):TextStyle(color: Colors.black)),
         // backgroundColor: Colors.purple[400],
         iconTheme:(prefs.colorSecundario) ? new IconThemeData(color: Colors.white): new IconThemeData(color: Colors.black),
-        backgroundColor:(prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
+        backgroundColor:(prefs.colorSecundario) ? Colors.purple[400] : Color(0xFFEFEEEE),
          leading: IconButton(
             tooltip: 'Previous choice',
             icon: const Icon(Icons.arrow_back),
@@ -323,12 +325,12 @@ super.initState();
                       ],
                     ),
                   ),
-                  Text((course.teacher[0] != null) ?'Instructor: ${course.teacher[0].firstName} ${course.teacher[0].lastName}':'Instructor: SIn asignar',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      )
-                      ),
+                  // Text((course.teacher[0] != null) ?'Instructor: ${course.teacher[0].firstName} ${course.teacher[0].lastName}':'Instructor: SIn asignar',
+                  //     style: TextStyle(
+                  //       fontSize: 12,
+                  //       color: Colors.grey,
+                  //     )
+                  //     ),
                   SizedBox(height: 15),
                     //  Popup(
                 // content: getSampleBox1(CrossAxisAlignment.start,course,),

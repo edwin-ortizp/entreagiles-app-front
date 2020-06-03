@@ -25,7 +25,7 @@ class CourseModel {
     dynamic learn;
     dynamic top;
     dynamic carreraId;
-    List<Teacher> teacher;
+    // List<Teacher> teacher;
     int pageCourse; 
     String course; 
     List<Section> sections;
@@ -52,7 +52,7 @@ class CourseModel {
         this.learn,
         this.top,
         this.carreraId,
-        this.teacher,
+        // this.teacher,
         this.pageCourse,
         this.course,
         this.sections,
@@ -79,7 +79,7 @@ class CourseModel {
         learn: json["learn"],
         top: json["top"],
         carreraId: json["carrera_id"],
-        teacher: json["teacher"] != null ? new List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))) : List<Teacher>(),
+        // teacher: json["teacher"] != null ? new List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))) : List<Teacher>(),
         pageCourse: json["pageCourse"],
         course: json["course"],
         sections: json["sections"] != null ? new List<Section>.from(json["sections"].map((x) => Section.fromJson(x))) : List<Section>(),
@@ -101,7 +101,7 @@ class CourseModel {
         "learn": learn,
         "top": top,
         "carrera_id": carreraId,
-        "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
+        // "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
         "pageCourse": pageCourse,
         "course": course,
         "sections": List<dynamic>.from(sections.map((x) => x.toJson())),
@@ -109,61 +109,61 @@ class CourseModel {
     };
 }
 
-class Teacher {
-    String id;
-    String username;
-    String firstName;
-    String lastName;
-    String email;
-    String type;
-    String imagePath;
-    String rememberToken;
-    int avatarId;
-    int countryId;
-    String phone;
+// class Teacher {
+//     String id;
+//     String username;
+//     String firstName;
+//     String lastName;
+//     String email;
+//     String type;
+//     String imagePath;
+//     String rememberToken;
+//     int avatarId;
+//     int countryId;
+//     String phone;
 
-    Teacher({
-        this.id,
-        this.username ,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.type,
-        this.imagePath,
-        this.rememberToken,
-        this.avatarId,
-        this.countryId,
-        this.phone,
-    });
+//     Teacher({
+//         this.id,
+//         this.username ,
+//         this.firstName,
+//         this.lastName,
+//         this.email,
+//         this.type,
+//         this.imagePath,
+//         this.rememberToken,
+//         this.avatarId,
+//         this.countryId,
+//         this.phone,
+//     });
 
-    factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
-       id: json["id"],
-        username: json["username"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        type: json["type"],
-        imagePath: json["image_path"],
-        rememberToken: json["remember_token"],
-        avatarId: json["avatar_id"],
-        countryId: json["country_id"],
-        phone: json["phone"],
-    );
+//     factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
+//        id: json["id"],
+//         username: json["username"],
+//         firstName: json["first_name"],
+//         lastName: json["last_name"],
+//         email: json["email"],
+//         type: json["type"],
+//         imagePath: json["image_path"],
+//         rememberToken: json["remember_token"],
+//         avatarId: json["avatar_id"],
+//         countryId: json["country_id"],
+//         phone: json["phone"],
+//     );
 
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "username": username,
-        "first_name": firstName,
-        "last_name": lastName,
-        "email": email,
-        "type": type,
-        "image_path": imagePath,
-        "remember_token": rememberToken,
-        "avatar_id": avatarId,
-        "country_id": countryId,
-        "phone": phone,
-    };
-}
+//     Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "username": username,
+//         "first_name": firstName,
+//         "last_name": lastName,
+//         "email": email,
+//         "type": type,
+//         "image_path": imagePath,
+//         "remember_token": rememberToken,
+//         "avatar_id": avatarId,
+//         "country_id": countryId,
+//         "phone": phone,
+//     };
+// }
 class Section {
     int id;
     String name;

@@ -33,7 +33,6 @@ void alertLogin(BuildContext context, String mesaje ){
       );
 }
 
-
 // AlertDialog(
 //         title: Text('Información incorrecta'),
 //         content: Text(mesaje),

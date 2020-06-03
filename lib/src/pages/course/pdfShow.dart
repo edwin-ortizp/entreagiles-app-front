@@ -133,18 +133,20 @@ class _PdfShowState extends State<PdfShow> {
       print(pdf);
     });
     return Scaffold(
+       backgroundColor: (prefs.colorSecundario)?Colors.grey[850] :Color(0xFFEFEEEE),
       appBar: AppBar(
              centerTitle: true,
          title: Text('${article.name}',
               style: (prefs.colorSecundario)
-                  ? TextStyle(color: Colors.white)
+                  ? TextStyle(color: Colors.grey)
                   : TextStyle(color: Colors.black)),
           // backgroundColor: Colors.purple[400],
           iconTheme: (prefs.colorSecundario)
-              ? new IconThemeData(color: Colors.white)
+              ? new IconThemeData(color: Colors.grey)
               : new IconThemeData(color: Colors.black),
           backgroundColor:
-              (prefs.colorSecundario) ? Colors.purple[400] : Colors.white
+              (prefs.colorSecundario) ? Colors.grey[850]  : Color(0xFFEFEEEE),
+              elevation: 0.0,
       ),
       body: Center(child: _isLoading ? Center(child: CircularProgressIndicator(),)
       :PDFViewer(document: document,

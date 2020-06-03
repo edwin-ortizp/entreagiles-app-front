@@ -6,8 +6,9 @@ class MenuSiderbarProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      final prefs = new PreferencesUser();
-    return Container(
-      child: Drawer(
+    return Drawer(
+      child: Container(
+         color:(prefs.colorSecundario)?Colors.grey[850] :Color(0xFFEFEEEE),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -15,12 +16,12 @@ class MenuSiderbarProfile extends StatelessWidget {
               child: Container(),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                  image: (prefs.colorSecundario) ? AssetImage('assets/imagenMenu1.jpg'): AssetImage('assets/banner.png'),
+                  image: (prefs.colorSecundario) ? AssetImage('assets/imagenMenudark.png'): AssetImage('assets/imagenMenuwhile.jpg'),
                   fit: BoxFit.cover
                   ),
                 ),
             ),
-
+  
             // ListTile(
             //   leading: Icon(Icons.add_circle,color: (prefs.colorSecundario) ?Colors.purple[400]:Colors.indigoAccent[700],),
             //   title: Text('Recargar creditos'),
@@ -50,8 +51,8 @@ class MenuSiderbarProfile extends StatelessWidget {
             //   } 
             // ),
               ListTile(
-            leading: Icon(Icons.cancel,color: (prefs.colorSecundario) ?Colors.purple[400]:Colors.indigoAccent[700],),
-            title: Text('Cerrar sesion'),
+            leading: Icon(Icons.cancel,color: Colors.grey,),
+            title: Text('Cerrar sesion',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
             onTap: (){
               Navigator.pushReplacementNamed(context, 'login');
                prefs.token= null;

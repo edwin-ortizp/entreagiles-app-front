@@ -27,18 +27,20 @@ class _MyCourseIndexState extends State<MyCourseIndex> {
     var width = MediaQuery.of(context).size.width;
     //  print(width);
     return Scaffold(
+      backgroundColor: (prefs.colorSecundario)?Colors.grey[850] :Color(0xFFEFEEEE),
         appBar: AppBar(
+          elevation: 0.0,
             centerTitle: true,
-            title: Text('Courses',
+            title: Text('Tus Cursos Virtuales',
                 style: (prefs.colorSecundario)
-                    ? TextStyle(color: Colors.black)
+                    ? TextStyle(color: Colors.grey)
                     : TextStyle(color: Colors.black)),
             // backgroundColor: Colors.purple[400],
             iconTheme: (prefs.colorSecundario)
-                ? new IconThemeData(color: Colors.white)
+                ? new IconThemeData(color: Colors.grey)
                 : new IconThemeData(color: Colors.black),
             backgroundColor:
-                (prefs.colorSecundario) ? Colors.purple[400] : Colors.white),
+                (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE)),
         body: SingleChildScrollView(
             child: Container(
           child: Column(
@@ -50,28 +52,28 @@ class _MyCourseIndexState extends State<MyCourseIndex> {
         )));
   }
 
-  Widget _card(
-      {Color primaryColor = Colors.redAccent,
-      String imgPath,
-      Widget backWidget}) {
-    return Container(
-        height: 190,
-        width: 392.72727272727275 * .34,
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(
-            color: primaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  offset: Offset(0, 5),
-                  blurRadius: 20,
-                  color: Color(0x12000000))
-            ]),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          child: backWidget,
-        ));
-  }
+  // Widget _card(
+  //     {Color primaryColor = Colors.redAccent,
+  //     String imgPath,
+  //     Widget backWidget}) {
+  //   return Container(
+  //       height: 190,
+  //       width: 392.72727272727275 * .34,
+  //       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+  //       decoration: BoxDecoration(
+  //           color: primaryColor,
+  //           borderRadius: BorderRadius.all(Radius.circular(20)),
+  //           boxShadow: <BoxShadow>[
+  //             BoxShadow(
+  //                 offset: Offset(0, 5),
+  //                 blurRadius: 20,
+  //                 color: Color(0x12000000))
+  //           ]),
+  //       child: ClipRRect(
+  //         borderRadius: BorderRadius.all(Radius.circular(20)),
+  //         child: backWidget,
+  //       ));
+  // }
 
 
   Widget _chip(String text, Color textColor,
@@ -177,7 +179,7 @@ class _MyCourseIndexState extends State<MyCourseIndex> {
                                 ? AssetImage('assets/banner.png')
                                 : NetworkImage(
                                     // 'https://st2.depositphotos.com/1428083/7080/i/450/depositphotos_70801427-stock-photo-unicorn-in-the-moonlight.jpg'),
-                                    'https://quizlab.app/public/img/courses/${course.name}.jpg'),
+                                    '${course.imagePath}'),
                             fit: BoxFit.cover,
                             // width: 100.0,
                             height: 160.0,

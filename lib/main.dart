@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
 
         },
         theme: ThemeData(
-          primarySwatch:(prefs.colorSecundario)? Colors.purple :Colors.indigo,fontFamily: 'TTFirs',
+          primarySwatch:(prefs.colorSecundario)? Colors.grey :Colors.grey,fontFamily: 'TTFirs',
         ),
       ),
     );

@@ -46,34 +46,40 @@ class _CourseShowState extends State<CourseShow> {
       course = courseData;
     // setState(() {
     print("variable ${course}");
-      
     // });
     }
-    return Scaffold(body: _appbarCustom(course, context));
+    return Scaffold(body: _appbarCustom(course, context),backgroundColor: (prefs.colorSecundario)?Colors.grey[850] :Color(0xFFEFEEEE),);
   }
 
   Widget _appbarCustom(CourseModel course, BuildContext context) {
+    
     // const String toLaunch = 'https://novapixel.org/eureka/public/buy-course/6';
     return RefreshIndicator(
       onRefresh: refresh,
           child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            elevation: 2.0,
+      // elevation: 0.0,
+      // backgroundColor: Colors.transparent,
             backgroundColor:
-                (prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
+                (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
+            elevation: 0.0,
             expandedHeight: 200.0,
             floating: false,
             pinned: true,
             iconTheme: (prefs.colorSecundario)
-                ? new IconThemeData(color: Colors.white)
+                ? new IconThemeData(color: Colors.grey)
                 : new IconThemeData(color: Colors.black),
                  actions: (course.course != "Belong") ?<Widget>[
               IconButton(
                 icon: const Icon(Icons.add_shopping_cart),
                 tooltip: 'Comprar Curso',
                    onPressed: () => setState(() {
-                    _launched = _launchInBrowser('https://quizlab.app/public/index.php/buy-course/${course.id}');
+                    Navigator.pushNamed(context, 'buttonBarBottom');
+                    if(prefs.mycoursesMicrolearning == false){
+                    prefs.mycoursesMicrolearning= true;
+                    }
+                  coursesProvider.addCourseMicrolearning(course.id.toString());
                   }),
               ),
             ]:[],
@@ -81,14 +87,14 @@ class _CourseShowState extends State<CourseShow> {
               centerTitle: true,
               title: Text('${course.name}',
                   style: (prefs.colorSecundario)
-                      ? TextStyle(color: Colors.white, fontSize: 15)
+                      ? TextStyle(color: Colors.grey, fontSize: 15)
                       : TextStyle(color: Colors.black, fontSize: 15)),
               background: FadeInImage(
                 placeholder: AssetImage('assets/cargando1.gif'),
                 image: (course.imagePath == null || course.imagePath == "")
                     ? AssetImage('assets/banner.png')
                     : NetworkImage(
-                        'https://quizlab.app/public/img/courses/${course.name}.jpg'),
+                        '${course.imagePath}'),
                         // 'https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg'),
                 // fadeInDuration: Duration(microseconds: 60),
                 fit: BoxFit.cover,
@@ -107,22 +113,43 @@ class _CourseShowState extends State<CourseShow> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int i) {
           return Center(
-            child: Card(
+            child: Container(
               margin: EdgeInsets.all(20.0),
-              elevation: 8,
-              shape: RoundedRectangleBorder(
+              // elevation: 8,
+              // shape: RoundedRectangleBorder(
+              //   borderRadius: BorderRadius.circular(20.0),
+              // ),
+               decoration: BoxDecoration(
+                   boxShadow: [
+                  BoxShadow(
+                    color: (prefs.colorSecundario) ? Colors.grey[800] :Colors.white.withOpacity(0.8),
+                    offset: (prefs.colorSecundario) ? Offset (-0.5,-0.5) : Offset(-6.0, -6.0),
+                    blurRadius:(prefs.colorSecundario) ? 1.0 : 16.0,
+                    spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+                  ),
+                  BoxShadow(
+                    color: (prefs.colorSecundario) ? Colors.grey[900] : Colors.black.withOpacity(0.1),
+                    offset: (prefs.colorSecundario) ? Offset(2.0, 2.0) : Offset(6.0, 6.0),
+                    blurRadius: (prefs.colorSecundario) ? 1.0 : 16.0,
+                    spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+                  ),
+                ],
+                color: (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
                 borderRadius: BorderRadius.circular(20.0),
-              ),
+
+                      // borderRadius: BorderRadius.all(Radius.circular(15)),
+                      // color: textColor.withAlpha(isPrimaryCard ? 200 : 50),
+                    ),
               child: Column(
                 children: <Widget>[
                   new ExpansionTile(
                     trailing: Icon(
                       Icons.add,
-                      color: Colors.indigoAccent[700],
+                      color: Colors.grey[700],
                     ),
-                    title: new Text('Sección ${i + 1}'),
+                    title: new Text('Sección ${i + 1}',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
                     // subtitle: (course.course == "Belong") ? Text("${sections[i].name} (${sections[i].countCompleted}/${sections[i].countArticule})"):Text("${sections[i].name}"),
-                    subtitle: (course.course == "Belong") ? Text("${sections[i].name} "):Text("${sections[i].name}"),
+                    subtitle: (course.course == "Belong") ? Text("${sections[i].name} ",style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),):Text("${sections[i].name}",style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
                     children: <Widget>[
                       GestureDetector(
                         // onTap:  () => Navigator.pushNamed(context, 'buttonBarBottomArticle',arguments: sections[i]),
@@ -216,7 +243,7 @@ class _CourseShowState extends State<CourseShow> {
             },
             child: 
             new ListTile(
-              title: new Text("${article.name} "),
+              title: new Text("${article.name} ",style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
               leading: (article.video.toString() != '' && article.content.toString() == ''&& article.ppt.toString() == '' && article.pdf.toString() == '')
                   ? Icon(Icons.video_call, color: Colors.blue)
                   : (article.video.toString() != '' && article.content.toString() != ''&& article.ppt.toString() == '' && article.pdf.toString() == '')
@@ -244,7 +271,7 @@ class _CourseShowState extends State<CourseShow> {
             : null;
             },
             child: new ListTile(
-              title: new Text("${quiz.title}"),
+              title: new Text("${quiz.title}",style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
               leading: Icon(Icons.description, color: Colors.blueAccent),
               // trailing: Icon(Icons.check_box_outline_blank, color: Colors.grey),
             ),
@@ -314,12 +341,13 @@ Future<void> _launchInWebViewWithJavaScript(String url) async {
       builder: (context) {
         return GestureDetector(
                   child: AlertDialog(
+                    backgroundColor:(prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
             shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            title:  Text('Realizar Quiz'),
+            title:  Text('Realizar Quiz',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
             content:  Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('¿Estás seguro(a) de iniciar el quiz? Deberas acceder a la plataforma'),
+                Text('¿Estás seguro(a) de iniciar el quiz? Deberas acceder a la plataforma',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
                 // FlutterLogo(size: 100.0,),
                 SizedBox(height: 30.0),
                 FadeInImage(

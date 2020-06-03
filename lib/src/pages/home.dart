@@ -44,7 +44,9 @@ class _HomePageState extends State<HomePage> {
     });
     }
   
+    var  mycoursesMicrolearning=  coursesProvider.courseForUserMicrolearning();
     _myCoursesLoad();
+    _myCoursesMicrolearning();
     // });
   var myCourses = prefs.myCourses;
   }
@@ -52,6 +54,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
   var  mycourses=  coursesProvider.courseForUser();
+  var  mycoursesMicrolearning=  coursesProvider.courseForUserMicrolearning();
+  var  mycoursesSimulators=  coursesProvider.courseForUserSimulators();
     final myCoursesBloc = Provider.myCoursesBloc(context);
     // myCoursesBloc.cargarCurso();
     // coursesProvider.missingCourses();
@@ -61,7 +65,10 @@ class _HomePageState extends State<HomePage> {
     print("${prefs.myCourses}");
     // prefs.ultimaPagina = HomePage.routeName;
     return Scaffold(
+      backgroundColor: (prefs.colorSecundario)? Colors.grey[850] :Color(0xFFEFEEEE),
       appBar: AppBar(
+      bottomOpacity: 0.0,
+      elevation: 0.0,
           centerTitle: true,
           // title: Text('Welcome ${prefs.nombre}',
           //     style: (prefs.colorSecundario)
@@ -73,7 +80,8 @@ class _HomePageState extends State<HomePage> {
               ? new IconThemeData(color: Colors.white)
               : new IconThemeData(color: Colors.black),
           backgroundColor:
-              (prefs.colorSecundario) ? Colors.purple[400] : Colors.white
+              (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE)
+            
           ),
 
       // drawer: MenuSiderbar(),
@@ -86,13 +94,17 @@ class _HomePageState extends State<HomePage> {
             ),
             // Se cargar los widgets necesarios en el body 
             _cardUser(),
-            _colum1(),
-            (prefs.myCourses == true )? _carouselHead("Mis Cursos", Colors.indigoAccent[700], Colors.orange,context, 'myCourses'):(prefs.myCourses == null )?Text(''):Text(''),
             SizedBox(height: 15.0,),
-            (prefs.myCourses  == true)?_myCoursesLoad():(prefs.myCourses == null )?Text(''):_cardNull(),
-            // (prefs.noCourses == true )?_carouselHead("Todos los Cursos", Colors.purpleAccent[700],Colors.orange, context, 'courses'):(prefs.noCourses == null )?Text(''):Text(''),
-            // SizedBox(height: 15.0,),
-            // (prefs.noCourses  == true)?_allCoursesLoad():(prefs.noCourses == null )?Text(''):_allCourses(),
+            _colum1(),
+            (prefs.myCourses == true )? _carouselHead("Tus Cursos Virtuales", Colors.indigoAccent[700], Colors.orange,context, 'myCourses'):(prefs.myCourses == null )?Text(''):Text(''),
+            SizedBox(height: 15.0,),
+            (prefs.myCourses  == true)?_myCoursesLoad():(prefs.myCourses == null )?Text(''):_cardNull(),SizedBox(height: 15.0,),
+            (prefs.mycoursesMicrolearning == true )?_carouselHead("Tus Cursos de Microlearning", Colors.purpleAccent[700],Colors.orange, context, 'myCoursesMicrolearning'):(prefs.mycoursesMicrolearning == null )?Text(''):Text(''),
+            SizedBox(height: 15.0,),
+            (prefs.mycoursesMicrolearning  == true)?_myCoursesMicrolearning():(prefs.mycoursesSimulators == null )?Text(''):_allCourses(),
+            (prefs.mycoursesSimulators == true )?_carouselHead("Tus Simuladores", Colors.purpleAccent[700],Colors.orange, context, 'mySimulators'):(prefs.mycoursesSimulators == null )?Text(''):Text(''),
+            SizedBox(height: 15.0,),
+            (prefs.mycoursesSimulators  == true)?_myCoursesSimulators():(prefs.mycoursesSimulators == null )?Text(''):Text(''),
           ],
         ),
       ),
@@ -151,16 +163,32 @@ class _HomePageState extends State<HomePage> {
       height: 100.0,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Colors.indigoAccent[700], Colors.purple[400]]),
-        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+                  BoxShadow(
+                    color: (prefs.colorSecundario) ? Colors.grey[800] :Colors.white.withOpacity(0.8),
+                    offset: (prefs.colorSecundario) ? Offset (-0.5,-0.5) : Offset(-6.0, -6.0),
+                    blurRadius:(prefs.colorSecundario) ? 1.0 : 16.0,
+                    spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+                  ),
+                  BoxShadow(
+                    color: (prefs.colorSecundario) ? Colors.grey[900] : Colors.black.withOpacity(0.1),
+                    offset: (prefs.colorSecundario) ? Offset(2.0, 2.0) : Offset(6.0, 6.0),
+                    blurRadius: (prefs.colorSecundario) ? 1.0 : 16.0,
+                    spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+                  ),
+                ],
+                color: (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
+                borderRadius: BorderRadius.circular(20.0),
+        // gradient: LinearGradient(
+        //     colors: [Colors.indigoAccent[700], Colors.purple[400]]),
+        // borderRadius: BorderRadius.circular(20.0),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           SizedBox(height: 5.0,),
-          Text('Tu Ranking',style: TextStyle(color: Colors.white),),
-          Text('# 0',style: TextStyle(color: Colors.white, fontSize: 25),),
+          Text('Tu Ranking',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey : Colors.black45),),
+          Text('# 0',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey : Colors.black45, fontSize: 25),),
           SizedBox(height: 5.0,)
         ],
       ),
@@ -172,16 +200,32 @@ class _HomePageState extends State<HomePage> {
       height: 100.0,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Colors.greenAccent[700], Colors.green[100]]),
-        borderRadius: BorderRadius.circular(20.0),
+         boxShadow: [
+              BoxShadow(
+                color: (prefs.colorSecundario) ? Colors.grey[800] :Colors.white.withOpacity(0.8),
+                offset: (prefs.colorSecundario) ? Offset (-0.5,-0.5) : Offset(-6.0, -6.0),
+                blurRadius:(prefs.colorSecundario) ? 1.0 : 16.0,
+                spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+              ),
+              BoxShadow(
+                color: (prefs.colorSecundario) ? Colors.grey[900] : Colors.black.withOpacity(0.1),
+                offset: (prefs.colorSecundario) ? Offset(2.0, 2.0) : Offset(6.0, 6.0),
+                blurRadius: (prefs.colorSecundario) ? 1.0 : 16.0,
+                spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+              ),
+            ],
+            color: (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
+            borderRadius: BorderRadius.circular(20.0),
+        // gradient: LinearGradient(
+        //     colors: [Colors.greenAccent[700], Colors.green[100]]),
+        // borderRadius: BorderRadius.circular(20.0),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           SizedBox(height: 5.0,),
-          Text('Créditos',style: TextStyle(color: Colors.white),),
-          Text('0',style: TextStyle(color: Colors.white, fontSize: 25),),
+          Text('Créditos',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey : Colors.black45),),
+          Text('0',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey : Colors.black45, fontSize: 25),),
           SizedBox(height: 5.0)
         ],
       ),
@@ -191,28 +235,48 @@ class _HomePageState extends State<HomePage> {
   Widget _cardNull() {
     return Column(
       children: <Widget>[
-        Card(
-            elevation: 10.5,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 35.0),
+          decoration: BoxDecoration(
+
+            boxShadow: [
+              BoxShadow(
+                color: (prefs.colorSecundario) ? Colors.grey[800] :Colors.white.withOpacity(0.8),
+                offset: (prefs.colorSecundario) ? Offset (-0.5,-0.5) : Offset(-6.0, -6.0),
+                blurRadius:(prefs.colorSecundario) ? 1.0 : 16.0,
+                spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+              ),
+              BoxShadow(
+                color: (prefs.colorSecundario) ? Colors.grey[900] : Colors.black.withOpacity(0.1),
+                offset: (prefs.colorSecundario) ? Offset(2.0, 2.0) : Offset(6.0, 6.0),
+                blurRadius: (prefs.colorSecundario) ? 1.0 : 16.0,
+                spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+              ),
+            ],
+
+          color: (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
+          borderRadius: BorderRadius.circular(20.0),
+            ),
             child: Column(children: <Widget>[
               ListTile(
-                leading: Icon(Icons.do_not_disturb_alt, color:(prefs.colorSecundario) ?  Colors.purple[400]:Colors.indigoAccent[700]),
-                title: Text('Ushhh  no tienes cursos !!'),
-                subtitle: Text('Por favor dale click en ir  para adquirir nuevos cursos'),
+                leading: Icon(Icons.do_not_disturb_alt, color:(prefs.colorSecundario) ?  Colors.grey:Colors.black45),
+                title: Text('No tienes ningún curso matriculado !!',style:(prefs.colorSecundario) ? TextStyle(color: Colors.grey):TextStyle(color: Colors.black)),
+                subtitle: Text('Por favor contacta al proveedor de cursos',style:(prefs.colorSecundario) ? TextStyle(color: Colors.grey):TextStyle(color: Colors.black54)),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   // FlatButton(onPressed: () {}, child: Text('Cancelar')),
-                  FlatButton(
-                    onPressed: () => setState(() {
-                     _launched = _launchInBrowser('https://novapixel.org/eureka/public/more-courses');
-                }),
-                     child: Text('ir'))
+                //   FlatButton(
+                //     onPressed: () => setState(() {
+                //      _launched = _launchInBrowser('http://quizlab.app/');
+                // }),
+                //      child: Text('ir'))
+                SizedBox(height: 15,)
                 ],
               )
-            ]))
+            ])
+            )
       ],
     );
   }
@@ -220,9 +284,9 @@ class _HomePageState extends State<HomePage> {
   Widget _allCourses(){
       return Center(
 
-    child: Text("Ya tienes todos los cursos",
+    child: Text("No tienes ningun curso Microlearning",
         style: TextStyle(
-            color:(prefs.colorSecundario) ?  Colors.purple[400]:Colors.indigoAccent[700],
+            color:(prefs.colorSecundario) ?  Colors.grey:Colors.indigoAccent[700],
             fontSize: 15,
             fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
@@ -234,11 +298,29 @@ class _HomePageState extends State<HomePage> {
   Widget _cardUser() {
     return Column(
       children: <Widget>[
-        Card(
+        Container(
           margin: EdgeInsets.symmetric(horizontal: 15.0),
-          elevation: 10.5,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          // elevation: 10.5,
+          // shape:
+          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: (prefs.colorSecundario) ? Colors.grey[800] :Colors.white.withOpacity(0.8),
+                offset: (prefs.colorSecundario) ? Offset (-0.5,-0.5) : Offset(-6.0, -6.0),
+                blurRadius:(prefs.colorSecundario) ? 1.0 : 16.0,
+                spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+              ),
+              BoxShadow(
+                color: (prefs.colorSecundario) ? Colors.grey[900] : Colors.black.withOpacity(0.1),
+                offset: (prefs.colorSecundario) ? Offset(2.0, 2.0) : Offset(6.0, 6.0),
+                blurRadius: (prefs.colorSecundario) ? 1.0 : 16.0,
+                spreadRadius: 1.0
+              ),
+            ],
+            color: (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
+            borderRadius: BorderRadius.circular(20.0),
+  ),
           child: Row(
             children: <Widget>[
               Padding(
@@ -253,7 +335,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(20.0),
                   child: Text(
                    (prefs.userFistname == null)? 'Te damos la bienvenida a QuizLab!': '${prefs.userFistname} ${prefs.userLastname}',
-                    style: TextStyle(fontSize: 15.0, color: Colors.black54),
+                    style: TextStyle(fontSize: 15.0, color:(prefs.colorSecundario) ? Colors.grey : Colors.black54),
                   ),
               ),
             ],
@@ -329,6 +411,78 @@ class _HomePageState extends State<HomePage> {
   //                 },
   //               );
   //             }
+  Widget _myCoursesMicrolearning() {
+    return StreamBuilder(
+      stream: coursesProvider.myCoursesMicrolearningStream,
+      builder:
+          (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
+        if (snapshot.hasData) {
+          final allCourses = snapshot.data;
+          nextAllCourses: coursesProvider.courseForUserMicrolearning;
+          // _pageController.addListener((){
+          //   if (_pageController.position.pixels >= _pageController.position.maxScrollExtent - 200){
+          //   nextAllCourses();
+          //               }
+          //             });
+                      return Container(
+                        height: 150.2,
+                        child: PageView.builder(
+                          pageSnapping: true,
+                          // reverse:true,
+                          // physics:ScrollPhysics(),
+                          // controller: PageController(
+                          //   initialPage: 3,
+                          //   viewportFraction: 0.3,
+                          // ),
+                          controller: _pageController,
+                          itemCount: allCourses.length,
+                          itemBuilder: (context, i) => _courses(context, allCourses[i]),
+                        ),
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                );
+              }
+  Widget _myCoursesSimulators() {
+    return StreamBuilder(
+      stream: coursesProvider.myCoursesSimulatorsStream,
+      builder:
+          (BuildContext context, AsyncSnapshot<List<CourseModel>> snapshot) {
+        if (snapshot.hasData) {
+          final allCourses = snapshot.data;
+          nextAllCourses: coursesProvider.courseForUserSimulators;
+          // _pageController.addListener((){
+            // if (_pageController.position.pixels >= _pageController.position.maxScrollExtent - 200){
+            // nextAllCourses();
+            //             }
+                      // });
+                      return Container(
+                        height: 150.2,
+                        child: PageView.builder(
+                          pageSnapping: true,
+                          // reverse:true,
+                          // physics:ScrollPhysics(),
+                          // controller: PageController(
+                          //   initialPage: 3,
+                          //   viewportFraction: 0.3,
+                          // ),
+                          controller: _pageController,
+                          itemCount: allCourses.length,
+                          itemBuilder: (context, i) => _courses(context, allCourses[i]),
+                        ),
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                );
+              }
             
               Widget _courses(BuildContext context, CourseModel course) {
                 return Container(
@@ -351,7 +505,8 @@ class _HomePageState extends State<HomePage> {
                             
                             image:( course.imagePath == null || course.imagePath == "") 
                               ? AssetImage('assets/banner.png') 
-                              : NetworkImage('https://quizlab.app/public/img/courses/${course.name}.jpg'),
+                              : NetworkImage(
+                                '${course.imagePath}'),
                                 // 'https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg'),
                             fit: BoxFit.cover,
                             // width: 100.0,
@@ -364,8 +519,24 @@ class _HomePageState extends State<HomePage> {
                           height: 120.0,
                           width: 100,
                            decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                              color:Color.fromRGBO(37,37,233,0.29),
+                            // borderRadius: BorderRadius.circular(20.0),
+                            //   color:Color.fromRGBO(37,37,233,0.29),
+                            boxShadow: [
+                              BoxShadow(
+                                color: (prefs.colorSecundario) ? Colors.grey[900].withOpacity(0.8) :Colors.white.withOpacity(0.8),
+                                offset: (prefs.colorSecundario) ? Offset (-3.5,-3.5) : Offset(-6.0, -6.0),
+                                blurRadius:(prefs.colorSecundario) ? 6.5 : 16.0,
+                                spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+                              ),
+                              BoxShadow(
+                                color: (prefs.colorSecundario) ? Colors.grey[800].withOpacity(0.1) : Colors.black.withOpacity(0.1),
+                                offset: (prefs.colorSecundario) ? Offset(1.0, 1.0) : Offset(6.0, 6.0),
+                                blurRadius: (prefs.colorSecundario) ? 1.0 : 16.0,
+                                spreadRadius: (prefs.colorSecundario)  ? 0.0 : 0.0,
+                              ),
+                            ],
+                            color: (prefs.colorSecundario) ? Colors.grey[850].withOpacity(0.7) : Colors.transparent,
+                             borderRadius: BorderRadius.circular(16.0),
                             ),
                           child: Center(
                             // child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5)),
@@ -399,13 +570,30 @@ class _HomePageState extends State<HomePage> {
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: textColor.withAlpha(isPrimaryCard ? 200 : 50),
+                        boxShadow: [
+                          BoxShadow(
+                            color: (prefs.colorSecundario) ? Colors.grey[800] :Colors.white.withOpacity(0.8),
+                            offset: (prefs.colorSecundario) ? Offset (-0.5,-0.5) : Offset(-6.0, -6.0),
+                            blurRadius:(prefs.colorSecundario) ? 1.0 : 16.0,
+                            spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+                          ),
+                          BoxShadow(
+                            color: (prefs.colorSecundario) ? Colors.grey[900] : Colors.black.withOpacity(0.1),
+                            offset: (prefs.colorSecundario) ? Offset(2.0, 2.0) : Offset(6.0, 6.0),
+                            blurRadius: (prefs.colorSecundario) ? 1.0 : 16.0,
+                            spreadRadius: (prefs.colorSecundario)  ? 1.0 : 0.0,
+                          ),
+                        ],
+                        color: (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
+                        borderRadius: BorderRadius.circular(20.0),
+
+                      // borderRadius: BorderRadius.all(Radius.circular(15)),
+                      // color: textColor.withAlpha(isPrimaryCard ? 200 : 50),
                     ),
                     child: Text(
                       text,
                       style: TextStyle(
-                          color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
+                          color:(prefs.colorSecundario) ? Colors.grey : Colors.black45, fontSize: 12),
                     ),
                   ),
                 );
@@ -426,7 +614,7 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       Text(
                         title,
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                        style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey : Colors.black, fontWeight: FontWeight.bold),
                       ),
                          _carouselButton("Ver todos", primary, context, route)
                     ],
@@ -456,12 +644,13 @@ class _HomePageState extends State<HomePage> {
 
         return GestureDetector(
                   child: AlertDialog(
+                    
             shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            title:  Text('Danos un momento '),
+            title:  Text('Danos un momento ',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
             content:  Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('Estamos Cargando tus datos'),
+                Text('Estamos Cargando tus datos',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
                 // FlutterLogo(size: 100.0,),
                 SizedBox(height: 30.0),
                 FadeInImage(
@@ -513,8 +702,9 @@ class _HomePageState extends State<HomePage> {
       builder: (context) {
         return GestureDetector(
                   child: AlertDialog(
+                    backgroundColor:(prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
             shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            title:  Text('!!Sin Conexión a internet!!'),
+            title:  Text('!!Sin Conexión a internet!!',style: TextStyle(color:(prefs.colorSecundario) ? Colors.grey :Colors.black),),
             content:  Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[

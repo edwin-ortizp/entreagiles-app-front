@@ -13,9 +13,15 @@ int _pageCourse = 0;
 
 // List<CourseModel> _missingCoursesSt new List();
 final _allCoursesStreamController = StreamController<List<CourseModel>>.broadcast(); 
+final _myCoursesMicrolearningStreamController = StreamController<List<CourseModel>>.broadcast(); 
+final _myCoursesSimulatorsStreamController = StreamController<List<CourseModel>>.broadcast(); 
 
 Function(List<CourseModel>) get allCoursesSink => _allCoursesStreamController.sink.add;
 Stream<List<CourseModel>> get allCoursesStream => _allCoursesStreamController.stream;
+Function(List<CourseModel>) get myCoursesMicrolearningSink => _myCoursesMicrolearningStreamController.sink.add;
+Stream<List<CourseModel>> get myCoursesMicrolearningStream => _myCoursesMicrolearningStreamController.stream;
+Function(List<CourseModel>) get myCoursesSimulatorsSink => _myCoursesSimulatorsStreamController.sink.add;
+Stream<List<CourseModel>> get myCoursesSimulatorsStream => _myCoursesSimulatorsStreamController.stream;
 
 void disposeStream(){
   _allCoursesStreamController?.close();
@@ -53,6 +59,61 @@ Future<List<CourseModel>> courseForUser() async {
   }
 
 }
+// traer los cursos que tiene  el usuarios de typo microlearning
+Future<List<CourseModel>> courseForUserMicrolearning() async {
+  final url = '$_url/courses/my-courses/microlearning?token=${_prefs.token}';
+  final resp = await http.get(url);
+   if (resp.statusCode == 200) {
+  final  decodedData = json.decode(resp.body);
+    List datos = decodedData ['myCourse'];
+    final List<CourseModel> _myCoursesMicrolearning = new List ();
+
+    if( datos == null ) return null;
+  if( datos.length == 0 || datos == null ){
+    _prefs.mycoursesMicrolearning= false;
+  } else{
+    _prefs.mycoursesMicrolearning= true;
+  }
+    datos.forEach(( myCourse ){
+      final myCoursesTemp = CourseModel.fromJson(myCourse);
+      _myCoursesMicrolearning.add(myCoursesTemp);
+    });
+      myCoursesMicrolearningSink(_myCoursesMicrolearning);
+    return _myCoursesMicrolearning;
+    } else {
+    // Si esta respuesta no fue OK, lanza un error.
+    throw Exception('Failed to load post');
+  }
+
+}
+// traer los cursos que tiene  el usuarios de typo simuladores
+Future<List<CourseModel>> courseForUserSimulators() async {
+  final url = '$_url/courses/my-simulators/inscribed?token=${_prefs.token}';
+  final resp = await http.get(url);
+   if (resp.statusCode == 200) {
+  final  decodedData = json.decode(resp.body);
+    List datos = decodedData ['myCourse'];
+    final List<CourseModel> _myCoursesSimulators = new List ();
+
+    if( datos == null ) return null;
+  if( datos.length == 0 || datos == null ){
+    _prefs.mycoursesSimulators= false;
+  } else{
+    _prefs.mycoursesSimulators= true;
+  }
+    datos.forEach(( myCourse ){
+      final myCoursesTemp = CourseModel.fromJson(myCourse);
+      _myCoursesSimulators.add(myCoursesTemp);
+    });
+      myCoursesSimulatorsSink(_myCoursesSimulators);
+    return _myCoursesSimulators;
+    } else {
+    // Si esta respuesta no fue OK, lanza un error.
+    throw Exception('Failed to load post');
+  }
+
+}
+
 Future<List<CourseModel>> missingCourses() async {
   final url = '$_url/courses/missing-courses/show?token=${_prefs.token}';
   final resp = await http.get(url);
@@ -61,6 +122,36 @@ Future<List<CourseModel>> missingCourses() async {
     List datos = decodedData ['cursos'];
     final List<CourseModel> _allCourses = new List ();
 
+    if( datos == null ) return [];
+  if( datos.length == 0 || datos == null ) {
+     _prefs.noCourses= false;
+  } else{
+    _prefs.noCourses= true;
+  }
+  // print( "misccursos ${_prefs.noCourses}");
+    datos.forEach(( course ){
+      final myCoursesTemp = CourseModel.fromJson(course);
+      _allCourses.add(myCoursesTemp);
+    });
+    
+     allCoursesSink(_allCourses);
+    return _allCourses;
+     } else {
+    // Si esta respuesta no fue OK, lanza un error.
+    throw Exception('Failed to load post');
+  }
+
+}
+
+// traer los cursos que no tiene  el usuarios de typo microlearning
+Future<List<CourseModel>> missingCoursesMicrolearning() async {
+  final url = '$_url/courses/missing-courses/microlearning/show?token=${_prefs.token}';
+  final resp = await http.get(url);
+   if (resp.statusCode == 200) {
+  final  decodedData = json.decode(resp.body);
+    List datos = decodedData ['cursos'];
+    final List<CourseModel> _allCourses = new List ();
+    // print(decodedData);
     if( datos == null ) return [];
   if( datos.length == 0 || datos == null ) {
      _prefs.noCourses= false;
@@ -91,6 +182,18 @@ Future<List<CourseModel>> missingCourses() async {
     };
 
     final url   = '$_url/article/?token=${_prefs.token}';
+    final resp  = await http.post(url,body: (authData));
+    //  final resp = await http.post(url,body: (authData));
+    // print(json.decode(resp.body));
+    return 1;
+  }
+ Future<int> addCourseMicrolearning(String course_id)async{
+    final authData ={
+
+      'course_id'     : course_id,
+    };
+
+    final url   = '$_url/courses/microlearning?token=${_prefs.token}';
     final resp  = await http.post(url,body: (authData));
     //  final resp = await http.post(url,body: (authData));
     // print(json.decode(resp.body));

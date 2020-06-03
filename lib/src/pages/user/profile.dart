@@ -33,22 +33,23 @@ class _ProfilePageState extends State<ProfilePage> {
     _colorSecundario = prefs.colorSecundario;
   }
   Widget build(BuildContext context) {
-  Color color = (prefs.colorSecundario)? Colors.purple[400] : Colors.indigoAccent[400];
+  Color color = (prefs.colorSecundario)? Colors.grey : Colors.grey;
   var height = MediaQuery.of(context).size.height;
   // theme: ThemeData (primarySwatch:(prefs.colorSecundario)?  Colors.purple :Colors.red ) ;
     return Scaffold(
+      backgroundColor: (prefs.colorSecundario)?Colors.grey[850] :Color(0xFFEFEEEE),
         appBar: AppBar(
           centerTitle: true,
           title: Text('Perfil',style: (prefs.colorSecundario)
-           ?TextStyle(color:Colors.white)
+           ?TextStyle(color:Colors.grey)
            : TextStyle(color: Colors.black),),
           
                   // ? TextStyle(color: Colors.white)
                   // : TextStyle(color: Colors.black)),
           // backgroundColor: Colors.purple[400],
           iconTheme: (prefs.colorSecundario)
-              ? new IconThemeData(color: Colors.white)
-              : new IconThemeData(color: Colors.black),
+              ? new IconThemeData(color: Color(0xFFEFEEEE))
+              : new IconThemeData(color: Colors.grey),
           // leading: IconButton(
           //   tooltip: 'Previous choice',
           //   icon: const Icon(Icons.arrow_back),
@@ -56,7 +57,8 @@ class _ProfilePageState extends State<ProfilePage> {
           //    Navigator.of(context).popAndPushNamed('settings');
           //   },
           // ),
-          backgroundColor: (prefs.colorSecundario) ? Colors.purple[400] : Colors.white,
+          elevation: 0.0,
+          backgroundColor: (prefs.colorSecundario) ? Colors.grey[850] : Color(0xFFEFEEEE),
           ),
       resizeToAvoidBottomPadding: false,
       endDrawer: MenuSiderbarProfile(),
@@ -116,7 +118,7 @@ Widget _purpleBar(UserModel user) {
           padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
           height: animation,
           width: double.infinity,
-          color: (prefs.colorSecundario) ? Colors.purple[200]:Colors.white70 ,
+          color: (prefs.colorSecundario) ? Colors.grey[850]:Color(0xFFEFEEEE) ,
           child: ListView( children: <Widget>[
             ListTile(
               title: new Center (
@@ -225,7 +227,6 @@ Widget _homePageContent(color,user) {
 Widget _nameField(String data,color,UserModel user){
 
   return TextFormField(
-    
     initialValue: user.firstName,
     //  enableInteractiveSelection: false,
      readOnly: true,
@@ -233,6 +234,7 @@ Widget _nameField(String data,color,UserModel user){
       // autofocus: true, es para activar  al entrar el texto
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
+        
         border:   OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
